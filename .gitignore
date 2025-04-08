@@ -1,13 +1,12 @@
 *.tar.gz
 
 *.exe
-src/sugarchain
-src/sugarchaind
-src/sugarchain-cli
-src/sugarchain-tx
-src/test/test_sugarchain
-src/test/test_sugarchain_fuzzy
-src/qt/test/test_sugarchain-qt
+src/adventurecoin
+src/adventurecoind
+src/adventurecoin-tx
+src/test/test_adventurecoin
+src/test/test_adventurecoin_fuzzy
+src/qt/test/test_adventurecoin-qt
 
 # autoreconf
 Makefile.in
@@ -80,13 +79,13 @@ src/qt/bitcoin-qt.includes
 # Compilation and Qt preprocessor part
 *.qm
 Makefile
-sugarchain-qt
-Sugarchain-Qt.app
+adventurecoin-qt
+Adventurecoin-Qt.app
 background.tiff*
 
 # Unit-tests
 Makefile.test
-sugarchain-qt_test
+adventurecoin-qt_test
 
 # Resources cpp
 qrc_*.cpp
@@ -99,7 +98,7 @@ build
 *.gcno
 *.gcda
 /*.info
-test_sugarchain.coverage/
+test_adventurecoin.coverage/
 total.coverage/
 coverage_percent.txt
 
