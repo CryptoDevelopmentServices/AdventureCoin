@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2016 The Bitcoin Core developers
-// Copyright (c) 2018-2020 The Sugarchain Yumekawa developers
+// Copyright (c) 2018-2020 The Adventurecoin Yumekawa developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -25,7 +25,7 @@ static const CAmount CENT = 1000000;
  * for the creation of coins out of thin air modification could lead to a fork.
  * */
 
-// SUGAR-HALVING
+// ADVC-HALVING
 // BTC: (was 21000000)
 // Total Supply in COINs (in theory):	1073741824
 // Total Supply in COINs (in actual):	1073741823.87500000

@@ -40,9 +40,9 @@ QString BitcoinUnits::longName(int unit)
 {
     switch(unit)
     {
-    case BTC: return QString("SUGAR");
-    case mBTC: return QString("mSUGAR");
-    case uBTC: return QString::fromUtf8("µSUGAR (bits)");
+    case BTC: return QString("ADVC");
+    case mBTC: return QString("mADVC");
+    case uBTC: return QString::fromUtf8("µADVC (bits)");
     default: return QString("???");
     }
 }
@@ -60,9 +60,9 @@ QString BitcoinUnits::description(int unit)
 {
     switch(unit)
     {
-    case BTC: return QString("Sugarchains");
-    case mBTC: return QString("Milli-Sugarchains (1 / 1" THIN_SP_UTF8 "000)");
-    case uBTC: return QString("Micro-Sugarchains (bits) (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+    case BTC: return QString("Adventurecoins");
+    case mBTC: return QString("Milli-Adventurecoins (1 / 1" THIN_SP_UTF8 "000)");
+    case uBTC: return QString("Micro-Adventurecoins (bits) (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
     default: return QString("???");
     }
 }

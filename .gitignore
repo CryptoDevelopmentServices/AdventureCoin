@@ -3,6 +3,7 @@
 *.exe
 src/adventurecoin
 src/adventurecoind
+src/adventurecoin-cli
 src/adventurecoin-tx
 src/test/test_adventurecoin
 src/test/test_adventurecoin_fuzzy

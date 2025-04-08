@@ -420,9 +420,9 @@ BOOST_AUTO_TEST_CASE(caddrinfo_get_tried_bucket)
     uint256 nKey2 = (uint256)(CHashWriter(SER_GETHASH, 0) << 2).GetHash();
 
 
-    BOOST_CHECK_EQUAL(info1.GetTriedBucket(nKey1), 14); // FIXME.SUGAR // SURE?
+    BOOST_CHECK_EQUAL(info1.GetTriedBucket(nKey1), 14); // FIXME.ADVC // SURE?
 
-    // FIXME.SUGAR
+    // FIXME.ADVC
     // BEGIN - DEBUG
     /*
     printf("addr1 = %s\n", addr1.ToString().c_str());
@@ -445,7 +445,7 @@ BOOST_AUTO_TEST_CASE(caddrinfo_get_tried_bucket)
     uint256 nKey2_BTC = (uint256)(CHashWriter(SER_GETHASH, 0) << 2).GetHash();
 
     BOOST_CHECK_EQUAL(info1_BTC.GetTriedBucket(nKey1_BTC), 40); // Additional Check2
-    BOOST_CHECK_EQUAL(info2_BTC.GetTriedBucket(nKey1_BTC), 113); // Additional Check2 // FIXME.SUGAR // SURE? // It should be 40?
+    BOOST_CHECK_EQUAL(info2_BTC.GetTriedBucket(nKey1_BTC), 113); // Additional Check2 // FIXME.ADVC // SURE? // It should be 40?
     BOOST_CHECK_EQUAL(info1_BTC.GetTriedBucket(nKey2_BTC), 191); // Additional Check2
     BOOST_CHECK_EQUAL(info2_BTC.GetTriedBucket(nKey2_BTC), 191); // Additional Check2
     // END - ADDITIONAL CHECK: BTC

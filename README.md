@@ -1,14 +1,14 @@
-Sugarchain Yumekawa
+Adventurecoin Yumekawa
 ===================
-[![Build Status](https://travis-ci.org/sugarchain-project/sugarchain.svg?branch=master-v0.16.3)](https://travis-ci.org/sugarchain-project/sugarchain)
-![GitHub All Releases](https://img.shields.io/github/downloads/sugarchain-project/sugarchain/total)
+[![Build Status](https://travis-ci.org/adventurecoin-project/adventurecoin.svg?branch=master-v0.16.3)](https://travis-ci.org/adventurecoin-project/adventurecoin)
+![GitHub All Releases](https://img.shields.io/github/downloads/adventurecoin-project/adventurecoin/total)
 
-https://sugarchain.org
+https://adventurecoin.org
 
 
 The Meaning of Yumekawa
 -----------------------
-Sugarchain's first node software is called `Yumekawa (夢川)`. It can be translated in some ways.
+Adventurecoin's first node software is called `Yumekawa (夢川)`. It can be translated in some ways.
 - "Yume (夢)" means dream and "Kawa (川)" means river. So its `Dream River` in japanese.
 - The second letter "Kawa" stands for "Kawaii (可愛い)". In this case the meaning is `Dreamy Cute`.
 - Also Yumekawa is replaces the word `Core` (ie: Bitcoin Core). We think it sounds a bit centralized.
@@ -16,19 +16,19 @@ Sugarchain's first node software is called `Yumekawa (夢川)`. It can be transl
 
 License
 -------
-Sugarchain Yumekawa is released under the terms of the MIT license. See [COPYING](COPYING) for more
+Adventurecoin Yumekawa is released under the terms of the MIT license. See [COPYING](COPYING) for more
 information or see https://opensource.org/licenses/MIT.
 - Copyright (c) 2009-2010 Satoshi Nakamoto
 - Copyright (c) 2009-2018 The Bitcoin Core developers
 - Copyright (c) 2013-2019 Alexander Peslyak - Yespower 1.0.1
 - Copyright (c) 2016-2018 The Zcash developers - DigiShieldZEC
-- Copyright (c) 2018-2020 The Sugarchain Yumekawa developers
+- Copyright (c) 2018-2020 The Adventurecoin Yumekawa developers
 
 
 Minimum Requirement
 -------------------
 - CPU: 1 Core
-- RAM: 2048 MB (at least 3 GB [swap](https://github.com/sugarchain-project/doc/blob/master/swap.md))
+- RAM: 2048 MB (at least 3 GB [swap](https://github.com/adventurecoin-project/doc/blob/master/swap.md))
 - DISK: HDD 5 GB
 
 
@@ -108,11 +108,11 @@ Options after Build
 -------------------
 - (optional) Reduce binary size using strip (about 90% file size reduction)
 ```bash
-strip ./src/sugarchain-cli && \
-strip ./src/sugarchaind && \
-strip ./src/qt/sugarchain-qt && \
-strip ./src/sugarchain-tx && \
-strip ./src/test/test_sugarchain
+strip ./src/adventurecoin-cli && \
+strip ./src/adventurecoind && \
+strip ./src/qt/adventurecoin-qt && \
+strip ./src/adventurecoin-tx && \
+strip ./src/test/test_adventurecoin
 ```
 
 - (optional) After bump version on `configure.ac`, update binary docs (manpages) using help2man `.1` files
@@ -122,27 +122,27 @@ make -j$(nproc) && ./contrib/devtools/gen-manpages.sh
 
 - (optional) build for Windows and OSX you may need `--disable-shared` option with make.
 
-- (optional) Add seeds/nodes from [DNSSEED](https://github.com/sugarchain-project/sugarchain-seeder)  
-  https://github.com/sugarchain-project/sugarchain/tree/master-v0.16.3/contrib/seeds
+- (optional) Add seeds/nodes from [DNSSEED](https://github.com/adventurecoin-project/adventurecoin-seeder)  
+  https://github.com/adventurecoin-project/adventurecoin/tree/master-v0.16.3/contrib/seeds
 
 
 Unit Test
 ---------
-All Sugarchain Yumekawa developers should execute this unit test. Some updates may break these tests in some occasions.
+All Adventurecoin Yumekawa developers should execute this unit test. Some updates may break these tests in some occasions.
 
 - Test All
 ```bash
-./src/test/test_sugarchain test_bitcoin --log_level=test_suite
+./src/test/test_adventurecoin test_bitcoin --log_level=test_suite
 ```
 
 - (optional) Test Partially: ie `blockencodings_tests`
 ```bash
-./src/test/test_sugarchain test_bitcoin --log_level=test_suite --run_test=blockencodings_tests
+./src/test/test_adventurecoin test_bitcoin --log_level=test_suite --run_test=blockencodings_tests
 ```
 
 - (optional) Test QT (GUI)
 ```bash
-./src/qt/test/test_sugarchain-qt
+./src/qt/test/test_adventurecoin-qt
 ```
 
 
@@ -151,13 +151,13 @@ Run
 The options `-rpcuser`, `-rpcpassword`, and `-printtoconsole` are optional. `server=1` needed by RPC servers or cpuminer when solo-mining.
 
 - Mainnet: debug mode: `net` for Network
-  > ./src/qt/sugarchain-qt -server=1 -rpcuser=rpcuser -rpcpassword=rpcpassword **-debug=net** -printtoconsole
+  > ./src/qt/adventurecoin-qt -server=1 -rpcuser=rpcuser -rpcpassword=rpcpassword **-debug=net** -printtoconsole
 
 - Testnet
-  > ./src/qt/sugarchain-qt **-testnet**
+  > ./src/qt/adventurecoin-qt **-testnet**
 
 - Regtest
-  > ./src/qt/sugarchain-qt **-regtest**
+  > ./src/qt/adventurecoin-qt **-regtest**
 
 - Reference  
   https://en.bitcoin.it/w/index.php?title=Running_Bitcoin&oldid=66644
@@ -166,7 +166,7 @@ The options `-rpcuser`, `-rpcpassword`, and `-printtoconsole` are optional. `ser
 CLI
 ---
 - `-prunedebuglogfile`: Prune (limit) filesize of debug.log
-  > ./src/qt/sugarchain-qt -prunedebuglogfile
+  > ./src/qt/adventurecoin-qt -prunedebuglogfile
 
   > 2020-09-15 19:41:34 DEBUG.LOG PRUNED at 10000063
 
@@ -178,11 +178,11 @@ Known Issues
 - Slow update balance on wallet:
   * This slow is a part of BTC.
   * Update total balance *every minute (12 blocks)* interval.
-  * A workaround at this moment. [source](https://github.com/sugarchain-project/sugarchain/commit/72436c90b29844cf507895df053103f9b6840776#diff-2e3836af182cfb375329c3463ffd91f8)
+  * A workaround at this moment. [source](https://github.com/adventurecoin-project/adventurecoin/commit/72436c90b29844cf507895df053103f9b6840776#diff-2e3836af182cfb375329c3463ffd91f8)
 - Poor performance on ARM CPUs (32/64-Bit):
   * No ARM optimization for Yespower yet.
 - Poor performance on 32-Bit OS:
-  * No SSE2 optimization for Yespower yet. [source](https://github.com/sugarchain-project/sugarchain/blob/d977987a83aba115d50a9130f0d7914330d1bc75/src/crypto/yespower-1.0.1/yespower-opt.c#L59)
+  * No SSE2 optimization for Yespower yet. [source](https://github.com/adventurecoin-project/adventurecoin/blob/d977987a83aba115d50a9130f0d7914330d1bc75/src/crypto/yespower-1.0.1/yespower-opt.c#L59)
 - Slow startup on low memory machines:
   * Startup can take up to some hours on 1cpu 1024ram (+swap 3GB) VPS.
   * Workaround is just increase RAM at least 2 GB.
@@ -190,7 +190,7 @@ Known Issues
 
 Release Process using GITIAN
 ----------------------------
-- All Sugarchain Yumekawa developers should do following GITIAN release process. It's the safest way to distribute binaries to people.
+- All Adventurecoin Yumekawa developers should do following GITIAN release process. It's the safest way to distribute binaries to people.
 - Please use GITIAN release with checking PGP signature, or compile it yourself on your own machine.
 
 https://gist.github.com/cryptozeny/3501c77750541208b9dd1a9e9719fc53

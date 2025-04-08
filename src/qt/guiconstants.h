@@ -46,9 +46,9 @@ static const int MAX_URI_LENGTH = 255;
 /* Number of frames in spinner animation */
 #define SPINNER_FRAMES 36
 
-#define QAPP_ORG_NAME "Sugarchain"
-#define QAPP_ORG_DOMAIN "sugarchain.org"
-#define QAPP_APP_NAME_DEFAULT "Sugarchain-Qt"
-#define QAPP_APP_NAME_TESTNET "Sugarchain-Qt-testnet"
+#define QAPP_ORG_NAME "Adventurecoin"
+#define QAPP_ORG_DOMAIN "adventurecoin.org"
+#define QAPP_APP_NAME_DEFAULT "Adventurecoin-Qt"
+#define QAPP_APP_NAME_TESTNET "Adventurecoin-Qt-testnet"
 
 #endif // BITCOIN_QT_GUICONSTANTS_H

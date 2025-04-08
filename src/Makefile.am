@@ -65,11 +65,11 @@ TESTS =
 BENCHMARKS =
 
 if BUILD_BITCOIND
-  bin_PROGRAMS += sugarchaind
+  bin_PROGRAMS += adventurecoind
 endif
 
 if BUILD_BITCOIN_UTILS
-  bin_PROGRAMS += sugarchain-cli sugarchain-tx
+  bin_PROGRAMS += adventurecoin-cli adventurecoin-tx
 endif
 
 .PHONY: FORCE check-symbols check-security
@@ -382,16 +382,16 @@ nodist_libbitcoin_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
 # bitcoind binary #
-sugarchaind_SOURCES = bitcoind.cpp
-sugarchaind_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-sugarchaind_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-sugarchaind_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+adventurecoind_SOURCES = bitcoind.cpp
+adventurecoind_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+adventurecoind_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+adventurecoind_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-sugarchaind_SOURCES += bitcoind-res.rc
+adventurecoind_SOURCES += bitcoind-res.rc
 endif
 
-sugarchaind_LDADD = \
+adventurecoind_LDADD = \
   $(LIBBITCOIN_SERVER) \
   $(LIBBITCOIN_COMMON) \
   $(LIBUNIVALUE) \
@@ -405,38 +405,38 @@ sugarchaind_LDADD = \
   $(LIBMEMENV) \
   $(LIBSECP256K1)
 
-sugarchaind_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS)
+adventurecoind_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS)
 
 # bitcoin-cli binary #
-sugarchain_cli_SOURCES = bitcoin-cli.cpp
-sugarchain_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
-sugarchain_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-sugarchain_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+adventurecoin_cli_SOURCES = bitcoin-cli.cpp
+adventurecoin_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
+adventurecoin_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+adventurecoin_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-sugarchain_cli_SOURCES += bitcoin-cli-res.rc
+adventurecoin_cli_SOURCES += bitcoin-cli-res.rc
 endif
 
-sugarchain_cli_LDADD = \
+adventurecoin_cli_LDADD = \
   $(LIBBITCOIN_CLI) \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_UTIL) \
   $(LIBBITCOIN_CRYPTO)
 
-sugarchain_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
+adventurecoin_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
 #
 
 # bitcoin-tx binary #
-sugarchain_tx_SOURCES = bitcoin-tx.cpp
-sugarchain_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-sugarchain_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-sugarchain_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+adventurecoin_tx_SOURCES = bitcoin-tx.cpp
+adventurecoin_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+adventurecoin_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+adventurecoin_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-sugarchain_tx_SOURCES += bitcoin-tx-res.rc
+adventurecoin_tx_SOURCES += bitcoin-tx-res.rc
 endif
 
-sugarchain_tx_LDADD = \
+adventurecoin_tx_LDADD = \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_UTIL) \
@@ -444,7 +444,7 @@ sugarchain_tx_LDADD = \
   $(LIBBITCOIN_CRYPTO) \
   $(LIBSECP256K1)
 
-sugarchain_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
+adventurecoin_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
 #
 
 # bitcoinconsensus library #

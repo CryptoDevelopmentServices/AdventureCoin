@@ -1508,7 +1508,7 @@ void ThreadMapPort()
             }
         }
 
-        std::string strDesc = "Sugarchain " + FormatFullVersion();
+        std::string strDesc = "Adventurecoin " + FormatFullVersion();
 
         try {
             while (true) {

@@ -4,26 +4,26 @@ TOPDIR=${TOPDIR:-$(git rev-parse --show-toplevel)}
 SRCDIR=${SRCDIR:-$TOPDIR/src}
 MANDIR=${MANDIR:-$TOPDIR/doc/man}
 
-SUGARCHAIND=${SUGARCHAIND:-$SRCDIR/sugarchaind}
-SUGARCHAINCLI=${SUGARCHAINCLI:-$SRCDIR/sugarchain-cli}
-SUGARCHAINTX=${SUGARCHAINTX:-$SRCDIR/sugarchain-tx}
-SUGARCHAINQT=${SUGARCHAINQT:-$SRCDIR/qt/sugarchain-qt}
+ADVENTURECOIND=${ADVENTURECOIND:-$SRCDIR/adventurecoind}
+ADVENTURECOINCLI=${ADVENTURECOINCLI:-$SRCDIR/adventurecoin-cli}
+ADVENTURECOINTX=${ADVENTURECOINTX:-$SRCDIR/adventurecoin-tx}
+ADVENTURECOINQT=${ADVENTURECOINQT:-$SRCDIR/qt/adventurecoin-qt}
 
-[ ! -x $SUGARCHAIND ] && echo "$SUGARCHAIND not found or not executable." && exit 1
+[ ! -x $ADVENTURECOIND ] && echo "$ADVENTURECOIND not found or not executable." && exit 1
 
 # The autodetected version git tag can screw up manpage output a little bit
-SUGARVER=($($SUGARCHAINCLI --version | head -n1 | awk -F'[ -]' '{ print $6, $7 }'))
+ADVCVER=($($ADVENTURECOINCLI --version | head -n1 | awk -F'[ -]' '{ print $6, $7 }'))
 
 # Create a footer file with copyright content.
 # This gets autodetected fine for bitcoind if --version-string is not set,
 # but has different outcomes for bitcoin-qt and bitcoin-cli.
 echo "[COPYRIGHT]" > footer.h2m
-$SUGARCHAIND --version | sed -n '1!p' >> footer.h2m
+$ADVENTURECOIND --version | sed -n '1!p' >> footer.h2m
 
-for cmd in $SUGARCHAIND $SUGARCHAINCLI $SUGARCHAINTX $SUGARCHAINQT; do
+for cmd in $ADVENTURECOIND $ADVENTURECOINCLI $ADVENTURECOINTX $ADVENTURECOINQT; do
   cmdname="${cmd##*/}"
-  help2man -N --version-string=${SUGARVER[0]} --include=footer.h2m -o ${MANDIR}/${cmdname}.1 ${cmd}
-  sed -i "s/\\\-${SUGARVER[1]}//g" ${MANDIR}/${cmdname}.1
+  help2man -N --version-string=${ADVCVER[0]} --include=footer.h2m -o ${MANDIR}/${cmdname}.1 ${cmd}
+  sed -i "s/\\\-${ADVCVER[1]}//g" ${MANDIR}/${cmdname}.1
 done
 
 rm -f footer.h2m
