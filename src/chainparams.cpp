@@ -42,7 +42,7 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
     // BEGIN - DEBUG - ADVC
 
     // MAINNET
-    // if (genesis.nTime == 1565881200) {
+    // if (genesis.nTime == 1744221343) {
     //   printf("\n*** BEGIN - DEBUG: MAINNET\n");
     //   printf("nTime = %u\n", nTime);
     //   printf("nNonce = %u\n", nNonce);
@@ -54,7 +54,7 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
     // }
 
     // TESTNET
-    // if (genesis.nTime == 1565913601) {
+    // if (genesis.nTime == 1744230279) {
     //   printf("\n*** BEGIN - DEBUG: TESTNET\n");
     //   printf("nTime = %u\n", nTime);
     //   printf("nNonce = %u\n", nNonce);
@@ -66,7 +66,7 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
     // }
 
     // REGTEST
-    // if (genesis.nTime == 1565913602) {
+    // if (genesis.nTime == 1744230401) {
     //   printf("\n*** BEGIN - DEBUG: REGTEST\n");
     //   printf("nTime = %u\n", nTime);
     //   printf("nNonce = %u\n", nNonce);
@@ -187,9 +187,7 @@ public:
         nDefaultPort = 33230;
         nPruneAfterHeight = 100000;
 
-        // nTime: date -d '2019-08-16 00:00:00 KST' +%s = 1565881200
-        // genesisReward: pow(2,32) / COIN = 42.94967296 (was 50)
-        genesis = CreateGenesisBlock(1565881200, 247, 0x1f3fffff, 1, 42.94967296 * COIN);
+        genesis = CreateGenesisBlock(1744221343, 0, 0x1f3fffff, 1, 100 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
 
         // DEBUG - ADVC
@@ -320,7 +318,7 @@ public:
         // ADVC-HALVING
         // 10*60/120 = 5 seconds block time
         // 120x faster than bitcoin
-        consensus.nPowTargetSpacing = 5;
+        consensus.nPowTargetSpacing = 60;
 
         consensus.fPowAllowMinDifficultyBlocks = false; // DigiShieldZEC
         consensus.fPowNoRetargeting = false; // DigiShieldZEC
@@ -366,9 +364,7 @@ public:
         nDefaultPort = 44229;
         nPruneAfterHeight = 1000;
 
-        // nTime: date -d '2019-08-16 00:00:01 UTC' +%s = 1565913601
-        // genesisReward: pow(2,32) / COIN = 42.94967296 (was 50)
-        genesis = CreateGenesisBlock(1565913601, 0, 0x1f3fffff, 1, 42.94967296 * COIN);
+        genesis = CreateGenesisBlock(1744230279, 0, 0x1f3fffff, 1, 100 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
 
         // DEBUG - ADVC
@@ -489,7 +485,7 @@ public:
         // ADVC-HALVING
         // 10*60/120 = 5 seconds block time
         // 120x faster than bitcoin
-        consensus.nPowTargetSpacing = 5;
+        consensus.nPowTargetSpacing = 60;
 
         consensus.fPowAllowMinDifficultyBlocks = true; // DigiShieldZEC
         consensus.fPowNoRetargeting = true; // DigiShieldZEC
@@ -525,7 +521,7 @@ public:
 
         // nTime: date -d '2019-08-16 00:00:02 UTC' +%s = 1565913602
         // genesisReward: pow(2,32) / COIN = 42.94967296 (was 50)
-        genesis = CreateGenesisBlock(1565913602, 9, 0x200f0f0f, 1, 42.94967296 * COIN);
+        genesis = CreateGenesisBlock(1744230401, 0, 0x200f0f0f, 1, 100 * COIN);
 
         consensus.hashGenesisBlock = genesis.GetHash();
 
