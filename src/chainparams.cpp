@@ -184,7 +184,7 @@ public:
         // ADVC-HALVING
         // 10*60/120 = 5 seconds block time
         // 120x faster than bitcoin
-        consensus.nPowTargetSpacing = 5;
+        consensus.nPowTargetSpacing = 60;
 
         consensus.fPowAllowMinDifficultyBlocks = false; // DigiShieldZEC
         consensus.fPowNoRetargeting = false; // DigiShieldZEC
