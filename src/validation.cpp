@@ -1,7 +1,9 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2017 The Bitcoin Core developers
 // Copyright (c) 2013-2019 Alexander Peslyak - Yespower 1.0.1
-// Copyright (c) 2018-2020 The Adventurecoin Yumekawa developers
+// Copyright (c) 2018-2020 The Sugarchain Yumekawa developers
+// Copyright (c) 2025 The Crypto Development Services developers
+// Copyright (c) 2025 The Adventurecoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
