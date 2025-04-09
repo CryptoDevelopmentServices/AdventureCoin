@@ -156,14 +156,37 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     nLastBlockTx = nBlockTx;
     nLastBlockWeight = nBlockWeight;
 
-    // Create coinbase transaction.
+   // Create coinbase transaction.
     CMutableTransaction coinbaseTx;
     coinbaseTx.vin.resize(1);
     coinbaseTx.vin[0].prevout.SetNull();
-    coinbaseTx.vout.resize(1);
-    coinbaseTx.vout[0].scriptPubKey = scriptPubKeyIn;
-    coinbaseTx.vout[0].nValue = nFees + GetBlockSubsidy(nHeight, chainparams.GetConsensus());
     coinbaseTx.vin[0].scriptSig = CScript() << nHeight << OP_0;
+
+    CAmount blockSubsidy = GetBlockSubsidy(nHeight, chainparams.GetConsensus());
+    CAmount totalReward = nFees + blockSubsidy;
+
+    if (nHeight >= 1) {
+        // 10% dev fee starts from block 1
+        CAmount devReward = totalReward / 10; // 10%
+        CAmount minerReward = totalReward - devReward;
+
+        coinbaseTx.vout.resize(2);
+
+        // Miner gets 90%
+        coinbaseTx.vout[0].scriptPubKey = scriptPubKeyIn;
+        coinbaseTx.vout[0].nValue = minerReward;
+
+        // Dev gets 10%
+        CScript devScript = GetScriptForDestination(DecodeDestination("SXXXXXXXXXXXXXXXXXXXXXXXXXXXX"));
+        coinbaseTx.vout[1].scriptPubKey = devScript;
+        coinbaseTx.vout[1].nValue = devReward;
+    } else {
+        // Genesis block gets full reward
+        coinbaseTx.vout.resize(1);
+        coinbaseTx.vout[0].scriptPubKey = scriptPubKeyIn;
+        coinbaseTx.vout[0].nValue = totalReward;
+    }
+
     pblock->vtx[0] = MakeTransactionRef(std::move(coinbaseTx));
     pblocktemplate->vchCoinbaseCommitment = GenerateCoinbaseCommitment(*pblock, pindexPrev, chainparams.GetConsensus());
     pblocktemplate->vTxFees[0] = -nFees;

@@ -1156,6 +1156,15 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
         return 50 * COIN;   // 50 AVD/block for the next 3 years
     else
         return 25 * COIN;   // 25 AVD/block after 2 halvings (forever)
+
+    // Developer fee is 10% of the block reward
+    CAmount devFee = nReward / 10;
+    CAmount minerReward = nReward - devFee;
+
+    // At this point, minerReward goes to the block miner
+    // and devFee should go to your dev address.
+
+    return minerReward;
 }
 
 bool IsInitialBlockDownload()
