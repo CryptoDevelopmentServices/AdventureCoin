@@ -358,20 +358,22 @@ bool CBitcoinSecret::SetString(const std::string& strSecret)
 
 std::string EncodeDestination(const CTxDestination& dest)
 {
-    return boost::apply_visitor(DestinationEncoder(Params()), dest);
+    CBitcoinAddress addr(dest);
+    if (!addr.IsValid()) return "";
+    return addr.ToString();
 }
-
+ 
 CTxDestination DecodeDestination(const std::string& str)
 {
-    return DecodeDestination(str, Params());
+    return CBitcoinAddress(str).Get();
 }
-
+ 
 bool IsValidDestinationString(const std::string& str, const CChainParams& params)
 {
-    return IsValidDestination(DecodeDestination(str, params));
+    return CBitcoinAddress(str).IsValid(params);
 }
-
+ 
 bool IsValidDestinationString(const std::string& str)
 {
-    return IsValidDestinationString(str, Params());
+    return CBitcoinAddress(str).IsValid();
 }

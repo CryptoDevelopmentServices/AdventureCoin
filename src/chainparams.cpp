@@ -42,16 +42,16 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
     // BEGIN - DEBUG - ADVC
 
     // MAINNET
-    // if (genesis.nTime == 1744221343) {
-    //   printf("\n*** BEGIN - DEBUG: MAINNET\n");
-    //   printf("nTime = %u\n", nTime);
-    //   printf("nNonce = %u\n", nNonce);
-    //   printf("nBits = 0x%x\n", nBits);
-    //   printf("nVersion = %d\n", nVersion);
-    //   printf("genesisReward = %ld\n", genesisReward);
-    //   printf("COIN = %ld\n", COIN);
-    //   printf("*** END - DEBUG\n");
-    // }
+    if (genesis.nTime == 1744221343) {
+      printf("\n*** BEGIN - DEBUG: MAINNET\n");
+      printf("nTime = %u\n", nTime);
+      printf("nNonce = %u\n", nNonce);
+      printf("nBits = 0x%x\n", nBits);
+      printf("nVersion = %d\n", nVersion);
+      printf("genesisReward = %ld\n", genesisReward);
+      printf("COIN = %ld\n", COIN);
+      printf("*** END - DEBUG\n");
+    }
 
     // TESTNET
     // if (genesis.nTime == 1744230279) {
@@ -174,6 +174,15 @@ public:
         // TODO.ADVC.UPDATE
         // getblockhash 6513497 && "hash"
         consensus.defaultAssumeValid = uint256S("0x00");
+          
+        // 15% of Block reward to operations wallet
+          nDeveloperFee = 10;
+ 
+          // This is the block height when the devfee starts working
+          nDeveloperFeeStart = 1;
+  
+          // Developer wallet address
+          strDeveloperFeeAddress = "A5JsYYsjnbFYHDrpibAStTEGpxyZrPBVr3"; //Change this
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
@@ -191,11 +200,11 @@ public:
         consensus.hashGenesisBlock = genesis.GetHash();
 
         // DEBUG - ADVC
-        // printf("***\n");
-        // printf("genesis.GetPoWHash.MAIN = %s\n", genesis.GetPoWHash().ToString().c_str());
-        // printf("genesis.GetHash.MAIN = %s\n", genesis.GetHash().ToString().c_str());
-        // printf("genesis.hashMerkleRoot.MAIN %s\n",genesis.hashMerkleRoot.ToString().c_str());
-        // printf("***\n");
+        printf("***\n");
+        printf("genesis.GetPoWHash.MAIN = %s\n", genesis.GetPoWHash().ToString().c_str());
+        printf("genesis.GetHash.MAIN = %s\n", genesis.GetHash().ToString().c_str());
+        printf("genesis.hashMerkleRoot.MAIN %s\n",genesis.hashMerkleRoot.ToString().c_str());
+        printf("***\n");
 
         assert(genesis.GetPoWHash() == uint256S("0x00")); // genesis
         assert(consensus.hashGenesisBlock == uint256S("0x00")); // genesis
