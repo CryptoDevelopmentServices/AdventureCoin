@@ -32,9 +32,9 @@ static const CAmount CENT = 1000000;
 // Total Supply in COINs (in theory):	1073741824
 // Total Supply in COINs (in actual):	1073741823.87500000
 // Difference: 0.125
-// static const CAmount MAX_MONEY = 1073741824 * COIN; // total supply in theory
-// inline bool MoneyRange(const CAmount& nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
-inline bool MoneyRange(const CAmount& nValue) { return (nValue >= 0); }
+static const CAmount MAX_MONEY = INT64_MAX; // Effectively unlimited
+inline bool MoneyRange(const CAmount& nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
+//inline bool MoneyRange(const CAmount& nValue) { return (nValue >= 0); }
 
 
 #endif //  BITCOIN_AMOUNT_H

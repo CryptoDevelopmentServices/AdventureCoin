@@ -21,8 +21,6 @@
 #include <pow.h>
 #include <primitives/transaction.h>
 #include <script/standard.h>
-using namespace script;
-
 #include <timedata.h>
 #include <util.h>
 #include <utilmoneystr.h>
@@ -158,38 +156,14 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     nLastBlockTx = nBlockTx;
     nLastBlockWeight = nBlockWeight;
 
-   // Create coinbase transaction.
+    // Create coinbase transaction.
     CMutableTransaction coinbaseTx;
     coinbaseTx.vin.resize(1);
     coinbaseTx.vin[0].prevout.SetNull();
+    coinbaseTx.vout.resize(1);
+    coinbaseTx.vout[0].scriptPubKey = scriptPubKeyIn;
+    coinbaseTx.vout[0].nValue = nFees + GetBlockSubsidy(nHeight, chainparams.GetConsensus());
     coinbaseTx.vin[0].scriptSig = CScript() << nHeight << OP_0;
-
-    CAmount blockSubsidy = GetBlockSubsidy(nHeight, chainparams.GetConsensus());
-    CAmount totalReward = 100 * COIN; // Assuming 100 coins per block as you mentioned
-
-    if (nHeight >= 1) {
-        // 10% dev fee starts from block 1
-        CAmount devFee = totalReward / 10; // 10% developer fee
-        CAmount minerReward = totalReward - devFee; // 90% for the miner
-
-        coinbaseTx.vout.resize(2);
-
-        // Miner gets 90% of the total reward
-        coinbaseTx.vout[0].scriptPubKey = scriptPubKeyIn;
-        coinbaseTx.vout[0].nValue = minerReward;
-
-        // Dev gets 10% of the total reward, send to a specific address starting with "A"
-        CScript devScript = GetScriptForDestination(DecodeDestination("AXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"));
-        coinbaseTx.vout[1].scriptPubKey = devScript;
-        coinbaseTx.vout[1].nValue = devFee;
-    } else {
-        // Genesis block gets full reward
-        coinbaseTx.vout.resize(1);
-        coinbaseTx.vout[0].scriptPubKey = scriptPubKeyIn;
-        coinbaseTx.vout[0].nValue = totalReward;
-    }
-
-
     pblock->vtx[0] = MakeTransactionRef(std::move(coinbaseTx));
     pblocktemplate->vchCoinbaseCommitment = GenerateCoinbaseCommitment(*pblock, pindexPrev, chainparams.GetConsensus());
     pblocktemplate->vTxFees[0] = -nFees;

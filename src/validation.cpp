@@ -1160,12 +1160,6 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
     else
         totalReward = 25 * COIN;   // 25 AVD/block after 2 halvings (forever)
 
-    // Developer fee is 10% of the total block reward
-    CAmount devFee = totalReward / 10;
-    CAmount minerReward = totalReward - devFee;
-
-    // Miner gets the remainder, dev fee goes to the developer
-    return minerReward; // The miner gets the remainder of the block reward
 }
 
 
