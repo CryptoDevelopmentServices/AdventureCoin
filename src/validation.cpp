@@ -1151,23 +1151,23 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
     // Calculate number of halvings
     int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
 
-    // After 2 halvings (6 years), the subsidy stays fixed at 25 AVD
+    // Define base block reward based on halvings
+    CAmount totalReward;
     if (halvings == 0)
-        return 100 * COIN;  // 100 AVD/block for the first 3 years
+        totalReward = 100 * COIN;  // 100 AVD/block for the first 3 years
     else if (halvings == 1)
-        return 50 * COIN;   // 50 AVD/block for the next 3 years
+        totalReward = 50 * COIN;   // 50 AVD/block for the next 3 years
     else
-        return 25 * COIN;   // 25 AVD/block after 2 halvings (forever)
+        totalReward = 25 * COIN;   // 25 AVD/block after 2 halvings (forever)
 
-    // Developer fee is 10% of the block reward
-    CAmount devFee = nReward / 10;
-    CAmount minerReward = nReward - devFee;
+    // Developer fee is 10% of the total block reward
+    CAmount devFee = totalReward / 10;
+    CAmount minerReward = totalReward - devFee;
 
-    // At this point, minerReward goes to the block miner
-    // and devFee should go to your dev address.
-
-    return minerReward;
+    // Miner gets the remainder, dev fee goes to the developer
+    return minerReward; // The miner gets the remainder of the block reward
 }
+
 
 bool IsInitialBlockDownload()
 {
