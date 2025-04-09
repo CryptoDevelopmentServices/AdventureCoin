@@ -2,6 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
+#include <amount.h>
 #include <consensus/tx_verify.h>
 
 #include <consensus/consensus.h>
@@ -173,7 +174,7 @@ bool CheckTransaction(const CTransaction& tx, CValidationState &state, bool fChe
     {
         if (txout.nValue < 0)
             return state.DoS(100, false, REJECT_INVALID, "bad-txns-vout-negative");
-        if (txout.nValue > MAX_MONEY)
+        if (txout.nValue /*> MAX_MONEY*/)
             return state.DoS(100, false, REJECT_INVALID, "bad-txns-vout-toolarge");
         nValueOut += txout.nValue;
         if (!MoneyRange(nValueOut))
