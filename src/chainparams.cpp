@@ -132,7 +132,7 @@ public:
         // Total Supply in COINs (in theory):	1073741824
         // Total Supply in COINs (in actual):	1073741823.87500000
         // Difference: 0.125
-        consensus.nSubsidyHalvingInterval = 12500000;
+        consensus.nSubsidyHalvingInterval = 1576800; // every 3 years
 
         consensus.BIP16Height = 0;  // always on
         consensus.BIP34Height = 17;
@@ -315,7 +315,7 @@ public:
         // Total Supply in COINs (in theory):	1073741824
         // Total Supply in COINs (in actual):	1073741823.87500000
         // Difference: 0.125
-        consensus.nSubsidyHalvingInterval = 12500000;
+        consensus.nSubsidyHalvingInterval = 1576800; // every 3 years
 
         consensus.BIP16Height = 0;  // always on
         consensus.BIP34Height = 17;
@@ -480,7 +480,7 @@ public:
         strNetworkID = "regtest";
 
         // ADVC-HALVING // (was same as BTC)
-        consensus.nSubsidyHalvingInterval = 150;
+        consensus.nSubsidyHalvingInterval = 1576800; // every 3 years
 
         // DEBUG - ADVC
         // printf("nSubsidyHalvingInterval = %d\n", consensus.nSubsidyHalvingInterval);
