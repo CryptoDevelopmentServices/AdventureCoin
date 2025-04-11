@@ -173,6 +173,7 @@ public:
         // This is fine at runtime as we'll fall back to using them as a oneshot if they dont support the
         // service bits we want, but we should get them updated to support all service bits wanted by any
         // release ASAP to avoid it where possible.
+        vSeeds.clear();
         // vSeeds.emplace_back("1seed.adventurecoin.info"); // cryptozeny
         // vSeeds.emplace_back("2seed.adventurecoin.info"); // cryptozeny
         // vSeeds.emplace_back("seed.adventurecoin.site"); // ROZ
