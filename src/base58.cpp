@@ -7,6 +7,8 @@
 #include <bech32.h>
 #include <hash.h>
 #include <script/script.h>
+#include <script/ismine.h>               // for IsValidDestination
+#include <script/standard.h>             // for EncodeDestination, DecodeDestination
 #include <uint256.h>
 #include <utilstrencodings.h>
 
@@ -358,22 +360,22 @@ bool CBitcoinSecret::SetString(const std::string& strSecret)
 
 std::string EncodeDestination(const CTxDestination& dest)
 {
-    CBitcoinAddress addr(dest);
-    if (!addr.IsValid()) return "";
-    return addr.ToString();
+    if (!IsValidDestination(dest)) return "";
+return EncodeDestination(dest);
+
 }
  
 CTxDestination DecodeDestination(const std::string& str)
 {
-    return CBitcoinAddress(str).Get();
+    return DecodeDestination(str);
 }
  
 bool IsValidDestinationString(const std::string& str, const CChainParams& params)
 {
-    return CBitcoinAddress(str).IsValid(params);
+    return IsValidDestination(DecodeDestination(str, params));
 }
  
 bool IsValidDestinationString(const std::string& str)
 {
-    return CBitcoinAddress(str).IsValid();
+    return IsValidDestinationString(str);
 }

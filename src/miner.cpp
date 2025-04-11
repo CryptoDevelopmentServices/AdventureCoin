@@ -164,7 +164,9 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     coinbaseTx.vin[0].prevout.SetNull();
     
      // Assign subsidy and fees
-     CAmount nSubsidy = GetBonkcoinBlockSubsidy(nHeight, consensus, pindexPrev->GetBlockHash());
+     // CAmount nSubsidy = GetBlockSubsidy(nHeight, Consensus, pindexPrev->GetBlockHash());
+     CAmount nSubsidy = GetBlockSubsidy(nHeight, chainparams.GetConsensus());
+
  
      CAmount nDeveloperFeeStart = Params().DeveloperFeeStart();
      CAmount nDeveloperFeeAmount = 0;
@@ -187,7 +189,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
         CTxDestination destDeveloperFeeAddress = DecodeDestination(GetDeveloperFeeAddress);
  
         if (!IsValidDestination(destDeveloperFeeAddress)) {
-            LogPrintf("IsValidDestination: Invalid Bonc address %s \n", GetDeveloperFeeAddress);
+            LogPrintf("IsValidDestination: Invalid Advc address %s \n", GetDeveloperFeeAddress);
         }
  
         // Ensure scriptPubKey is correctly assigned

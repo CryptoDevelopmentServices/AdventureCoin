@@ -1149,19 +1149,16 @@ bool ReadBlockFromDisk(CBlock& block, const CBlockIndex* pindex, const Consensus
 
 CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
 {
-    // Calculate number of halvings
     int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
 
-    // Define base block reward based on halvings
-    CAmount totalReward;
     if (halvings == 0)
-        totalReward = 100 * COIN;  // 100 AVD/block for the first 3 years
+        return 100 * COIN;
     else if (halvings == 1)
-        totalReward = 50 * COIN;   // 50 AVD/block for the next 3 years
+        return 50 * COIN;
     else
-        totalReward = 25 * COIN;   // 25 AVD/block after 2 halvings (forever)
-
+        return 25 * COIN;
 }
+
 
 
 bool IsInitialBlockDownload()
@@ -1993,12 +1990,12 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
                                std::string GetDeveloperFeeAddress = Params().DeveloperFeeAddress();
                                CTxDestination destDeveloperFeeAddress = DecodeDestination(GetDeveloperFeeAddress);
                                if (!IsValidDestination(destDeveloperFeeAddress)) {
-                                   LogPrintf("IsValidDestination: Invalid Bonc address %s \n", GetDeveloperFeeAddress);
+                                   LogPrintf("IsValidDestination: Invalid Advc address %s \n", GetDeveloperFeeAddress);
                                }
                                CAmount nDeveloperFeeStart = Params().DeveloperFeeStart();
                                CScript scriptPubKeyDeveloperFeeAddress = GetScriptForDestination(destDeveloperFeeAddress);
                                CAmount nDeveloperFeeAmount = Params().DeveloperFee();
-                               CAmount nSubsidy = GetBonkcoinBlockSubsidy(pindex->nHeight, chainparams.GetConsensus(pindex->nHeight), hashPrevBlock);
+                               CAmount nSubsidy = GetBlockSubsidy(pindex->nHeight, chainparams.GetConsensus()/*, hashPrevBlock*/);
                                CAmount nDeveloperFeeAmountValue = nSubsidy * nDeveloperFeeAmount / 100;
                            
                                // ! Uncomment these if you want to debug the values!
