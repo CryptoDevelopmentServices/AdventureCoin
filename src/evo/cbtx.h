@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef VECO_CBTX_H
-#define VECO_CBTX_H
+#ifndef ADVC_CBTX_H
+#define ADVC_CBTX_H
 
 #include "consensus/validation.h"
 #include "primitives/transaction.h"
@@ -43,4 +43,4 @@ bool CheckCbTx(const CTransaction& tx, const CBlockIndex* pindexPrev, CValidatio
 bool CheckCbTxMerkleRootMNList(const CBlock& block, const CBlockIndex* pindex, CValidationState& state);
 bool CalcCbTxMerkleRootMNList(const CBlock& block, const CBlockIndex* pindexPrev, uint256& merkleRootRet, CValidationState& state);
 
-#endif //VECO_CBTX_H
+#endif //ADVC_CBTX_H

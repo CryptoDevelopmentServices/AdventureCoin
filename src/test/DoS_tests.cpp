@@ -14,7 +14,7 @@
 #include "util.h"
 #include "validation.h"
 
-#include "test/test_veco.h"
+#include "test/test_advc.h"
 
 #include <stdint.h>
 

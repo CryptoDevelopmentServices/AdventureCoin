@@ -1,6 +1,6 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2018-2022 The Veco Core developers
+// Copyright (c) 2018-2022 The Adventurecoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -135,7 +135,7 @@ void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent)
 #if QT_VERSION >= 0x040700
     // We don't want translators to use own addresses in translations
     // and this is the only place, where this address is supplied.
-    widget->setPlaceholderText(QObject::tr("Enter a Veco address (e.g. %1)").arg(
+    widget->setPlaceholderText(QObject::tr("Enter a Adventurecoin address (e.g. %1)").arg(
         QString::fromStdString(DummyAddress(Params()))));
 #endif
     widget->setValidator(new BitcoinAddressEntryValidator(parent));
@@ -153,8 +153,8 @@ void setupAmountWidget(QLineEdit *widget, QWidget *parent)
 
 bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 {
-    // return if URI is not valid or is no veco: URI
-    if(!uri.isValid() || uri.scheme() != QString("veco"))
+    // return if URI is not valid or is no advc: URI
+    if(!uri.isValid() || uri.scheme() != QString("advc"))
         return false;
 
     SendCoinsRecipient rv;
@@ -203,7 +203,7 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
         {
             if(!i->second.isEmpty())
             {
-                if(!BitcoinUnits::parse(BitcoinUnits::VECO, i->second, &rv.amount))
+                if(!BitcoinUnits::parse(BitcoinUnits::ADVC, i->second, &rv.amount))
                 {
                     return false;
                 }
@@ -223,13 +223,13 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 
 bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
 {
-    // Convert veco:// to veco:
+    // Convert advc:// to advc:
     //
-    //    Cannot handle this later, because veco:// will cause Qt to see the part after // as host,
+    //    Cannot handle this later, because advc:// will cause Qt to see the part after // as host,
     //    which will lower-case it (and thus invalidate the address).
-    if(uri.startsWith("veco://", Qt::CaseInsensitive))
+    if(uri.startsWith("advc://", Qt::CaseInsensitive))
     {
-        uri.replace(0, 7, "veco:");
+        uri.replace(0, 7, "advc:");
     }
     QUrl uriInstance(uri);
     return parseBitcoinURI(uriInstance, out);
@@ -237,12 +237,12 @@ bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
 
 QString formatBitcoinURI(const SendCoinsRecipient &info)
 {
-    QString ret = QString("veco:%1").arg(info.address);
+    QString ret = QString("advc:%1").arg(info.address);
     int paramCount = 0;
 
     if (info.amount)
     {
-        ret += QString("?amount=%1").arg(BitcoinUnits::format(BitcoinUnits::VECO, info.amount, false, BitcoinUnits::separatorNever));
+        ret += QString("?amount=%1").arg(BitcoinUnits::format(BitcoinUnits::ADVC, info.amount, false, BitcoinUnits::separatorNever));
         paramCount++;
     }
 
@@ -443,7 +443,7 @@ void openConfigfile()
 {
     boost::filesystem::path pathConfig = GetConfigFile(GetArg("-conf", BITCOIN_CONF_FILENAME));
 
-    /* Open veco.conf with the associated application */
+    /* Open advc.conf with the associated application */
     if (boost::filesystem::exists(pathConfig))
         QDesktopServices::openUrl(QUrl::fromLocalFile(boostPathToQString(pathConfig)));
 }
@@ -653,15 +653,15 @@ boost::filesystem::path static StartupShortcutPath()
 {
     std::string chain = ChainNameFromCommandLine();
     if (chain == CBaseChainParams::MAIN)
-        return GetSpecialFolderPath(CSIDL_STARTUP) / "Veco Core.lnk";
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "Adventurecoin Core.lnk";
     if (chain == CBaseChainParams::TESTNET) // Remove this special case when CBaseChainParams::TESTNET = "testnet4"
-        return GetSpecialFolderPath(CSIDL_STARTUP) / "Veco Core (testnet).lnk";
-    return GetSpecialFolderPath(CSIDL_STARTUP) / strprintf("Veco Core (%s).lnk", chain);
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "Adventurecoin Core (testnet).lnk";
+    return GetSpecialFolderPath(CSIDL_STARTUP) / strprintf("Adventurecoin Core (%s).lnk", chain);
 }
 
 bool GetStartOnSystemStartup()
 {
-    // check for "Veco Core*.lnk"
+    // check for "Adventurecoin Core*.lnk"
     return boost::filesystem::exists(StartupShortcutPath());
 }
 
@@ -753,8 +753,8 @@ boost::filesystem::path static GetAutostartFilePath()
 {
     std::string chain = ChainNameFromCommandLine();
     if (chain == CBaseChainParams::MAIN)
-        return GetAutostartDir() / "vecocore.desktop";
-    return GetAutostartDir() / strprintf("vecocore-%s.lnk", chain);
+        return GetAutostartDir() / "advccore.desktop";
+    return GetAutostartDir() / strprintf("advccore-%s.lnk", chain);
 }
 
 bool GetStartOnSystemStartup()
@@ -793,13 +793,13 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         if (!optionFile.good())
             return false;
         std::string chain = ChainNameFromCommandLine();
-        // Write a vecocore.desktop file to the autostart directory:
+        // Write a advccore.desktop file to the autostart directory:
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
         if (chain == CBaseChainParams::MAIN)
-            optionFile << "Name=Veco Core\n";
+            optionFile << "Name=Adventurecoin Core\n";
         else
-            optionFile << strprintf("Name=Veco Core (%s)\n", chain);
+            optionFile << strprintf("Name=Adventurecoin Core (%s)\n", chain);
         optionFile << "Exec=" << pszExePath << strprintf(" -min -testnet=%d -regtest=%d\n", GetBoolArg("-testnet", false), GetBoolArg("-regtest", false));
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
@@ -820,7 +820,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
 LSSharedFileListItemRef findStartupItemInList(LSSharedFileListRef list, CFURLRef findUrl);
 LSSharedFileListItemRef findStartupItemInList(LSSharedFileListRef list, CFURLRef findUrl)
 {
-    // loop through the list of startup items and try to find the Veco Core app
+    // loop through the list of startup items and try to find the Adventurecoin Core app
     CFArrayRef listSnapshot = LSSharedFileListCopySnapshot(list, NULL);
     for(int i = 0; i < CFArrayGetCount(listSnapshot); i++) {
         LSSharedFileListItemRef item = (LSSharedFileListItemRef)CFArrayGetValueAtIndex(listSnapshot, i);
@@ -865,7 +865,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
     LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, bitcoinAppUrl);
 
     if(fAutoStart && !foundItem) {
-        // add Veco Core app to startup item list
+        // add Adventurecoin Core app to startup item list
         LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemBeforeFirst, NULL, NULL, bitcoinAppUrl, NULL, NULL);
     }
     else if(!fAutoStart && foundItem) {

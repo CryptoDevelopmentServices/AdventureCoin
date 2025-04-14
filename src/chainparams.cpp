@@ -1,7 +1,7 @@
 // Copyright (c) 2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2018-2022 The Veco Core developers
+// Copyright (c) 2018-2022 The Adventurecoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -78,8 +78,8 @@ static CBlock CreateDevNetGenesisBlock(const uint256 &prevBlockHash, const std::
  */
 static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
-    const char* pszTimestamp = "Decentralised Economy += VECO; 9 October 2018";
-    const CScript genesisOutputScript = CScript() << ParseHex("0431d9e740dfaa5e7f4c230bcd6ced7e8cdc5bf9f54acbc0f53c10e27a4e661b787a28be070def9b68ef679206cbe4590305ddb8f1bfd1865e20db9cc03ae09819") << OP_CHECKSIG;
+    const char* pszTimestamp = "Let the quest begin";
+    const CScript genesisOutputScript = CScript() << ParseHex("0402b6ffcf87465e8cd0429e13856e9350b917487edf0c48ad681d553010b45a21a1332a1cbf38f7447da2210cf506dd78561d3778d49c646ed016525f18a2a7") << OP_CHECKSIG;
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward);
 }
 
@@ -199,8 +199,8 @@ public:
         consensus.BIP66Height = 951; // 00000000000b1fa2dfa312863570e13fae9ca7b5566cb27e55422620b469aefa
         consensus.DIP0001Height = 633254;
         consensus.powLimit = uint256S("00000fffff000000000000000000000000000000000000000000000000000000"); // ~uint256(0) >> 20
-        consensus.nPowTargetTimespan = 24 * 60 * 60; // Veco: 1 day
-        consensus.nPowTargetSpacing = 110; // Veco: ~2 minutes
+        consensus.nPowTargetTimespan = 24 * 60 * 60; // Adventurecoin: 1 day
+        consensus.nPowTargetSpacing = 110; // Adventurecoin: ~2 minutes
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
         consensus.nPowKGWHeight = 0;
@@ -252,8 +252,8 @@ public:
         pchMessageStart[1] = 0x65;
         pchMessageStart[2] = 0x63;
         pchMessageStart[3] = 0x6F;
-        vAlertPubKey = ParseHex("047738e763b45593b3bc080cfd2ec07ce725d2c39b18e4bccced4ed75856afa15e88399cc894bbe9f10d98dd715081a27d3c45e5e7382f07c4c6bd32a9acda5c7d");
-        nDefaultPort = 26919;
+        vAlertPubKey = ParseHex("0402b6ffcf87465e8cd0429e13856e9350b917487edf0c48ad681d553010b45a21a1332a1cbf38f7447da2210cf506dd78561d3778d49c646ed016525f18a2a7");
+        nDefaultPort = 33230;
         nPruneAfterHeight = 100000;
 
         genesis = CreateGenesisBlock(1539043200, 1599202, 0x1e0ffff0, 1, 20 * COIN);
@@ -262,24 +262,24 @@ public:
         assert(genesis.hashMerkleRoot == uint256S("0xde4fe11d6d0c735a192d4e6eed593ad575ccd671ff4ff0d9188e347e067d028d"));
 
 
-        vSeeds.push_back(CDNSSeedData("veco.to", "dnsseed1.veco.to"));
-        vSeeds.push_back(CDNSSeedData("veco.to", "dnsseed2.veco.to"));
-        vSeeds.push_back(CDNSSeedData("veco.to", "block.veco.to"));
-        vSeeds.push_back(CDNSSeedData("veco.to", "vision.veco.to"));
-        vSeeds.push_back(CDNSSeedData("veco.to", "edu.veco.to"));
+        vSeeds.push_back(CDNSSeedData("advc.to", "dnsseed1.advc.to"));
+        vSeeds.push_back(CDNSSeedData("advc.to", "dnsseed2.advc.to"));
+        vSeeds.push_back(CDNSSeedData("advc.to", "block.advc.to"));
+        vSeeds.push_back(CDNSSeedData("advc.to", "vision.advc.to"));
+        vSeeds.push_back(CDNSSeedData("advc.to", "edu.advc.to"));
 
-        // Veco addresses start with 'X'
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,70);
-        // Veco script addresses start with '7'
+        // Adventurecoin addresses start with 'X'
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,23);
+        // Adventurecoin script addresses start with '7'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,20);
-        // Veco private keys start with '7' or 'X'
+        // Adventurecoin private keys start with '7' or 'X'
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,75);
-        // Veco BIP32 pubkeys start with 'xpub' (Bitcoin defaults)
+        // Adventurecoin BIP32 pubkeys start with 'xpub' (Bitcoin defaults)
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >();
-        // Veco BIP32 prvkeys start with 'xprv' (Bitcoin defaults)
+        // Adventurecoin BIP32 prvkeys start with 'xprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >();
 
-        // Veco BIP44 coin type is '5'
+        // Adventurecoin BIP44 coin type is '5'
         nExtCoinType = 5;
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
@@ -348,8 +348,8 @@ public:
         consensus.BIP66Height = 2075; // 0000002acdd29a14583540cb72e1c5cc83783560e38fa7081495d474fe1671f7
         consensus.DIP0001Height = 5500;
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 20
-        consensus.nPowTargetTimespan = 24 * 60 * 60; // Veco: 1 day
-        consensus.nPowTargetSpacing = 2.5 * 60; // Veco: 2.5 minutes
+        consensus.nPowTargetTimespan = 24 * 60 * 60; // Adventurecoin: 1 day
+        consensus.nPowTargetSpacing = 2.5 * 60; // Adventurecoin: 2.5 minutes
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
         consensus.nPowKGWHeight = 4002; // nPowKGWHeight >= nPowDGWHeight means "no KGW"
@@ -396,8 +396,8 @@ public:
         pchMessageStart[1] = 0xe2;
         pchMessageStart[2] = 0xca;
         pchMessageStart[3] = 0xff;
-        vAlertPubKey = ParseHex("04517d8a699cb43d3938d7b24faaff7cda448ca4ea267723ba614784de661949bf632d6304316b244646dea079735b9a6fc4af804efb4752075b9fe2245e14e412");
-        nDefaultPort = 19999;
+        vAlertPubKey = ParseHex("0402b6ffcf87465e8cd0429e13856e9350b917487edf0c48ad681d553010b45a21a1332a1cbf38f7447da2210cf506dd78561d3778d49c646ed016525f18a2a7");
+        nDefaultPort = 33229;
         nPruneAfterHeight = 1000;
 
         genesis = CreateGenesisBlock(1390666206UL, 3861367235UL, 0x1e0ffff0, 1, 50 * COIN);
@@ -410,21 +410,21 @@ public:
 
         vSeeds.clear();
         // nodes with support for servicebits filtering should be at the top
-        vSeeds.push_back(CDNSSeedData("vecodot.io",  "testnet-seed.vecodot.io"));
+        vSeeds.push_back(CDNSSeedData("advcdot.io",  "testnet-seed.advcdot.io"));
         vSeeds.push_back(CDNSSeedData("masternode.io", "test.dnsseed.masternode.io"));
 
-        // Testnet Veco addresses start with 'y'
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,140);
-        // Testnet Veco script addresses start with '8' or '9'
+        // Testnet Adventurecoin addresses start with 'y'
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,83);
+        // Testnet Adventurecoin script addresses start with '8' or '9'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,19);
         // Testnet private keys start with '9' or 'c' (Bitcoin defaults)
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,239);
-        // Testnet Veco BIP32 pubkeys start with 'tpub' (Bitcoin defaults)
+        // Testnet Adventurecoin BIP32 pubkeys start with 'tpub' (Bitcoin defaults)
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x35)(0x87)(0xCF).convert_to_container<std::vector<unsigned char> >();
-        // Testnet Veco BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
+        // Testnet Adventurecoin BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >();
 
-        // Testnet Veco BIP44 coin type is '1' (All coin's testnet default)
+        // Testnet Adventurecoin BIP44 coin type is '1' (All coin's testnet default)
         nExtCoinType = 1;
 
         // long living quorum params
@@ -493,8 +493,8 @@ public:
         consensus.BIP66Height = 1; // BIP66 activated immediately on devnet
         consensus.DIP0001Height = 2; // DIP0001 activated immediately on devnet
         consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 1
-        consensus.nPowTargetTimespan = 24 * 60 * 60; // Veco: 1 day
-        consensus.nPowTargetSpacing = 2.5 * 60; // Veco: 2.5 minutes
+        consensus.nPowTargetTimespan = 24 * 60 * 60; // Adventurecoin: 1 day
+        consensus.nPowTargetSpacing = 2.5 * 60; // Adventurecoin: 2.5 minutes
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
         consensus.nPowKGWHeight = 4001; // nPowKGWHeight >= nPowDGWHeight means "no KGW"
@@ -541,8 +541,8 @@ public:
         pchMessageStart[1] = 0xca;
         pchMessageStart[2] = 0xff;
         pchMessageStart[3] = 0xce;
-        vAlertPubKey = ParseHex("04517d8a699cb43d3938d7b24faaff7cda448ca4ea267723ba614784de661949bf632d6304316b244646dea079735b9a6fc4af804efb4752075b9fe2245e14e412");
-        nDefaultPort = 19999;
+        vAlertPubKey = ParseHex("0402b6ffcf87465e8cd0429e13856e9350b917487edf0c48ad681d553010b45a21a1332a1cbf38f7447da2210cf506dd78561d3778d49c646ed016525f18a2a7");
+        nDefaultPort = 33229;
         nPruneAfterHeight = 1000;
 
         genesis = CreateGenesisBlock(1417713337, 1096447, 0x207fffff, 1, 50 * COIN);
@@ -555,20 +555,20 @@ public:
 
         vFixedSeeds.clear();
         vSeeds.clear();
-        //vSeeds.push_back(CDNSSeedData("vecoevo.org",  "devnet-seed.vecoevo.org"));
+        //vSeeds.push_back(CDNSSeedData("advcevo.org",  "devnet-seed.advcevo.org"));
 
-        // Testnet Veco addresses start with 'y'
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,140);
-        // Testnet Veco script addresses start with '8' or '9'
+        // Testnet Adventurecoin addresses start with 'y'
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,83);
+        // Testnet Adventurecoin script addresses start with '8' or '9'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,19);
         // Testnet private keys start with '9' or 'c' (Bitcoin defaults)
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,239);
-        // Testnet Veco BIP32 pubkeys start with 'tpub' (Bitcoin defaults)
+        // Testnet Adventurecoin BIP32 pubkeys start with 'tpub' (Bitcoin defaults)
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x35)(0x87)(0xCF).convert_to_container<std::vector<unsigned char> >();
-        // Testnet Veco BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
+        // Testnet Adventurecoin BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >();
 
-        // Testnet Veco BIP44 coin type is '1' (All coin's testnet default)
+        // Testnet Adventurecoin BIP44 coin type is '1' (All coin's testnet default)
         nExtCoinType = 1;
 
         // long living quorum params
@@ -643,8 +643,8 @@ public:
         consensus.BIP66Height = 1251; // BIP66 activated on regtest (Used in rpc activation tests)
         consensus.DIP0001Height = 2000;
         consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 1
-        consensus.nPowTargetTimespan = 24 * 60 * 60; // Veco: 1 day
-        consensus.nPowTargetSpacing = 2.5 * 60; // Veco: 2.5 minutes
+        consensus.nPowTargetTimespan = 24 * 60 * 60; // Adventurecoin: 1 day
+        consensus.nPowTargetSpacing = 2.5 * 60; // Adventurecoin: 2.5 minutes
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = true;
         consensus.nPowKGWHeight = 15200; // same as mainnet
@@ -716,18 +716,18 @@ public:
             0
         };
 
-        // Regtest Veco addresses start with 'y'
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,140);
-        // Regtest Veco script addresses start with '8' or '9'
+        // Regtest Adventurecoin addresses start with 'y'
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,83);
+        // Regtest Adventurecoin script addresses start with '8' or '9'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,19);
         // Regtest private keys start with '9' or 'c' (Bitcoin defaults)
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,239);
-        // Regtest Veco BIP32 pubkeys start with 'tpub' (Bitcoin defaults)
+        // Regtest Adventurecoin BIP32 pubkeys start with 'tpub' (Bitcoin defaults)
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x35)(0x87)(0xCF).convert_to_container<std::vector<unsigned char> >();
-        // Regtest Veco BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
+        // Regtest Adventurecoin BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >();
 
-        // Regtest Veco BIP44 coin type is '1' (All coin's testnet default)
+        // Regtest Adventurecoin BIP44 coin type is '1' (All coin's testnet default)
         nExtCoinType = 1;
 
         // long living quorum params

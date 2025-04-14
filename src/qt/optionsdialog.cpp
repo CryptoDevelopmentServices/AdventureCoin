@@ -3,7 +3,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include "config/veco-config.h"
+#include "config/advc-config.h"
 #endif
 
 #include "optionsdialog.h"
@@ -92,13 +92,13 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
     }
     
     /* Theme selector */
-    //ui->theme->addItem(QString("VECO-light"), QVariant("light"));
-    //ui->theme->addItem(QString("VECO-light-hires"), QVariant("light-hires"));
-    //ui->theme->addItem(QString("VECO-light-retro"), QVariant("light-retro"));
-    //ui->theme->addItem(QString("VECO-light-hires-retro"), QVariant("light-hires-retro"));
-    //ui->theme->addItem(QString("VECO-blue"), QVariant("drkblue"));
-    ui->theme->addItem(QString("VECO-Crownium"), QVariant("crownium"));
-    ui->theme->addItem(QString("VECO-traditional"), QVariant("trad"));
+    //ui->theme->addItem(QString("ADVC-light"), QVariant("light"));
+    //ui->theme->addItem(QString("ADVC-light-hires"), QVariant("light-hires"));
+    //ui->theme->addItem(QString("ADVC-light-retro"), QVariant("light-retro"));
+    //ui->theme->addItem(QString("ADVC-light-hires-retro"), QVariant("light-hires-retro"));
+    //ui->theme->addItem(QString("ADVC-blue"), QVariant("drkblue"));
+    ui->theme->addItem(QString("ADVC-Crownium"), QVariant("crownium"));
+    ui->theme->addItem(QString("ADVC-traditional"), QVariant("trad"));
     
     /* Language selector */
     QDir translations(":translations");

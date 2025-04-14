@@ -11,7 +11,7 @@
 #include "script/sign.h"
 #include "script/ismine.h"
 #include "uint256.h"
-#include "test/test_veco.h"
+#include "test/test_advc.h"
 
 
 #include <boost/foreach.hpp>

@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef VECO_EVODB_H
-#define VECO_EVODB_H
+#ifndef ADVC_EVODB_H
+#define ADVC_EVODB_H
 
 #include "dbwrapper.h"
 #include "sync.h"
@@ -76,4 +76,4 @@ public:
 
 extern CEvoDB* evoDb;
 
-#endif //VECO_EVODB_H
+#endif //ADVC_EVODB_H

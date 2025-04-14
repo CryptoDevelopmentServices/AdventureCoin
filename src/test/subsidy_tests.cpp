@@ -1,12 +1,12 @@
 // Copyright (c) 2014-2018 The Dash Core developers
-// Copyright (c) 2018-2022 The Veco Core developers
+// Copyright (c) 2018-2022 The Adventurecoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "chainparams.h"
 #include "validation.h"
 
-#include "test/test_veco.h"
+#include "test/test_advc.h"
 
 #include <boost/test/unit_test.hpp>
 

@@ -1,11 +1,11 @@
 Sample configuration files for:
 
-SystemD: vecod.service
-Upstart: vecod.conf
-OpenRC:  vecod.openrc
-         vecod.openrcconf
-CentOS:  vecod.init
-OS X:    org.veco.vecod.plist
+SystemD: advcd.service
+Upstart: advcd.conf
+OpenRC:  advcd.openrc
+         advcd.openrcconf
+CentOS:  advcd.init
+OS X:    org.advc.advcd.plist
 
 have been made available to assist packagers in creating node packages here.
 

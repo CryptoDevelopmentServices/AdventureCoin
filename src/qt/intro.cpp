@@ -1,11 +1,11 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2018-2022 The Veco Core developers
+// Copyright (c) 2018-2022 The Adventurecoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include "config/veco-config.h"
+#include "config/advc-config.h"
 #endif
 
 #include "intro.h"
@@ -216,8 +216,8 @@ bool Intro::pickDataDirectory()
         settings.setValue("strDataDirDefault", dataDirDefaultCurrent);
     }
     /* Only override -datadir if different from the default, to make it possible to
-     * override -datadir in the veco.conf file in the default data directory
-     * (to be consistent with vecod behavior)
+     * override -datadir in the advc.conf file in the default data directory
+     * (to be consistent with advcd behavior)
      */
     if(dataDir != dataDirDefaultCurrent)
         SoftSetArg("-datadir", GUIUtil::qstringToBoostPath(dataDir).string()); // use OS locale for path setting

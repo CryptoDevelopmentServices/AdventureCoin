@@ -18,7 +18,7 @@
 #include "util.h"
 #include "utilstrencodings.h"
 
-#include "test/test_veco.h"
+#include "test/test_advc.h"
 
 #include <memory>
 

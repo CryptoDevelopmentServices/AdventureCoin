@@ -11,9 +11,9 @@ When a "Transaction Lock" occurs the hash of the related transaction is broadcas
 * `zmqpubrawtxlock`: publishes the raw transaction when locked via InstantSend
 * `zmqpubhashtxlock`: publishes the transaction hash when locked via InstantSend
 
-This mechanism has been integrated into Bitcore-Node-Veco which allows for notification to be broadcast through Insight API in one of two ways:
-* WebSocket: [https://github.com/vecopay/insight-api-veco#web-socket-api](https://github.com/vecopay/insight-api-veco#web-socket-api)
-* API: [https://github.com/vecopay/insight-api-veco#instantsend-transactions](https://github.com/vecopay/insight-api-veco#instantsend-transactions)
+This mechanism has been integrated into Bitcore-Node-Adventurecoin which allows for notification to be broadcast through Insight API in one of two ways:
+* WebSocket: [https://github.com/advcpay/insight-api-advc#web-socket-api](https://github.com/advcpay/insight-api-advc#web-socket-api)
+* API: [https://github.com/advcpay/insight-api-advc#instantsend-transactions](https://github.com/advcpay/insight-api-advc#instantsend-transactions)
 
 #### Command line option
 

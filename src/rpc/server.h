@@ -143,7 +143,7 @@ public:
 };
 
 /**
- * Veco RPC command dispatcher.
+ * Adventurecoin RPC command dispatcher.
  */
 class CRPCTable
 {

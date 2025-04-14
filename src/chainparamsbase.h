@@ -9,8 +9,8 @@
 #include <vector>
 
 /**
- * CBaseChainParams defines the base parameters (shared between veco-cli and vecod)
- * of a given instance of the Veco system.
+ * CBaseChainParams defines the base parameters (shared between advc-cli and advcd)
+ * of a given instance of the Adventurecoin system.
  */
 class CBaseChainParams
 {

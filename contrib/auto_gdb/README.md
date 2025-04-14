@@ -1,9 +1,9 @@
 # Contents
-This directory contains tools to automatically get data about the memory consumption by some objects in vecod process with the help of GDB debugger.
+This directory contains tools to automatically get data about the memory consumption by some objects in advcd process with the help of GDB debugger.
 
-## veco_dbg.sh
-This shell script attaches GDB to the running vecod process (should be built with debug info), executes debug.gdb script and detaches.
-By default it uses testnet settings, see script comments to attach it to mainnet vecod.
+## advc_dbg.sh
+This shell script attaches GDB to the running advcd process (should be built with debug info), executes debug.gdb script and detaches.
+By default it uses testnet settings, see script comments to attach it to mainnet advcd.
 
 ## debug.gdb
 Contains debugger instructions to execute during attach: loads python code and executes it for the objects we want to investigate.

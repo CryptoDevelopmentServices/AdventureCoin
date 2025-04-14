@@ -4,7 +4,7 @@
 
 #include "compressor.h"
 #include "util.h"
-#include "test/test_veco.h"
+#include "test/test_advc.h"
 
 #include <stdint.h>
 

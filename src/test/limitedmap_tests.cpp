@@ -4,7 +4,7 @@
 
 #include "limitedmap.h"
 
-#include "test/test_veco.h"
+#include "test/test_advc.h"
 
 #include <boost/test/unit_test.hpp>
 

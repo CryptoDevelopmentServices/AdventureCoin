@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef VECO_QUORUMS_UTILS_H
-#define VECO_QUORUMS_UTILS_H
+#ifndef ADVC_QUORUMS_UTILS_H
+#define ADVC_QUORUMS_UTILS_H
 
 #include "consensus/params.h"
 
@@ -25,4 +25,4 @@ public:
 
 }
 
-#endif//VECO_QUORUMS_UTILS_H
+#endif//ADVC_QUORUMS_UTILS_H

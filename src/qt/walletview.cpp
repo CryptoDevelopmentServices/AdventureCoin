@@ -13,7 +13,7 @@
 #include "optionsmodel.h"
 #include "overviewpage.h"
 #include "platformstyle.h"
-#include "receivecoinsdialog.h"
+#include "receiadvcinsdialog.h"
 #include "sendcoinsdialog.h"
 #include "signverifymessagedialog.h"
 #include "transactionrecord.h"

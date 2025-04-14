@@ -1,6 +1,6 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2018-2022 The Veco Core developers
+// Copyright (c) 2018-2022 The Adventurecoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -13,7 +13,7 @@ static const int MODEL_UPDATE_DELAY = 250;
 /* AskPassphraseDialog -- Maximum passphrase length */
 static const int MAX_PASSPHRASE_SIZE = 1024;
 
-/* VecoGUI -- Size of icons in status bar */
+/* AdventurecoinGUI -- Size of icons in status bar */
 static const int STATUSBAR_ICONSIZE = 16;
 
 static const bool DEFAULT_SPLASHSCREEN = true;
@@ -52,10 +52,10 @@ static const int MAX_URI_LENGTH = 255;
 /* Number of frames in spinner animation */
 #define SPINNER_FRAMES 36
 
-#define QAPP_ORG_NAME "Veco"
-#define QAPP_ORG_DOMAIN "veco.org"
-#define QAPP_APP_NAME_DEFAULT "Veco-Qt"
-#define QAPP_APP_NAME_TESTNET "Veco-Qt-testnet"
-#define QAPP_APP_NAME_DEVNET "Veco-Qt-%s"
+#define QAPP_ORG_NAME "Adventurecoin"
+#define QAPP_ORG_DOMAIN "advc.org"
+#define QAPP_APP_NAME_DEFAULT "Adventurecoin-Qt"
+#define QAPP_APP_NAME_TESTNET "Adventurecoin-Qt-testnet"
+#define QAPP_APP_NAME_DEVNET "Adventurecoin-Qt-%s"
 
 #endif // BITCOIN_QT_GUICONSTANTS_H

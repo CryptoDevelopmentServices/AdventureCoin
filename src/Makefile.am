@@ -27,23 +27,23 @@ BITCOIN_INCLUDES += $(UNIVALUE_CFLAGS)
 
 BLS_LIBS=-lchiabls -lgmp
 
-LIBBITCOIN_SERVER=libveco_server.a
-LIBBITCOIN_COMMON=libveco_common.a
-LIBBITCOIN_CONSENSUS=libveco_consensus.a
-LIBBITCOIN_CLI=libveco_cli.a
-LIBBITCOIN_UTIL=libveco_util.a
-LIBBITCOIN_CRYPTO=crypto/libveco_crypto.a
-LIBBITCOINQT=qt/libvecoqt.a
+LIBBITCOIN_SERVER=libadvc_server.a
+LIBBITCOIN_COMMON=libadvc_common.a
+LIBBITCOIN_CONSENSUS=libadvc_consensus.a
+LIBBITCOIN_CLI=libadvc_cli.a
+LIBBITCOIN_UTIL=libadvc_util.a
+LIBBITCOIN_CRYPTO=crypto/libadvc_crypto.a
+LIBBITCOINQT=qt/libadvcqt.a
 LIBSECP256K1=secp256k1/libsecp256k1.la
 
 if ENABLE_ZMQ
-LIBBITCOIN_ZMQ=libveco_zmq.a
+LIBBITCOIN_ZMQ=libadvc_zmq.a
 endif
 if BUILD_BITCOIN_LIBS
-LIBBITCOINCONSENSUS=libvecoconsensus.la
+LIBBITCOINCONSENSUS=libadvcconsensus.la
 endif
 if ENABLE_WALLET
-LIBBITCOIN_WALLET=libveco_wallet.a
+LIBBITCOIN_WALLET=libadvc_wallet.a
 endif
 
 $(LIBSECP256K1): $(wildcard secp256k1/src/*) $(wildcard secp256k1/include/*)
@@ -68,15 +68,15 @@ TESTS =
 BENCHMARKS =
 
 if BUILD_BITCOIND
-  bin_PROGRAMS += vecod
+  bin_PROGRAMS += advcd
 endif
 
 if BUILD_BITCOIN_UTILS
-  bin_PROGRAMS += veco-cli veco-tx
+  bin_PROGRAMS += advc-cli advc-tx
 endif
 
 .PHONY: FORCE check-symbols check-security
-# veco core #
+# advc core #
 BITCOIN_CORE_H = \
   addrdb.h \
   activemasternode.h \
@@ -216,12 +216,12 @@ obj/build.h: FORCE
 	@$(MKDIR_P) $(builddir)/obj
 	@$(top_srcdir)/share/genbuild.sh $(abs_top_builddir)/src/obj/build.h \
 	  $(abs_top_srcdir)
-libveco_util_a-clientversion.$(OBJEXT): obj/build.h
+libadvc_util_a-clientversion.$(OBJEXT): obj/build.h
 
-# server: shared between vecod and veco-qt
-libveco_server_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(MINIUPNPC_CPPFLAGS) $(EVENT_CFLAGS) $(EVENT_PTHREADS_CFLAGS)
-libveco_server_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libveco_server_a_SOURCES = \
+# server: shared between advcd and advc-qt
+libadvc_server_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(MINIUPNPC_CPPFLAGS) $(EVENT_CFLAGS) $(EVENT_PTHREADS_CFLAGS)
+libadvc_server_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libadvc_server_a_SOURCES = \
   activemasternode.cpp \
   addrman.cpp \
   addrdb.cpp \
@@ -295,20 +295,20 @@ libveco_server_a_SOURCES = \
   $(BITCOIN_CORE_H)
 
 if ENABLE_ZMQ
-libveco_zmq_a_CPPFLAGS = $(BITCOIN_INCLUDES) $(ZMQ_CFLAGS)
-libveco_zmq_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libveco_zmq_a_SOURCES = \
+libadvc_zmq_a_CPPFLAGS = $(BITCOIN_INCLUDES) $(ZMQ_CFLAGS)
+libadvc_zmq_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libadvc_zmq_a_SOURCES = \
   zmq/zmqabstractnotifier.cpp \
   zmq/zmqnotificationinterface.cpp \
   zmq/zmqpublishnotifier.cpp
 endif
 
 
-# wallet: shared between vecod and veco-qt, but only linked
+# wallet: shared between advcd and advc-qt, but only linked
 # when wallet enabled
-libveco_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libveco_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libveco_wallet_a_SOURCES = \
+libadvc_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libadvc_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libadvc_wallet_a_SOURCES = \
   keepass.cpp \
   privatesend-client.cpp \
   privatesend-util.cpp \
@@ -321,10 +321,10 @@ libveco_wallet_a_SOURCES = \
   $(BITCOIN_CORE_H)
 
 # crypto primitives library
-crypto_libveco_crypto_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_CONFIG_INCLUDES) $(PIC_FLAGS)
-crypto_libveco_crypto_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) $(PIC_FLAGS)
+crypto_libadvc_crypto_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_CONFIG_INCLUDES) $(PIC_FLAGS)
+crypto_libadvc_crypto_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) $(PIC_FLAGS)
 crypto_libbitcoin_crypto_a_CFLAGS = $(AM_CFLAGS) $(PIE_FLAGS) -msse4.2 -fomit-frame-pointer
-crypto_libveco_crypto_a_SOURCES = \
+crypto_libadvc_crypto_a_SOURCES = \
   crypto/aes.cpp \
   crypto/aes.h \
   crypto/common.h \
@@ -354,7 +354,7 @@ noinst_HEADERS = \
   crypto/yespower/yespower-ref.c
 
 # x11
-crypto_libveco_crypto_a_SOURCES += \
+crypto_libadvc_crypto_a_SOURCES += \
   crypto/blake.c \
   crypto/bmw.c \
   crypto/cubehash.c \
@@ -380,9 +380,9 @@ crypto_libveco_crypto_a_SOURCES += \
   crypto/sph_types.h
 
 # consensus: shared between all executables that validate any consensus rules.
-libveco_consensus_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libveco_consensus_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libveco_consensus_a_SOURCES = \
+libadvc_consensus_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libadvc_consensus_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libadvc_consensus_a_SOURCES = \
   amount.h \
   arith_uint256.cpp \
   arith_uint256.h \
@@ -401,7 +401,7 @@ libveco_consensus_a_SOURCES = \
   primitives/transaction.h \
   pubkey.cpp \
   pubkey.h \
-  script/vecoconsensus.cpp \
+  script/advcconsensus.cpp \
   script/interpreter.cpp \
   script/interpreter.h \
   script/script.cpp \
@@ -417,10 +417,10 @@ libveco_consensus_a_SOURCES = \
   utilstrencodings.h \
   version.h
 
-# common: shared between vecod, and veco-qt and non-server tools
-libveco_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libveco_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libveco_common_a_SOURCES = \
+# common: shared between advcd, and advc-qt and non-server tools
+libadvc_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libadvc_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libadvc_common_a_SOURCES = \
   amount.cpp \
   base58.cpp \
   bip39.cpp \
@@ -444,9 +444,9 @@ libveco_common_a_SOURCES = \
 # util: shared between all executables.
 # This library *must* be included to make sure that the glibc
 # backward-compatibility objects and their sanity checks are linked.
-libveco_util_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libveco_util_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libveco_util_a_SOURCES = \
+libadvc_util_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libadvc_util_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libadvc_util_a_SOURCES = \
   bls/bls_ies.cpp \
   bls/bls_ies.h \
   bls/bls_worker.cpp \
@@ -469,31 +469,31 @@ libveco_util_a_SOURCES = \
   $(BITCOIN_CORE_H)
 
 if GLIBC_BACK_COMPAT
-libveco_util_a_SOURCES += compat/glibc_compat.cpp
+libadvc_util_a_SOURCES += compat/glibc_compat.cpp
 AM_LDFLAGS += -Wl,--wrap=log2f -Wl,--wrap=__divmoddi4
 endif
 
-# cli: shared between veco-cli and veco-qt
-libveco_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libveco_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libveco_cli_a_SOURCES = \
+# cli: shared between advc-cli and advc-qt
+libadvc_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libadvc_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libadvc_cli_a_SOURCES = \
   rpc/client.cpp \
   $(BITCOIN_CORE_H)
 
-nodist_libveco_util_a_SOURCES = $(srcdir)/obj/build.h
+nodist_libadvc_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
-# vecod binary #
-vecod_SOURCES = vecod.cpp
-vecod_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-vecod_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-vecod_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# advcd binary #
+advcd_SOURCES = advcd.cpp
+advcd_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+advcd_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+advcd_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-vecod_SOURCES += vecod-res.rc
+advcd_SOURCES += advcd-res.rc
 endif
 
-vecod_LDADD = \
+advcd_LDADD = \
   $(LIBBITCOIN_SERVER) \
   $(LIBBITCOIN_COMMON) \
   $(LIBUNIVALUE) \
@@ -506,37 +506,37 @@ vecod_LDADD = \
   $(LIBMEMENV) \
   $(LIBSECP256K1)
 
-vecod_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(BLS_LIBS)
+advcd_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(BLS_LIBS)
 
-# veco-cli binary #
-veco_cli_SOURCES = veco-cli.cpp
-veco_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
-veco_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-veco_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# advc-cli binary #
+advc_cli_SOURCES = advc-cli.cpp
+advc_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
+advc_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+advc_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-veco_cli_SOURCES += veco-cli-res.rc
+advc_cli_SOURCES += advc-cli-res.rc
 endif
 
-veco_cli_LDADD = \
+advc_cli_LDADD = \
   $(LIBBITCOIN_CLI) \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_UTIL) \
   $(LIBBITCOIN_CRYPTO)
-veco_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS) $(BLS_LIBS)
+advc_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS) $(BLS_LIBS)
 #
 
-# veco-tx binary #
-veco_tx_SOURCES = veco-tx.cpp
-veco_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-veco_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-veco_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# advc-tx binary #
+advc_tx_SOURCES = advc-tx.cpp
+advc_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+advc_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+advc_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-veco_tx_SOURCES += veco-tx-res.rc
+advc_tx_SOURCES += advc-tx-res.rc
 endif
 
-veco_tx_LDADD = \
+advc_tx_LDADD = \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_UTIL) \
@@ -544,22 +544,22 @@ veco_tx_LDADD = \
   $(LIBBITCOIN_CRYPTO) \
   $(LIBSECP256K1)
 
-veco_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS) $(BLS_LIBS)
+advc_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS) $(BLS_LIBS)
 #
 
-# vecoconsensus library #
+# advcconsensus library #
 if BUILD_BITCOIN_LIBS
-include_HEADERS = script/vecoconsensus.h
-libvecoconsensus_la_SOURCES = $(crypto_libveco_crypto_a_SOURCES) $(libveco_consensus_a_SOURCES)
+include_HEADERS = script/advcconsensus.h
+libadvcconsensus_la_SOURCES = $(crypto_libadvc_crypto_a_SOURCES) $(libadvc_consensus_a_SOURCES)
 
 if GLIBC_BACK_COMPAT
-  libvecoconsensus_la_SOURCES += compat/glibc_compat.cpp
+  libadvcconsensus_la_SOURCES += compat/glibc_compat.cpp
 endif
 
-libvecoconsensus_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS)
-libvecoconsensus_la_LIBADD = $(LIBSECP256K1) $(BLS_LIBS)
-libvecoconsensus_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_BITCOIN_INTERNAL
-libvecoconsensus_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libadvcconsensus_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS)
+libadvcconsensus_la_LIBADD = $(LIBSECP256K1) $(BLS_LIBS)
+libadvcconsensus_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_BITCOIN_INTERNAL
+libadvcconsensus_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 
 endif
 #
@@ -593,12 +593,12 @@ EXTRA_DIST = $(CTAES_DIST)
 EXTRA_DIST += $(IMMER_DIST)
 
 
-config/veco-config.h: config/stamp-h1
+config/advc-config.h: config/stamp-h1
 	@$(MAKE) -C $(top_builddir) $(subdir)/$(@)
-config/stamp-h1: $(top_srcdir)/$(subdir)/config/veco-config.h.in $(top_builddir)/config.status
+config/stamp-h1: $(top_srcdir)/$(subdir)/config/advc-config.h.in $(top_builddir)/config.status
 	$(AM_V_at)$(MAKE) -C $(top_builddir) $(subdir)/$(@)
-$(top_srcdir)/$(subdir)/config/veco-config.h.in:  $(am__configure_deps)
-	$(AM_V_at)$(MAKE) -C $(top_srcdir) $(subdir)/config/veco-config.h.in
+$(top_srcdir)/$(subdir)/config/advc-config.h.in:  $(am__configure_deps)
+	$(AM_V_at)$(MAKE) -C $(top_srcdir) $(subdir)/config/advc-config.h.in
 
 clean-local:
 	-$(MAKE) -C secp256k1 clean

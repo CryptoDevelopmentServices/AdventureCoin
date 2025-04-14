@@ -1,12 +1,12 @@
 // Copyright (c) 2014-2018 The Dash Core developers
-// Copyright (c) 2018-2022 The Veco Core developers
+// Copyright (c) 2018-2022 The Adventurecoin Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef GOVERNANCE_H
 #define GOVERNANCE_H
 
-//#define ENABLE_VECO_DEBUG
+//#define ENABLE_ADVC_DEBUG
 
 #include "bloom.h"
 #include "cachemap.h"

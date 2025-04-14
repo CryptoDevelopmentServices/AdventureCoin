@@ -1,0 +1,6 @@
+usr/local/bin/advc-qt usr/bin
+share/pixmaps/advc32.xpm usr/share/pixmaps
+share/pixmaps/advc16.xpm usr/share/pixmaps
+share/pixmaps/advc128.png usr/share/pixmaps
+debian/advc-qt.desktop usr/share/applications
+debian/advc-qt.protocol usr/share/kde4/services/

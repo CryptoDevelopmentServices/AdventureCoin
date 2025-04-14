@@ -1,5 +1,5 @@
 // Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2018-2022 The Veco Core developers
+// Copyright (c) 2018-2022 The Adventurecoin Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -149,8 +149,8 @@ void masternode_list_help()
             "  lastpaidblock  - Print the last block height a node was paid on the network\n"
             "  lastpaidtime   - Print the last time a node was paid on the network\n"
             "  lastseen       - Print timestamp of when a masternode was last seen on the network\n"
-            "  owneraddress   - Print the masternode owner Veco address\n"
-            "  payee          - Print the masternode payout Veco address (can be additionally filtered,\n"
+            "  owneraddress   - Print the masternode owner Adventurecoin address\n"
+            "  payee          - Print the masternode payout Adventurecoin address (can be additionally filtered,\n"
             "                   partial match)\n"
             "  protocol       - Print protocol of a masternode (can be additionally filtered, exact match)\n"
             "  keyid          - Print the masternode (not collateral) key id\n"
@@ -158,7 +158,7 @@ void masternode_list_help()
             "  sentinel       - Print sentinel version of a masternode (can be additionally filtered, exact match)\n"
             "  status         - Print masternode status: PRE_ENABLED / ENABLED / EXPIRED / SENTINEL_PING_EXPIRED / NEW_START_REQUIRED /\n"
             "                   UPDATE_REQUIRED / POSE_BAN / OUTPOINT_SPENT (can be additionally filtered, partial match)\n"
-            "  votingaddress  - Print the masternode voting Veco address\n"
+            "  votingaddress  - Print the masternode voting Adventurecoin address\n"
         );
 }
 
@@ -1300,13 +1300,13 @@ UniValue sentinelping(const JSONRPCRequest& request)
 static const CRPCCommand commands[] =
 { //  category              name                      actor (function)         okSafe argNames
   //  --------------------- ------------------------  -----------------------  ------ ----------
-    { "veco",               "masternode",             &masternode,             true,  {} },
-    { "veco",               "masternodelist",         &masternodelist,         true,  {} },
-    { "veco",               "masternodebroadcast",    &masternodebroadcast,    true,  {} },
-    { "veco",               "getpoolinfo",            &getpoolinfo,            true,  {} },
-    { "veco",               "sentinelping",           &sentinelping,           true,  {} },
+    { "advc",               "masternode",             &masternode,             true,  {} },
+    { "advc",               "masternodelist",         &masternodelist,         true,  {} },
+    { "advc",               "masternodebroadcast",    &masternodebroadcast,    true,  {} },
+    { "advc",               "getpoolinfo",            &getpoolinfo,            true,  {} },
+    { "advc",               "sentinelping",           &sentinelping,           true,  {} },
 #ifdef ENABLE_WALLET
-    { "veco",               "privatesend",            &privatesend,            false, {} },
+    { "advc",               "privatesend",            &privatesend,            false, {} },
 #endif // ENABLE_WALLET
 };
 

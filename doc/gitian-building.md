@@ -1,9 +1,9 @@
 Gitian building
 ================
 
-*Setup instructions for a Gitian build of Veco Core using a Debian VM or physical system.*
+*Setup instructions for a Gitian build of Adventurecoin Core using a Debian VM or physical system.*
 
-Gitian is the deterministic build process that is used to build the Veco
+Gitian is the deterministic build process that is used to build the Adventurecoin
 Core executables. It provides a way to be reasonably sure that the
 executables are really built from the source on GitHub. It also makes sure that
 the same, tested dependencies are used and statically built into the executable.
@@ -11,7 +11,7 @@ the same, tested dependencies are used and statically built into the executable.
 Multiple developers build the source code by following a specific descriptor
 ("recipe"), cryptographically sign the result, and upload the resulting signature.
 These results are compared and only if they match, the build is accepted and uploaded
-to veco.org.
+to advc.org.
 
 More independent Gitian builders are needed, which is why this guide exists.
 It is preferred you follow these steps yourself instead of using someone else's
@@ -26,7 +26,7 @@ Table of Contents
 - [Installing Gitian](#installing-gitian)
 - [Setting up the Gitian image](#setting-up-the-gitian-image)
 - [Getting and building the inputs](#getting-and-building-the-inputs)
-- [Building Veco Core](#building-veco-core)
+- [Building Adventurecoin Core](#building-advc-core)
 - [Building an alternative repository](#building-an-alternative-repository)
 - [Signing externally](#signing-externally)
 - [Uploading signatures](#uploading-signatures)
@@ -305,12 +305,12 @@ cd ..
 
 **Note**: When sudo asks for a password, enter the password for the user *debian* not for *root*.
 
-Clone the git repositories for Veco Core and Gitian.
+Clone the git repositories for Adventurecoin Core and Gitian.
 
 ```bash
 git clone https://github.com/devrandom/gitian-builder.git
-git clone https://github.com/vecopay/veco
-git clone https://github.com/vecopay/gitian.sigs.git
+git clone https://github.com/advcpay/advc
+git clone https://github.com/advcpay/gitian.sigs.git
 ```
 
 Setting up the Gitian image
@@ -347,16 +347,16 @@ Getting and building the inputs
 At this point you have two options, you can either use the automated script (found in [contrib/gitian-build.py](/contrib/gitian-build.py)) or you could manually do everything by following this guide. If you're using the automated script, then run it with the "--setup" command. Afterwards, run it with the "--build" command (example: "contrib/gitian-building.sh -b signer 0.13.0"). Otherwise ignore this.
 
 Follow the instructions in [doc/release-process.md](release-process.md#fetch-and-create-inputs-first-time-or-when-dependency-versions-change)
-in the Veco Core repository under 'Fetch and create inputs' to install sources which require
+in the Adventurecoin Core repository under 'Fetch and create inputs' to install sources which require
 manual intervention. Also optionally follow the next step: 'Seed the Gitian sources cache
 and offline git repositories' which will fetch the remaining files required for building
 offline.
 
-Building Veco Core
+Building Adventurecoin Core
 ----------------
 
-To build Veco Core (for Linux, OS X and Windows) just follow the steps under 'perform
-Gitian builds' in [doc/release-process.md](release-process.md#perform-gitian-builds) in the Veco Core repository.
+To build Adventurecoin Core (for Linux, OS X and Windows) just follow the steps under 'perform
+Gitian builds' in [doc/release-process.md](release-process.md#perform-gitian-builds) in the Adventurecoin Core repository.
 
 This may take some time as it will build all the dependencies needed for each descriptor.
 These dependencies will be cached after a successful build to avoid rebuilding them when possible.
@@ -371,12 +371,12 @@ tail -f var/build.log
 Output from `gbuild` will look something like
 
 ```bash
-    Initialized empty Git repository in /home/debian/gitian-builder/inputs/veco/.git/
+    Initialized empty Git repository in /home/debian/gitian-builder/inputs/advc/.git/
     remote: Counting objects: 57959, done.
     remote: Total 57959 (delta 0), reused 0 (delta 0), pack-reused 57958
     Receiving objects: 100% (57959/57959), 53.76 MiB | 484.00 KiB/s, done.
     Resolving deltas: 100% (41590/41590), done.
-    From https://github.com/vecopay/veco
+    From https://github.com/advcpay/advc
     ... (new tags, new branch etc)
     --- Building for bionic amd64 ---
     Stopping target if it is up
@@ -402,18 +402,18 @@ and inputs.
 
 For example:
 ```bash
-URL=https://github.com/crowning-/veco.git
+URL=https://github.com/crowning-/advc.git
 COMMIT=b616fb8ef0d49a919b72b0388b091aaec5849b96
-./bin/gbuild --commit veco=${COMMIT} --url veco=${URL} ../veco/contrib/gitian-descriptors/gitian-linux.yml
-./bin/gbuild --commit veco=${COMMIT} --url veco=${URL} ../veco/contrib/gitian-descriptors/gitian-win.yml
-./bin/gbuild --commit veco=${COMMIT} --url veco=${URL} ../veco/contrib/gitian-descriptors/gitian-osx.yml
+./bin/gbuild --commit advc=${COMMIT} --url advc=${URL} ../advc/contrib/gitian-descriptors/gitian-linux.yml
+./bin/gbuild --commit advc=${COMMIT} --url advc=${URL} ../advc/contrib/gitian-descriptors/gitian-win.yml
+./bin/gbuild --commit advc=${COMMIT} --url advc=${URL} ../advc/contrib/gitian-descriptors/gitian-osx.yml
 ```
 
 Building fully offline
 -----------------------
 
 For building fully offline including attaching signatures to unsigned builds, the detached-sigs repository
-and the veco git repository with the desired tag must both be available locally, and then gbuild must be
+and the advc git repository with the desired tag must both be available locally, and then gbuild must be
 told where to find them. It also requires an apt-cacher-ng which is fully-populated but set to offline mode, or
 manually disabling gitian-builder's use of apt-get to update the VM build environment.
 
@@ -432,7 +432,7 @@ cd /path/to/gitian-builder
 LXC_ARCH=amd64 LXC_SUITE=bionic on-target -u root apt-get update
 LXC_ARCH=amd64 LXC_SUITE=bionic on-target -u root \
   -e DEBIAN_FRONTEND=noninteractive apt-get --no-install-recommends -y install \
-  $( sed -ne '/^packages:/,/[^-] .*/ {/^- .*/{s/"//g;s/- //;p}}' ../veco/contrib/gitian-descriptors/*|sort|uniq )
+  $( sed -ne '/^packages:/,/[^-] .*/ {/^- .*/{s/"//g;s/- //;p}}' ../advc/contrib/gitian-descriptors/*|sort|uniq )
 LXC_ARCH=amd64 LXC_SUITE=bionic on-target -u root apt-get -q -y purge grub
 LXC_ARCH=amd64 LXC_SUITE=bionic on-target -u root -e DEBIAN_FRONTEND=noninteractive apt-get -y dist-upgrade
 ```
@@ -452,12 +452,12 @@ Then when building, override the remote URLs that gbuild would otherwise pull fr
 ```bash
 
 cd /some/root/path/
-git clone https://github.com/vecopay/veco-detached-sigs.git
+git clone https://github.com/advcpay/advc-detached-sigs.git
 
-BTCPATH=/some/root/path/veco
-SIGPATH=/some/root/path/veco-detached-sigs
+BTCPATH=/some/root/path/advc
+SIGPATH=/some/root/path/advc-detached-sigs
 
-./bin/gbuild --url veco=${BTCPATH},signature=${SIGPATH} ../veco/contrib/gitian-descriptors/gitian-win-signer.yml
+./bin/gbuild --url advc=${BTCPATH},signature=${SIGPATH} ../advc/contrib/gitian-descriptors/gitian-win-signer.yml
 ```
 
 Signing externally
@@ -472,9 +472,9 @@ When you execute `gsign` you will get an error from GPG, which can be ignored. C
 in `gitian.sigs` to your signing machine and do
 
 ```bash
-    gpg --detach-sign ${VERSION}-linux/${SIGNER}/veco-linux-build.assert
-    gpg --detach-sign ${VERSION}-win/${SIGNER}/veco-win-build.assert
-    gpg --detach-sign ${VERSION}-osx-unsigned/${SIGNER}/veco-osx-build.assert
+    gpg --detach-sign ${VERSION}-linux/${SIGNER}/advc-linux-build.assert
+    gpg --detach-sign ${VERSION}-win/${SIGNER}/advc-win-build.assert
+    gpg --detach-sign ${VERSION}-osx-unsigned/${SIGNER}/advc-osx-build.assert
 ```
 
 This will create the `.sig` files that can be committed together with the `.assert` files to assert your
@@ -484,6 +484,6 @@ Uploading signatures (not yet implemented)
 ---------------------
 
 In the future it will be possible to push your signatures (both the `.assert` and `.assert.sig` files) to the
-[veco/gitian.sigs](https://github.com/vecopay/gitian.sigs/) repository, or if that's not possible to create a pull
+[advc/gitian.sigs](https://github.com/advcpay/gitian.sigs/) repository, or if that's not possible to create a pull
 request.
 There will be an official announcement when this repository is online.

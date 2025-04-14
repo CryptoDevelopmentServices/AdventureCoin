@@ -1,6 +1,6 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2018-2022 The Veco Core developers
+// Copyright (c) 2018-2022 The Adventurecoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -20,9 +20,9 @@ BitcoinUnits::BitcoinUnits(QObject *parent):
 QList<BitcoinUnits::Unit> BitcoinUnits::availableUnits()
 {
     QList<BitcoinUnits::Unit> unitlist;
-    unitlist.append(VECO);
-    unitlist.append(mVECO);
-    unitlist.append(uVECO);
+    unitlist.append(ADVC);
+    unitlist.append(mADVC);
+    unitlist.append(uADVC);
     unitlist.append(duffs);
     return unitlist;
 }
@@ -31,9 +31,9 @@ bool BitcoinUnits::valid(int unit)
 {
     switch(unit)
     {
-    case VECO:
-    case mVECO:
-    case uVECO:
+    case ADVC:
+    case mADVC:
+    case uADVC:
     case duffs:
         return true;
     default:
@@ -47,9 +47,9 @@ QString BitcoinUnits::name(int unit)
     {
         switch(unit)
         {
-            case VECO: return QString("VECO");
-            case mVECO: return QString("mVECO");
-            case uVECO: return QString::fromUtf8("μVECO");
+            case ADVC: return QString("ADVC");
+            case mADVC: return QString("mADVC");
+            case uADVC: return QString::fromUtf8("μADVC");
             case duffs: return QString("duffs");
             default: return QString("???");
         }
@@ -58,9 +58,9 @@ QString BitcoinUnits::name(int unit)
     {
         switch(unit)
         {
-            case VECO: return QString("tVECO");
-            case mVECO: return QString("mtVECO");
-            case uVECO: return QString::fromUtf8("μtVECO");
+            case ADVC: return QString("tADVC");
+            case mADVC: return QString("mtADVC");
+            case uADVC: return QString::fromUtf8("μtADVC");
             case duffs: return QString("tduffs");
             default: return QString("???");
         }
@@ -73,10 +73,10 @@ QString BitcoinUnits::description(int unit)
     {
         switch(unit)
         {
-            case VECO: return QString("Veco");
-            case mVECO: return QString("Milli-Veco (1 / 1" THIN_SP_UTF8 "000)");
-            case uVECO: return QString("Micro-Veco (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
-            case duffs: return QString("Ten Nano-Veco (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case ADVC: return QString("Adventurecoin");
+            case mADVC: return QString("Milli-Adventurecoin (1 / 1" THIN_SP_UTF8 "000)");
+            case uADVC: return QString("Micro-Adventurecoin (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case duffs: return QString("Ten Nano-Adventurecoin (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
             default: return QString("???");
         }
     }
@@ -84,10 +84,10 @@ QString BitcoinUnits::description(int unit)
     {
         switch(unit)
         {
-            case VECO: return QString("TestVecos");
-            case mVECO: return QString("Milli-TestVeco (1 / 1" THIN_SP_UTF8 "000)");
-            case uVECO: return QString("Micro-TestVeco (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
-            case duffs: return QString("Ten Nano-TestVeco (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case ADVC: return QString("TestAdventurecoins");
+            case mADVC: return QString("Milli-TestAdventurecoin (1 / 1" THIN_SP_UTF8 "000)");
+            case uADVC: return QString("Micro-TestAdventurecoin (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case duffs: return QString("Ten Nano-TestAdventurecoin (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
             default: return QString("???");
         }
     }
@@ -97,9 +97,9 @@ qint64 BitcoinUnits::factor(int unit)
 {
     switch(unit)
     {
-    case VECO:  return 100000000;
-    case mVECO: return 100000;
-    case uVECO: return 100;
+    case ADVC:  return 100000000;
+    case mADVC: return 100000;
+    case uADVC: return 100;
     case duffs: return 1;
     default:   return 100000000;
     }
@@ -109,9 +109,9 @@ int BitcoinUnits::decimals(int unit)
 {
     switch(unit)
     {
-    case VECO: return 8;
-    case mVECO: return 5;
-    case uVECO: return 2;
+    case ADVC: return 8;
+    case mADVC: return 5;
+    case uADVC: return 2;
     case duffs: return 0;
     default: return 0;
     }

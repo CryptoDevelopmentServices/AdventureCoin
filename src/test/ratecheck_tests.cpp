@@ -1,9 +1,9 @@
 // Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2018-2022 The Veco Core developers
+// Copyright (c) 2018-2022 The Adventurecoin Core developers
 
 #include "governance.h"
 
-#include "test/test_veco.h"
+#include "test/test_advc.h"
 
 #include <boost/test/unit_test.hpp>
 

@@ -1,8 +1,8 @@
 // Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2018-2022 The Veco Core developers
+// Copyright (c) 2018-2022 The Adventurecoin Core developers
 // Distributed under the MIT software license, see the accompanying
-#ifndef VECO_HDCHAIN_H
-#define VECO_HDCHAIN_H
+#ifndef ADVC_HDCHAIN_H
+#define ADVC_HDCHAIN_H
 
 #include "key.h"
 #include "sync.h"
@@ -148,4 +148,4 @@ public:
     std::string GetKeyPath() const;
 };
 
-#endif // VECO_HDCHAIN_H
+#endif // ADVC_HDCHAIN_H

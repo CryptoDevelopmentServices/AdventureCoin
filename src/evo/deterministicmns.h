@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef VECO_DETERMINISTICMNS_H
-#define VECO_DETERMINISTICMNS_H
+#ifndef ADVC_DETERMINISTICMNS_H
+#define ADVC_DETERMINISTICMNS_H
 
 #include "arith_uint256.h"
 #include "bls/bls.h"
@@ -495,4 +495,4 @@ private:
 
 extern CDeterministicMNManager* deterministicMNManager;
 
-#endif //VECO_DETERMINISTICMNS_H
+#endif //ADVC_DETERMINISTICMNS_H

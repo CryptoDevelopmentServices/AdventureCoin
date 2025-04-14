@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef VECO_CRYPTO_BLS_H
-#define VECO_CRYPTO_BLS_H
+#ifndef ADVC_CRYPTO_BLS_H
+#define ADVC_CRYPTO_BLS_H
 
 #include "hash.h"
 #include "serialize.h"
@@ -309,4 +309,4 @@ typedef std::shared_ptr<BLSSignatureVector> BLSSignatureVectorPtr;
 
 bool BLSInit();
 
-#endif // VECO_CRYPTO_BLS_H
+#endif // ADVC_CRYPTO_BLS_H

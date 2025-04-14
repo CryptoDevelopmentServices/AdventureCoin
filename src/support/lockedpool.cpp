@@ -6,7 +6,7 @@
 #include "support/cleanse.h"
 
 #if defined(HAVE_CONFIG_H)
-#include "config/veco-config.h"
+#include "config/advc-config.h"
 #endif
 
 #ifdef WIN32

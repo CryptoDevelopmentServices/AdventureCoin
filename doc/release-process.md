@@ -1,9 +1,9 @@
 Release Process
 ====================
 
-* Update translations, see [translation_process.md](https://github.com/vecopay/veco/blob/master/doc/translation_process.md#synchronising-translations).
+* Update translations, see [translation_process.md](https://github.com/advcpay/advc/blob/master/doc/translation_process.md#synchronising-translations).
 
-* Update manpages, see [gen-manpages.sh](https://github.com/vecopay/veco/blob/master/contrib/devtools/README.md#gen-manpagessh).
+* Update manpages, see [gen-manpages.sh](https://github.com/advcpay/advc/blob/master/contrib/devtools/README.md#gen-manpagessh).
 
 Before every minor and major release:
 
@@ -19,7 +19,7 @@ Before every minor and major release:
 
 Before every major release:
 
-* Update hardcoded [seeds](/contrib/seeds/README.md). TODO: Give example PR for Veco
+* Update hardcoded [seeds](/contrib/seeds/README.md). TODO: Give example PR for Adventurecoin
 * Update [`BLOCK_CHAIN_SIZE`](/src/qt/intro.cpp) to the current size plus some overhead.
 
 ### First time / New builders
@@ -29,12 +29,12 @@ If you're using the automated script (found in [contrib/gitian-build.py](/contri
 Check out the source code in the following directory hierarchy.
 
 	cd /path/to/your/toplevel/build
-	git clone https://github.com/vecopay/gitian.sigs.git
-	git clone https://github.com/vecopay/veco-detached-sigs.git
+	git clone https://github.com/advcpay/gitian.sigs.git
+	git clone https://github.com/advcpay/advc-detached-sigs.git
 	git clone https://github.com/devrandom/gitian-builder.git
-	git clone https://github.com/vecopay/veco.git
+	git clone https://github.com/advcpay/advc.git
 
-### Veco Core maintainers/release engineers, update (commit) version in sources
+### Adventurecoin Core maintainers/release engineers, update (commit) version in sources
 
 - `configure.ac`:
     - `_CLIENT_VERSION_MAJOR`
@@ -68,7 +68,7 @@ If you're using the automated script (found in [contrib/gitian-build.py](/contri
 
 Setup Gitian descriptors:
 
-    pushd ./veco
+    pushd ./advc
     export SIGNER=(your Gitian key, ie bluematt, sipa, etc)
     export VERSION=(new version, e.g. 0.12.3)
     git fetch
@@ -103,7 +103,7 @@ Create the OS X SDK tarball, see the [OS X readme](README_osx.md) for details, a
 By default, Gitian will fetch source files as needed. To cache them ahead of time:
 
     pushd ./gitian-builder
-    make -C ../veco/depends download SOURCES_PATH=`pwd`/cache/common
+    make -C ../advc/depends download SOURCES_PATH=`pwd`/cache/common
     popd
 
 Only missing files will be fetched, so this is safe to re-run for each build.
@@ -111,50 +111,50 @@ Only missing files will be fetched, so this is safe to re-run for each build.
 NOTE: Offline builds must use the --url flag to ensure Gitian fetches only from local URLs. For example:
 
     pushd ./gitian-builder
-    ./bin/gbuild --url veco=/path/to/veco,signature=/path/to/sigs {rest of arguments}
+    ./bin/gbuild --url advc=/path/to/advc,signature=/path/to/sigs {rest of arguments}
     popd
 
 The gbuild invocations below <b>DO NOT DO THIS</b> by default.
 
-### Build and sign Veco Core for Linux, Windows, and OS X:
+### Build and sign Adventurecoin Core for Linux, Windows, and OS X:
 
     pushd ./gitian-builder
-    ./bin/gbuild --memory 3000 --commit veco=v${VERSION} ../veco/contrib/gitian-descriptors/gitian-linux.yml
-    ./bin/gsign --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs/ ../veco/contrib/gitian-descriptors/gitian-linux.yml
-    mv build/out/veco-*.tar.gz build/out/src/veco-*.tar.gz ../
+    ./bin/gbuild --memory 3000 --commit advc=v${VERSION} ../advc/contrib/gitian-descriptors/gitian-linux.yml
+    ./bin/gsign --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs/ ../advc/contrib/gitian-descriptors/gitian-linux.yml
+    mv build/out/advc-*.tar.gz build/out/src/advc-*.tar.gz ../
 
-    ./bin/gbuild --memory 3000 --commit veco=v${VERSION} ../veco/contrib/gitian-descriptors/gitian-win.yml
-    ./bin/gsign --signer $SIGNER --release ${VERSION}-win-unsigned --destination ../gitian.sigs/ ../veco/contrib/gitian-descriptors/gitian-win.yml
-    mv build/out/veco-*-win-unsigned.tar.gz inputs/veco-win-unsigned.tar.gz
-    mv build/out/veco-*.zip build/out/veco-*.exe ../
+    ./bin/gbuild --memory 3000 --commit advc=v${VERSION} ../advc/contrib/gitian-descriptors/gitian-win.yml
+    ./bin/gsign --signer $SIGNER --release ${VERSION}-win-unsigned --destination ../gitian.sigs/ ../advc/contrib/gitian-descriptors/gitian-win.yml
+    mv build/out/advc-*-win-unsigned.tar.gz inputs/advc-win-unsigned.tar.gz
+    mv build/out/advc-*.zip build/out/advc-*.exe ../
 
-    ./bin/gbuild --memory 3000 --commit veco=v${VERSION} ../veco/contrib/gitian-descriptors/gitian-osx.yml
-    ./bin/gsign --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../veco/contrib/gitian-descriptors/gitian-osx.yml
-    mv build/out/veco-*-osx-unsigned.tar.gz inputs/veco-osx-unsigned.tar.gz
-    mv build/out/veco-*.tar.gz build/out/veco-*.dmg ../
+    ./bin/gbuild --memory 3000 --commit advc=v${VERSION} ../advc/contrib/gitian-descriptors/gitian-osx.yml
+    ./bin/gsign --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../advc/contrib/gitian-descriptors/gitian-osx.yml
+    mv build/out/advc-*-osx-unsigned.tar.gz inputs/advc-osx-unsigned.tar.gz
+    mv build/out/advc-*.tar.gz build/out/advc-*.dmg ../
     popd
 
 Build output expected:
 
-  1. source tarball (`veco-${VERSION}.tar.gz`)
-  2. linux 32-bit and 64-bit dist tarballs (`veco-${VERSION}-linux[32|64].tar.gz`)
-  3. windows 32-bit and 64-bit unsigned installers and dist zips (`veco-${VERSION}-win[32|64]-setup-unsigned.exe`, `veco-${VERSION}-win[32|64].zip`)
-  4. OS X unsigned installer and dist tarball (`veco-${VERSION}-osx-unsigned.dmg`, `veco-${VERSION}-osx64.tar.gz`)
+  1. source tarball (`advc-${VERSION}.tar.gz`)
+  2. linux 32-bit and 64-bit dist tarballs (`advc-${VERSION}-linux[32|64].tar.gz`)
+  3. windows 32-bit and 64-bit unsigned installers and dist zips (`advc-${VERSION}-win[32|64]-setup-unsigned.exe`, `advc-${VERSION}-win[32|64].zip`)
+  4. OS X unsigned installer and dist tarball (`advc-${VERSION}-osx-unsigned.dmg`, `advc-${VERSION}-osx64.tar.gz`)
   5. Gitian signatures (in `gitian.sigs/${VERSION}-<linux|{win,osx}-unsigned>/(your Gitian key)/`)
 
 ### Verify other gitian builders signatures to your own. (Optional)
 
 Add other gitian builders keys to your gpg keyring, and/or refresh keys.
 
-    gpg --import veco/contrib/gitian-keys/*.pgp
+    gpg --import advc/contrib/gitian-keys/*.pgp
     gpg --refresh-keys
 
 Verify the signatures
 
     pushd ./gitian-builder
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-linux ../veco/contrib/gitian-descriptors/gitian-linux.yml
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-unsigned ../veco/contrib/gitian-descriptors/gitian-win.yml
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-unsigned ../veco/contrib/gitian-descriptors/gitian-osx.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-linux ../advc/contrib/gitian-descriptors/gitian-linux.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-unsigned ../advc/contrib/gitian-descriptors/gitian-win.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-unsigned ../advc/contrib/gitian-descriptors/gitian-osx.yml
     popd
 
 ### Next steps:
@@ -172,25 +172,25 @@ Commit your signature to gitian.sigs:
 Wait for Windows/OS X detached signatures:
 
 - Once the Windows/OS X builds each have 3 matching signatures, they will be signed with their respective release keys.
-- Detached signatures will then be committed to the [veco-detached-sigs](https://github.com/vecopay/veco-detached-sigs) repository, which can be combined with the unsigned apps to create signed binaries.
+- Detached signatures will then be committed to the [advc-detached-sigs](https://github.com/advcpay/advc-detached-sigs) repository, which can be combined with the unsigned apps to create signed binaries.
 
 Create (and optionally verify) the signed OS X binary:
 
     pushd ./gitian-builder
-    ./bin/gbuild -i --commit signature=v${VERSION} ../veco/contrib/gitian-descriptors/gitian-osx-signer.yml
-    ./bin/gsign --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs/ ../veco/contrib/gitian-descriptors/gitian-osx-signer.yml
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../veco/contrib/gitian-descriptors/gitian-osx-signer.yml
-    mv build/out/veco-osx-signed.dmg ../veco-${VERSION}-osx.dmg
+    ./bin/gbuild -i --commit signature=v${VERSION} ../advc/contrib/gitian-descriptors/gitian-osx-signer.yml
+    ./bin/gsign --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs/ ../advc/contrib/gitian-descriptors/gitian-osx-signer.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../advc/contrib/gitian-descriptors/gitian-osx-signer.yml
+    mv build/out/advc-osx-signed.dmg ../advc-${VERSION}-osx.dmg
     popd
 
 Create (and optionally verify) the signed Windows binaries:
 
     pushd ./gitian-builder
-    ./bin/gbuild -i --commit signature=v${VERSION} ../veco/contrib/gitian-descriptors/gitian-win-signer.yml
-    ./bin/gsign --signer $SIGNER --release ${VERSION}-win-signed --destination ../gitian.sigs/ ../veco/contrib/gitian-descriptors/gitian-win-signer.yml
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-signed ../veco/contrib/gitian-descriptors/gitian-win-signer.yml
-    mv build/out/veco-*win64-setup.exe ../veco-${VERSION}-win64-setup.exe
-    mv build/out/veco-*win32-setup.exe ../veco-${VERSION}-win32-setup.exe
+    ./bin/gbuild -i --commit signature=v${VERSION} ../advc/contrib/gitian-descriptors/gitian-win-signer.yml
+    ./bin/gsign --signer $SIGNER --release ${VERSION}-win-signed --destination ../gitian.sigs/ ../advc/contrib/gitian-descriptors/gitian-win-signer.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-signed ../advc/contrib/gitian-descriptors/gitian-win-signer.yml
+    mv build/out/advc-*win64-setup.exe ../advc-${VERSION}-win64-setup.exe
+    mv build/out/advc-*win32-setup.exe ../advc-${VERSION}-win32-setup.exe
     popd
 
 Commit your signature for the signed OS X/Windows binaries:
@@ -212,23 +212,23 @@ sha256sum * > SHA256SUMS
 
 The list of files should be:
 ```
-veco-${VERSION}-aarch64-linux-gnu.tar.gz
-veco-${VERSION}-arm-linux-gnueabihf.tar.gz
-veco-${VERSION}-i686-pc-linux-gnu.tar.gz
-veco-${VERSION}-x86_64-linux-gnu.tar.gz
-veco-${VERSION}-osx64.tar.gz
-veco-${VERSION}-osx.dmg
-veco-${VERSION}.tar.gz
-veco-${VERSION}-win32-setup.exe
-veco-${VERSION}-win32.zip
-veco-${VERSION}-win64-setup.exe
-veco-${VERSION}-win64.zip
+advc-${VERSION}-aarch64-linux-gnu.tar.gz
+advc-${VERSION}-arm-linux-gnueabihf.tar.gz
+advc-${VERSION}-i686-pc-linux-gnu.tar.gz
+advc-${VERSION}-x86_64-linux-gnu.tar.gz
+advc-${VERSION}-osx64.tar.gz
+advc-${VERSION}-osx.dmg
+advc-${VERSION}.tar.gz
+advc-${VERSION}-win32-setup.exe
+advc-${VERSION}-win32.zip
+advc-${VERSION}-win64-setup.exe
+advc-${VERSION}-win64.zip
 ```
 The `*-debug*` files generated by the gitian build contain debug symbols
 for troubleshooting by developers. It is assumed that anyone that is interested
 in debugging can run gitian to generate the files for themselves. To avoid
 end-user confusion about which file to pick, as well as save storage
-space *do not upload these to the veco.org server*.
+space *do not upload these to the advc.org server*.
 
 - GPG-sign it, delete the unsigned file:
 ```
@@ -238,20 +238,20 @@ rm SHA256SUMS
 (the digest algorithm is forced to sha256 to avoid confusion of the `Hash:` header that GPG adds with the SHA256 used for the files)
 Note: check that SHA256SUMS itself doesn't end up in SHA256SUMS, which is a spurious/nonsensical entry.
 
-- Upload zips and installers, as well as `SHA256SUMS.asc` from last step, to the veco.org server
+- Upload zips and installers, as well as `SHA256SUMS.asc` from last step, to the advc.org server
 
-- Update veco.org
+- Update advc.org
 
 - Announce the release:
 
-  - Release on Veco forum: https://www.veco.org/forum/topic/official-announcements.54/
+  - Release on Adventurecoin forum: https://www.advc.org/forum/topic/official-announcements.54/
 
-  - Optionally Discord, twitter, reddit /r/Vecopay, ... but this will usually sort out itself
+  - Optionally Discord, twitter, reddit /r/Adventurecoinpay, ... but this will usually sort out itself
 
-  - Notify flare so that he can start building [the PPAs](https://launchpad.net/~veco.org/+archive/ubuntu/veco)
+  - Notify flare so that he can start building [the PPAs](https://launchpad.net/~advc.org/+archive/ubuntu/advc)
 
   - Archive release notes for the new version to `doc/release-notes/` (branch `master` and branch of the release)
 
-  - Create a [new GitHub release](https://github.com/vecopay/veco/releases/new) with a link to the archived release notes.
+  - Create a [new GitHub release](https://github.com/advcpay/advc/releases/new) with a link to the archived release notes.
 
   - Celebrate

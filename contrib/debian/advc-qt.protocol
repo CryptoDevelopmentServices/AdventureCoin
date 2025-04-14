@@ -1,0 +1,11 @@
+[Protocol]
+exec=advc-qt '%u'
+protocol=advc
+input=none
+output=none
+helper=true
+listing=
+reading=false
+writing=false
+makedir=false
+deleting=false

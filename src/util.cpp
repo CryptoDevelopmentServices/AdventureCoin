@@ -1,12 +1,12 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2015 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2018-2022 The Veco Core developers
+// Copyright (c) 2018-2022 The Adventurecoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include "config/veco-config.h"
+#include "config/advc-config.h"
 #endif
 
 #include "util.h"
@@ -110,7 +110,7 @@ namespace boost {
 
 
 
-//Veco only features
+//Adventurecoin only features
 bool fMasternodeMode = false;
 bool fLiteMode = false;
 /**
@@ -122,8 +122,8 @@ bool fLiteMode = false;
 */
 int nWalletBackups = 10;
 
-const char * const BITCOIN_CONF_FILENAME = "veco.conf";
-const char * const BITCOIN_PID_FILENAME = "vecod.pid";
+const char * const BITCOIN_CONF_FILENAME = "advc.conf";
+const char * const BITCOIN_PID_FILENAME = "advcd.pid";
 
 CCriticalSection cs_args;
 std::map<std::string, std::string> mapArgs;
@@ -279,8 +279,8 @@ bool LogAcceptCategory(const char* category)
                 const std::vector<std::string>& categories = mapMultiArgs.at("-debug");
                 ptrCategory.reset(new std::set<std::string>(categories.begin(), categories.end()));
                 // thread_specific_ptr automatically deletes the set when the thread ends.
-                // "veco" is a composite category enabling all Veco-related debug output
-                if(ptrCategory->count(std::string("veco"))) {
+                // "advc" is a composite category enabling all Adventurecoin-related debug output
+                if(ptrCategory->count(std::string("advc"))) {
                     ptrCategory->insert(std::string("privatesend"));
                     ptrCategory->insert(std::string("instantsend"));
                     ptrCategory->insert(std::string("masternode"));
@@ -537,7 +537,7 @@ static std::string FormatException(const std::exception* pex, const char* pszThr
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "veco";
+    const char* pszModule = "advc";
 #endif
     if (pex)
         return strprintf(
@@ -557,13 +557,13 @@ void PrintExceptionContinue(const std::exception* pex, const char* pszThread)
 boost::filesystem::path GetDefaultDataDir()
 {
     namespace fs = boost::filesystem;
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\VecoCore
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\VecoCore
-    // Mac: ~/Library/Application Support/VecoCore
-    // Unix: ~/.vecocore
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\AdventurecoinCore
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\AdventurecoinCore
+    // Mac: ~/Library/Application Support/AdventurecoinCore
+    // Unix: ~/.advccore
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "VecoCore";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "AdventurecoinCore";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -573,10 +573,10 @@ boost::filesystem::path GetDefaultDataDir()
         pathRet = fs::path(pszHome);
 #ifdef MAC_OSX
     // Mac
-    return pathRet / "Library/Application Support/VecoCore";
+    return pathRet / "Library/Application Support/AdventurecoinCore";
 #else
     // Unix
-    return pathRet / ".vecocore";
+    return pathRet / ".advccore";
 #endif
 #endif
 }
@@ -654,7 +654,7 @@ void ReadConfigFile(const std::string& confPath)
 {
     boost::filesystem::ifstream streamConfig(GetConfigFile(confPath));
     if (!streamConfig.good()){
-        // Create empty veco.conf if it does not excist
+        // Create empty advc.conf if it does not excist
         FILE* configFile = fopen(GetConfigFile(confPath).string().c_str(), "a");
         if (configFile != NULL)
             fclose(configFile);
@@ -668,7 +668,7 @@ void ReadConfigFile(const std::string& confPath)
 
         for (boost::program_options::detail::config_file_iterator it(streamConfig, setOptions), end; it != end; ++it)
         {
-            // Don't overwrite existing settings so command line settings override veco.conf
+            // Don't overwrite existing settings so command line settings override advc.conf
             std::string strKey = std::string("-") + it->string_key;
             std::string strValue = it->value[0];
             InterpretNegativeSetting(strKey, strValue);

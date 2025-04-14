@@ -18,9 +18,9 @@ RUN apt-get update && apt-get install -y \
 # Python stuff
 RUN pip3 install pyzmq # really needed?
 
-# veco_hash
-RUN git clone https://github.com/vecopay/veco_hash
-RUN cd veco_hash && python3 setup.py install
+# advc_hash
+RUN git clone https://github.com/advcpay/advc_hash
+RUN cd advc_hash && python3 setup.py install
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
@@ -28,8 +28,8 @@ ARG GROUP_ID=1000
 # add user with specified (or default) user/group ids
 ENV USER_ID ${USER_ID}
 ENV GROUP_ID ${GROUP_ID}
-RUN groupadd -g ${GROUP_ID} veco
-RUN useradd -u ${USER_ID} -g veco -s /bin/bash -m -d /veco veco
+RUN groupadd -g ${GROUP_ID} advc
+RUN useradd -u ${USER_ID} -g advc -s /bin/bash -m -d /advc advc
 
 # Extra packages
 ARG BUILD_TARGET=linux64
@@ -47,13 +47,13 @@ RUN \
   update-alternatives --set x86_64-w64-mingw32-g++  /usr/bin/x86_64-w64-mingw32-g++-posix; \
   exit 0
 
-RUN mkdir /veco-src && \
+RUN mkdir /advc-src && \
   mkdir -p /cache/ccache && \
   mkdir /cache/depends && \
   mkdir /cache/sdk-sources && \
-  chown $USER_ID:$GROUP_ID /veco-src && \
+  chown $USER_ID:$GROUP_ID /advc-src && \
   chown $USER_ID:$GROUP_ID /cache && \
   chown $USER_ID:$GROUP_ID /cache -R
-WORKDIR /veco-src
+WORKDIR /advc-src
 
-USER veco
+USER advc

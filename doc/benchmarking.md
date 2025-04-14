@@ -1,11 +1,11 @@
 Benchmarking
 ============
 
-Veco Core has an internal benchmarking framework, with benchmarks
+Adventurecoin Core has an internal benchmarking framework, with benchmarks
 for cryptographic algorithms such as SHA1, SHA256, SHA512 and RIPEMD160. As well as the rolling bloom filter.
 
-After compiling Veco Core, the benchmarks can be run with:
-`src/bench/bench_veco`
+After compiling Adventurecoin Core, the benchmarks can be run with:
+`src/bench/bench_advc`
 
 The output will look similar to:
 ```

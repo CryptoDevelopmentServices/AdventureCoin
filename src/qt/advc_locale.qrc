@@ -1,0 +1,25 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource prefix="/translations">
+        <file alias="ar">locale/advc_ar.qm</file>
+        <file alias="bg">locale/advc_bg.qm</file>
+        <file alias="de">locale/advc_de.qm</file>
+        <file alias="en">locale/advc_en.qm</file>
+        <file alias="es">locale/advc_es.qm</file>
+        <file alias="fi">locale/advc_fi.qm</file>
+        <file alias="fr">locale/advc_fr.qm</file>
+        <file alias="it">locale/advc_it.qm</file>
+        <file alias="ja">locale/advc_ja.qm</file>
+        <file alias="ko">locale/advc_ko.qm</file>
+        <file alias="nl">locale/advc_nl.qm</file>
+        <file alias="pl">locale/advc_pl.qm</file>
+        <file alias="pt">locale/advc_pt.qm</file>
+        <file alias="ru">locale/advc_ru.qm</file>
+        <file alias="sk">locale/advc_sk.qm</file>
+        <file alias="sv">locale/advc_sv.qm</file>
+        <file alias="th">locale/advc_th.qm</file>
+        <file alias="tr">locale/advc_tr.qm</file>
+        <file alias="vi">locale/advc_vi.qm</file>
+        <file alias="zh_CN">locale/advc_zh_CN.qm</file>
+        <file alias="zh_TW">locale/advc_zh_TW.qm</file>
+    </qresource>
+</RCC>

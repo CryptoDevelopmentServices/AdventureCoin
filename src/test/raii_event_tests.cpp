@@ -12,7 +12,7 @@
 
 #include "support/events.h"
 
-#include "test/test_veco.h"
+#include "test/test_advc.h"
 
 #include <vector>
 

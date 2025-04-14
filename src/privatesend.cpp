@@ -1,5 +1,5 @@
 // Copyright (c) 2014-2018 The Dash Core developers
-// Copyright (c) 2018-2022 The Veco Core developers
+// Copyright (c) 2018-2022 The Adventurecoin Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -451,10 +451,10 @@ int CPrivateSend::GetDenominations(const std::vector<CTxOut>& vecTxOut, bool fSi
 bool CPrivateSend::GetDenominationsBits(int nDenom, std::vector<int>& vecBitsRet)
 {
     // ( bit on if present, 4 denominations example )
-    // bit 0 - 100VECO+1
-    // bit 1 - 10VECO+1
-    // bit 2 - 1VECO+1
-    // bit 3 - .1VECO+1
+    // bit 0 - 100ADVC+1
+    // bit 1 - 10ADVC+1
+    // bit 2 - 1ADVC+1
+    // bit 3 - .1ADVC+1
 
     int nMaxDenoms = vecStandardDenominations.size();
 

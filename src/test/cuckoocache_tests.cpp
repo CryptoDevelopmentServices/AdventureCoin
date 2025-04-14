@@ -3,7 +3,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #include <boost/test/unit_test.hpp>
 #include "cuckoocache.h"
-#include "test/test_veco.h"
+#include "test/test_advc.h"
 #include "random.h"
 #include <thread>
 #include <boost/thread.hpp>

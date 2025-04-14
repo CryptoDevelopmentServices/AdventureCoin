@@ -7,23 +7,23 @@ define(_CLIENT_VERSION_BUILD, 0)
 define(_CLIENT_VERSION_IS_RELEASE, true)
 define(_COPYRIGHT_YEAR, 2022)
 define(_COPYRIGHT_HOLDERS,[The %s developers])
-define(_COPYRIGHT_HOLDERS_SUBSTITUTION,[[Veco Core]])
-AC_INIT([Veco Core],[_CLIENT_VERSION_MAJOR._CLIENT_VERSION_MINOR._CLIENT_VERSION_REVISION],[https://github.com/vecopay/veco/issues],[vecocore],[https://veco.org/])
+define(_COPYRIGHT_HOLDERS_SUBSTITUTION,[[Adventurecoin Core]])
+AC_INIT([Adventurecoin Core],[_CLIENT_VERSION_MAJOR._CLIENT_VERSION_MINOR._CLIENT_VERSION_REVISION],[https://github.com/advcpay/advc/issues],[advccore],[https://advc.org/])
 AC_CONFIG_SRCDIR([src/validation.cpp])
-AC_CONFIG_HEADERS([src/config/veco-config.h])
+AC_CONFIG_HEADERS([src/config/advc-config.h])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([build-aux/m4])
 
-BITCOIN_DAEMON_NAME=vecod
-BITCOIN_GUI_NAME=veco-qt
-BITCOIN_CLI_NAME=veco-cli
-BITCOIN_TX_NAME=veco-tx
+BITCOIN_DAEMON_NAME=advcd
+BITCOIN_GUI_NAME=advc-qt
+BITCOIN_CLI_NAME=advc-cli
+BITCOIN_TX_NAME=advc-tx
 
 AC_CANONICAL_HOST
 
-AH_TOP([#ifndef VECO_CONFIG_H])
-AH_TOP([#define VECO_CONFIG_H])
-AH_BOTTOM([#endif //VECO_CONFIG_H])
+AH_TOP([#ifndef ADVC_CONFIG_H])
+AH_TOP([#define ADVC_CONFIG_H])
+AH_BOTTOM([#endif //ADVC_CONFIG_H])
 
 dnl faketime breaks configure and is only needed for make. Disable it here.
 unset FAKETIME
@@ -252,7 +252,7 @@ CPPFLAGS="$CPPFLAGS -DHAVE_BUILD_INFO -D__STDC_FORMAT_MACROS"
 
 AC_ARG_WITH([utils],
   [AS_HELP_STRING([--with-utils],
-  [build veco-cli veco-tx (default=yes)])],
+  [build advc-cli advc-tx (default=yes)])],
   [build_bitcoin_utils=$withval],
   [build_bitcoin_utils=yes])
 
@@ -264,7 +264,7 @@ AC_ARG_WITH([libs],
 
 AC_ARG_WITH([daemon],
   [AS_HELP_STRING([--with-daemon],
-  [build vecod daemon (default=yes)])],
+  [build advcd daemon (default=yes)])],
   [build_bitcoind=$withval],
   [build_bitcoind=yes])
 
@@ -455,7 +455,7 @@ AC_C_BIGENDIAN
 dnl Check for pthread compile/link requirements
 AX_PTHREAD
 
-# The following macro will add the necessary defines to veco-config.h, but
+# The following macro will add the necessary defines to advc-config.h, but
 # they also need to be passed down to any subprojects. Pull the results out of
 # the cache and add them to CPPFLAGS.
 AC_SYS_LARGEFILE
@@ -928,11 +928,11 @@ AC_SUBST(UNIVALUE_LIBS)
 
 BITCOIN_QT_PATH_PROGS([PROTOC], [protoc],$protoc_bin_path)
 
-AC_MSG_CHECKING([whether to build vecod])
+AC_MSG_CHECKING([whether to build advcd])
 AM_CONDITIONAL([BUILD_BITCOIND], [test x$build_bitcoind = xyes])
 AC_MSG_RESULT($build_bitcoind)
 
-AC_MSG_CHECKING([whether to build utils (veco-cli veco-tx)])
+AC_MSG_CHECKING([whether to build utils (advc-cli advc-tx)])
 AM_CONDITIONAL([BUILD_BITCOIN_UTILS], [test x$build_bitcoin_utils = xyes])
 AC_MSG_RESULT($build_bitcoin_utils)
 
@@ -940,7 +940,7 @@ AC_MSG_CHECKING([whether to build libraries])
 AM_CONDITIONAL([BUILD_BITCOIN_LIBS], [test x$build_bitcoin_libs = xyes])
 if test x$build_bitcoin_libs = xyes; then
   AC_DEFINE(HAVE_CONSENSUS_LIB, 1, [Define this symbol if the consensus lib has been built])
-  AC_CONFIG_FILES([libvecoconsensus.pc:libvecoconsensus.pc.in])
+  AC_CONFIG_FILES([libadvcconsensus.pc:libadvcconsensus.pc.in])
 fi
 AC_MSG_RESULT($build_bitcoin_libs)
 
@@ -1033,7 +1033,7 @@ if test x$bitcoin_enable_qt != xno; then
     AC_MSG_WARN("xgettext is required to update qt translations")
   fi
 
-  AC_MSG_CHECKING([whether to build test_veco-qt])
+  AC_MSG_CHECKING([whether to build test_advc-qt])
   if test x$use_gui_tests$bitcoin_enable_qt_test = xyesyes; then
     AC_MSG_RESULT([yes])
     BUILD_TEST_QT="yes"
@@ -1044,7 +1044,7 @@ fi
 
 AM_CONDITIONAL([ENABLE_ZMQ], [test "x$use_zmq" = "xyes"])
 
-AC_MSG_CHECKING([whether to build test_veco])
+AC_MSG_CHECKING([whether to build test_advc])
 if test x$use_tests = xyes; then
   AC_MSG_RESULT([yes])
   BUILD_TEST="yes"
