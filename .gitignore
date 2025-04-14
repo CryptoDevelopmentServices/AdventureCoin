@@ -2,17 +2,18 @@
 *.sublime-workspace
 todo.txt
 reset-files.bash
-
+/keys
 *.tar.gz
+.goutputstream-*
 
 *.exe
-src/veco
-src/vecod
-src/veco-cli
-src/veco-tx
-src/test/test_veco
-src/qt/test/test_veco-qt
-src/bench/bench_veco
+src/advc
+src/advcd
+src/advc-cli
+src/advc-tx
+src/test/test_advc
+src/qt/test/test_advc-qt
+src/bench/bench_advc
 
 # autoreconf
 Makefile.in
@@ -35,8 +36,8 @@ config.log
 config.status
 configure
 libtool
-src/config/veco-config.h
-src/config/veco-config.h.in
+src/config/advc-config.h
+src/config/advc-config.h.in
 src/config/stamp-h1
 share/setup.nsi
 share/qt/Info.plist
@@ -81,12 +82,12 @@ libconftest.dylib*
 # Compilation and Qt preprocessor part
 *.qm
 Makefile
-veco-qt
-Veco-Qt.app
+advc-qt
+Adventurecoin-Qt.app
 
 # Unit-tests
 Makefile.test
-veco-qt_test
+advc-qt_test
 src/test/buildenv.py
 
 # Resources cpp
@@ -100,7 +101,7 @@ build
 *.gcno
 *.gcda
 /*.info
-test_veco.coverage/
+test_advc.coverage/
 total.coverage/
 coverage_percent.txt
 
@@ -118,15 +119,15 @@ qa/cache/*
 .autotools
 /doc/doxygen/
 
-libvecoconsensus.pc
+libadvcconsensus.pc
 contrib/devtools/split-debug.sh
-src/qt/veco-qt.bash
+src/qt/advc-qt.bash
 qa/pull-tester/tests-config.sh
 
 #development symlinks
-veco-cli
-vecod
-veco-qt
+advc-cli
+advcd
+advc-qt
 make
 
 /docker/bin
