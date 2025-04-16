@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2016 The Bitcoin Core developers
-// Copyright (c) 2018 MicroBitcoin developers
+// Copyright (c) 2018 AdventureCoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -43,7 +43,7 @@
 #include <validationinterface.h>
 #include <versionbits.h>
 #include <warnings.h>
-#include <microbitcoin.h>
+#include <adventurecoin.h>
 
 #include <atomic>
 #include <future>
@@ -1130,7 +1130,7 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
     const CAmount initSubsidy = 50 * COIN * COIN_RATIO;
 
     // Old subsidy
-    if (nHeight < (consensusParams.mbcHeight + 1))
+    if (nHeight < (consensusParams.advcHeight + 1))
     {
         const int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
         // Force block reward to zero when right shift is undefined.
@@ -1147,20 +1147,20 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
 
     // New subsidy
     const int halvingRatio = (consensusParams.nSubsidyHalvingInterval * 10) / consensusParams.nSubsidyHalvingInterval;
-    const CAmount initSubsidyMBC = initSubsidy >> ((consensusParams.mbcHeight + 1) / consensusParams.nSubsidyHalvingInterval);
-    const int lastSubsidyHeightBTC = ((consensusParams.mbcHeight + 1) / consensusParams.nSubsidyHalvingInterval) * consensusParams.nSubsidyHalvingInterval;
-    const int remainSubsidyHeightBTC = consensusParams.nSubsidyHalvingInterval - ((consensusParams.mbcHeight + 1) - lastSubsidyHeightBTC);
-    const int newSubsidyHeightMBC = (consensusParams.mbcHeight + 1) + remainSubsidyHeightBTC * halvingRatio;
-    if (nHeight < newSubsidyHeightMBC) {
-        const CAmount nSubsidy = initSubsidyMBC / halvingRatio;
+    const CAmount initSubsidyADVC = initSubsidy >> ((consensusParams.advcHeight + 1) / consensusParams.nSubsidyHalvingInterval);
+    const int lastSubsidyHeightBTC = ((consensusParams.advcHeight + 1) / consensusParams.nSubsidyHalvingInterval) * consensusParams.nSubsidyHalvingInterval;
+    const int remainSubsidyHeightBTC = consensusParams.nSubsidyHalvingInterval - ((consensusParams.advcHeight + 1) - lastSubsidyHeightBTC);
+    const int newSubsidyHeightADVC = (consensusParams.advcHeight + 1) + remainSubsidyHeightBTC * halvingRatio;
+    if (nHeight < newSubsidyHeightADVC) {
+        const CAmount nSubsidy = initSubsidyADVC / halvingRatio;
         return nSubsidy;
     }
 
-    const int halvings = (nHeight - newSubsidyHeightMBC) / (consensusParams.nSubsidyHalvingInterval * 10) + 1;
+    const int halvings = (nHeight - newSubsidyHeightADVC) / (consensusParams.nSubsidyHalvingInterval * 10) + 1;
     if (halvings >= 18) {
         return 0;
     }
-    const CAmount nSubsidy = (initSubsidyMBC >> halvings) / halvingRatio;
+    const CAmount nSubsidy = (initSubsidyADVC >> halvings) / halvingRatio;
     return nSubsidy;
 }
 
@@ -1772,7 +1772,7 @@ static unsigned int GetBlockScriptFlags(const CBlockIndex* pindex, const Consens
     }
 
     // After hardfork we start accepting replay protected txns (OLD)
-    if (pindex->nHeight > (consensusParams.mbcHeight + 1) && pindex->nHeight < consensusParams.lwma2Height) {
+    if (pindex->nHeight > (consensusParams.advcHeight + 1) && pindex->nHeight < consensusParams.lwma2Height) {
         flags |= SCRIPT_VERIFY_STRICTENC;
         flags |= SCRIPT_ENABLE_SIGHASH_FORKID_OLD;
     }
@@ -1994,24 +1994,10 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
     int64_t nTime3 = GetTimeMicros(); nTimeConnect += nTime3 - nTime2;
     LogPrint(BCLog::BENCH, "      - Connect %u transactions: %.2fms (%.3fms/tx, %.3fms/txin) [%.2fs]\n", (unsigned)block.vtx.size(), 0.001 * (nTime3 - nTime2), 0.001 * (nTime3 - nTime2) / block.vtx.size(), nInputs <= 1 ? 0 : 0.001 * (nTime3 - nTime2) / (nInputs-1), nTimeConnect * 0.000001);
 
-    auto isPremineBlock = pindex->nHeight == (chainparams.GetConsensus().mbcHeight + 1);
-    auto premineValue = chainparams.GetConsensus().premineValue;
-
     CAmount blockReward = nFees + GetBlockSubsidy(pindex->nHeight, chainparams.GetConsensus());
-    if (premineValue) blockReward += premineValue;
     if (block.vtx[0]->GetValueOut() > blockReward)
     {
-        return state.DoS(100, error("ConnectBlock(): coinbase pays too much (actual=%d vs limit=%d)", block.vtx[0]-> GetValueOut(), blockReward), REJECT_INVALID, "bad-cb-amount");
-    }
-
-    // Check premine tx-out at hardfork height
-    const auto& coinbaseVouts = block.vtx[0]->vout;
-    if (isPremineBlock)
-    {
-        if (coinbaseVouts[0].nValue < premineValue || coinbaseVouts[0].scriptPubKey != GetScriptForDestination(DecodeDestination(chainparams.GetConsensus().premineAddress)))
-        {
-            return state.DoS(100, error("ConnectBlock(): coinbase has no premine (actual=%d vs premine=%d)", block.vtx[0]-> GetValueOut(), premineValue), REJECT_INVALID, "bad-cb-no-premine");
-        }
+        return state.DoS(100, error("ConnectBlock(): coinbase pays too much (actual=%d vs limit=%d)", block.vtx[0]->GetValueOut(), blockReward), REJECT_INVALID, "bad-cb-amount");
     }
 
     if (!control.Wait())

@@ -69,7 +69,7 @@ Build Bitcoin Core
 Running
 -------
 
-Bitcoin Core is now available at `./src/microbitcoind`
+Bitcoin Core is now available at `./src/adventurecoind`
 
 Before running, it's recommended you create an RPC configuration file.
 
@@ -77,7 +77,7 @@ Before running, it's recommended you create an RPC configuration file.
 
     chmod 600 "/Users/${USER}/Library/Application Support/Bitcoin/bitcoin.conf"
 
-The first time you run microbitcoind, it will start downloading the blockchain. This process could take several hours.
+The first time you run adventurecoind, it will start downloading the blockchain. This process could take several hours.
 
 You can monitor the download process by looking at the debug.log file:
 
@@ -86,9 +86,9 @@ You can monitor the download process by looking at the debug.log file:
 Other commands:
 -------
 
-    ./src/microbitcoind -daemon # Starts the bitcoin daemon.
-    ./src/microbitcoin-cli --help # Outputs a list of command-line options.
-    ./src/microbitcoin-cli help # Outputs a list of RPC commands when the daemon is running.
+    ./src/adventurecoind -daemon # Starts the bitcoin daemon.
+    ./src/adventurecoin-cli --help # Outputs a list of command-line options.
+    ./src/adventurecoin-cli help # Outputs a list of RPC commands when the daemon is running.
 
 Notes
 -----

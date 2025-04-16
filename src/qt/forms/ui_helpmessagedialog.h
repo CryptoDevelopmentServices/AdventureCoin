@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'helpmessagedialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,14 +10,11 @@
 #define UI_HELPMESSAGEDIALOG_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QSpacerItem>
@@ -46,17 +43,17 @@ public:
     void setupUi(QDialog *HelpMessageDialog)
     {
         if (HelpMessageDialog->objectName().isEmpty())
-            HelpMessageDialog->setObjectName(QStringLiteral("HelpMessageDialog"));
+            HelpMessageDialog->setObjectName(QString::fromUtf8("HelpMessageDialog"));
         HelpMessageDialog->resize(780, 400);
         horizontalLayout_2 = new QHBoxLayout(HelpMessageDialog);
         horizontalLayout_2->setSpacing(0);
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         horizontalLayout_2->setContentsMargins(12, 12, 12, 12);
         verticalLayoutLogo = new QVBoxLayout();
-        verticalLayoutLogo->setObjectName(QStringLiteral("verticalLayoutLogo"));
+        verticalLayoutLogo->setObjectName(QString::fromUtf8("verticalLayoutLogo"));
         verticalLayoutLogo->setContentsMargins(0, 4, 0, -1);
         aboutLogo = new QLabel(HelpMessageDialog);
-        aboutLogo->setObjectName(QStringLiteral("aboutLogo"));
+        aboutLogo->setObjectName(QString::fromUtf8("aboutLogo"));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Ignored);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -70,7 +67,7 @@ public:
         verticalLayoutLogo->addWidget(aboutLogo);
 
         frame = new QFrame(HelpMessageDialog);
-        frame->setObjectName(QStringLiteral("frame"));
+        frame->setObjectName(QString::fromUtf8("frame"));
         frame->setFrameShape(QFrame::NoFrame);
         frame->setFrameShadow(QFrame::Raised);
 
@@ -80,24 +77,24 @@ public:
         horizontalLayout_2->addLayout(verticalLayoutLogo);
 
         verticalLayout = new QVBoxLayout();
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         helpMessage = new QTextEdit(HelpMessageDialog);
-        helpMessage->setObjectName(QStringLiteral("helpMessage"));
+        helpMessage->setObjectName(QString::fromUtf8("helpMessage"));
         helpMessage->setReadOnly(true);
 
         verticalLayout->addWidget(helpMessage);
 
         scrollArea = new QScrollArea(HelpMessageDialog);
-        scrollArea->setObjectName(QStringLiteral("scrollArea"));
+        scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
         scrollArea->setFrameShape(QFrame::NoFrame);
         scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
-        scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
+        scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
         verticalLayout_2 = new QVBoxLayout(scrollAreaWidgetContents);
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         aboutMessage = new QLabel(scrollAreaWidgetContents);
-        aboutMessage->setObjectName(QStringLiteral("aboutMessage"));
+        aboutMessage->setObjectName(QString::fromUtf8("aboutMessage"));
         aboutMessage->setCursor(QCursor(Qt::IBeamCursor));
         aboutMessage->setTextFormat(Qt::PlainText);
         aboutMessage->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
@@ -115,7 +112,7 @@ public:
         verticalLayout->addItem(verticalSpacer);
 
         okButton = new QDialogButtonBox(HelpMessageDialog);
-        okButton->setObjectName(QStringLiteral("okButton"));
+        okButton->setObjectName(QString::fromUtf8("okButton"));
         okButton->setOrientation(Qt::Horizontal);
         okButton->setStandardButtons(QDialogButtonBox::Ok);
 

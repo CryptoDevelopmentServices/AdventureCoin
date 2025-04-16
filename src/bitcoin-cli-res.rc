@@ -16,14 +16,14 @@ BEGIN
     BEGIN
         BLOCK "040904E4" // U.S. English - multilingual (hex)
         BEGIN
-            VALUE "CompanyName",        "MicroBitcoin"
-            VALUE "FileDescription",    "microbitcoin-cli (JSON-RPC client for " PACKAGE_NAME ")"
+            VALUE "CompanyName",        "AdventureCoin"
+            VALUE "FileDescription",    "adventurecoin-cli (JSON-RPC client for " PACKAGE_NAME ")"
             VALUE "FileVersion",        VER_FILEVERSION_STR
-            VALUE "InternalName",       "microbitcoin-cli"
+            VALUE "InternalName",       "adventurecoin-cli"
             VALUE "LegalCopyright",     COPYRIGHT_STR
             VALUE "LegalTrademarks1",   "Distributed under the MIT software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php."
-            VALUE "OriginalFilename",   "microbitcoin-cli.exe"
-            VALUE "ProductName",        "microbitcoin-cli"
+            VALUE "OriginalFilename",   "adventurecoin-cli.exe"
+            VALUE "ProductName",        "adventurecoin-cli"
             VALUE "ProductVersion",     VER_PRODUCTVERSION_STR
         END
     END

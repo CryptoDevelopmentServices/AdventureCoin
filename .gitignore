@@ -1,15 +1,15 @@
 *.tar.gz
 
 *.exe
-src/microbitcoin
-src/microbitcoind
-src/microbitcoin-cli
-src/microbitcoin-tx
-src/test/test_microbitcoin
-src/test/test_microbitcoin_fuzzy
-src/qt/test/test_microbitcoin-qt
-src/bench/bench_microbitcoin
-src/qt/microbitcoin-qt
+src/adventurecoin
+src/adventurecoind
+src/adventurecoin-cli
+src/adventurecoin-tx
+src/test/test_adventurecoin
+src/test/test_adventurecoin_fuzzy
+src/qt/test/test_adventurecoin-qt
+src/bench/bench_adventurecoin
+src/qt/adventurecoin-qt
 bin/*
 
 # autoreconf

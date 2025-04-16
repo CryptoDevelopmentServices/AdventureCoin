@@ -16,10 +16,10 @@ BEGIN
     BEGIN
         BLOCK "040904E4" // U.S. English - multilingual (hex)
         BEGIN
-            VALUE "CompanyName",        "MicroBitcoin"
-            VALUE "FileDescription",    "microbitcoin-tx (CLI MicroBitcoin transaction editor utility)"
+            VALUE "CompanyName",        "AdventureCoin"
+            VALUE "FileDescription",    "adventurecoin-tx (CLI AdventureCoin transaction editor utility)"
             VALUE "FileVersion",        VER_FILEVERSION_STR
-            VALUE "InternalName",       "microbitcoin-tx"
+            VALUE "InternalName",       "adventurecoin-tx"
             VALUE "LegalCopyright",     COPYRIGHT_STR
             VALUE "LegalTrademarks1",   "Distributed under the MIT software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php."
             VALUE "OriginalFilename",   "bitcoin-tx.exe"

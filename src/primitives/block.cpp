@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2016 The Bitcoin Core developers
-// Copyright (c) 2018 MicroBitcoin developers
+// Copyright (c) 2018 AdventureCoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -13,7 +13,7 @@
 #include <versionbits.h>
 #include <consensus/params.h>
 #include <chainparams.h>
-#include <microbitcoin.h>
+#include <adventurecoin.h>
 
 uint256 CBlockHeader::GetIndexHash(int nHeight) const
 {
@@ -32,7 +32,7 @@ uint256 CBlockHeader::GetWorkHash(const Consensus::Params& consensusParams, int 
         return RainforestV2(BEGIN(nVersion), END(nNonce));
     } else if (nHeight >= consensusParams.rainforestHeight && nHeight < consensusParams.rainforestHeightV2) {
         return Rainforest(BEGIN(nVersion), END(nNonce));
-    } else if (nHeight > consensusParams.mbcHeight && nHeight < consensusParams.rainforestHeight) {
+    } else if (nHeight > consensusParams.advcHeight && nHeight < consensusParams.rainforestHeight) {
         return Groestl(BEGIN(nVersion), END(nNonce));
     } else {
         return SerializeHash(*this);

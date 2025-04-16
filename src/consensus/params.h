@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2016 The Bitcoin Core developers
-// Copyright (c) 2018 MicroBitcoin developers
+// Copyright (c) 2018 AdventureCoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -58,7 +58,7 @@ struct Params {
     BIP9Deployment vDeployments[MAX_VERSION_BITS_DEPLOYMENTS];
     /** Proof of work parameters */
     uint256 powLimit;
-    uint256 powLimitMBC;
+    uint256 powLimitADVC;
     uint256 powLimitRFv2;
     bool fPowAllowMinDifficultyBlocks;
     bool fPowNoRetargeting;
@@ -73,7 +73,7 @@ struct Params {
     uint256 nMinimumChainWork;
     uint256 defaultAssumeValid;
 
-    int mbcHeight;
+    int advcHeight;
     int lwma2Height;
     int lwma3Height;
     int rainforestHeight;
@@ -82,8 +82,7 @@ struct Params {
     int lwmaAveragingWindow;
     int64_t lwmaMaxFutureBlockTime;
     int64_t lwmaMaxFutureBlockTimeV2;
-    std::string premineAddress;
-    CAmount premineValue;
+    
 };
 } // namespace Consensus
 

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'receivecoinsdialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,9 +10,8 @@
 #define UI_RECEIVECOINSDIALOG_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
@@ -63,12 +62,12 @@ public:
     void setupUi(QWidget *ReceiveCoinsDialog)
     {
         if (ReceiveCoinsDialog->objectName().isEmpty())
-            ReceiveCoinsDialog->setObjectName(QStringLiteral("ReceiveCoinsDialog"));
+            ReceiveCoinsDialog->setObjectName(QString::fromUtf8("ReceiveCoinsDialog"));
         ReceiveCoinsDialog->resize(776, 364);
         verticalLayout = new QVBoxLayout(ReceiveCoinsDialog);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         frame2 = new QFrame(ReceiveCoinsDialog);
-        frame2->setObjectName(QStringLiteral("frame2"));
+        frame2->setObjectName(QString::fromUtf8("frame2"));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -77,78 +76,78 @@ public:
         frame2->setFrameShape(QFrame::StyledPanel);
         frame2->setFrameShadow(QFrame::Sunken);
         verticalLayout_3 = new QVBoxLayout(frame2);
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         gridLayout = new QGridLayout();
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         reuseAddress = new QCheckBox(frame2);
-        reuseAddress->setObjectName(QStringLiteral("reuseAddress"));
+        reuseAddress->setObjectName(QString::fromUtf8("reuseAddress"));
 
         gridLayout->addWidget(reuseAddress, 7, 2, 1, 1);
 
         label_4 = new QLabel(frame2);
-        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setObjectName(QString::fromUtf8("label_4"));
 
         gridLayout->addWidget(label_4, 7, 0, 1, 1);
 
         label_3 = new QLabel(frame2);
-        label_3->setObjectName(QStringLiteral("label_3"));
+        label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         gridLayout->addWidget(label_3, 6, 0, 1, 1);
 
         reqLabel = new QLineEdit(frame2);
-        reqLabel->setObjectName(QStringLiteral("reqLabel"));
+        reqLabel->setObjectName(QString::fromUtf8("reqLabel"));
 
         gridLayout->addWidget(reqLabel, 4, 2, 1, 1);
 
         reqMessage = new QLineEdit(frame2);
-        reqMessage->setObjectName(QStringLiteral("reqMessage"));
+        reqMessage->setObjectName(QString::fromUtf8("reqMessage"));
 
         gridLayout->addWidget(reqMessage, 6, 2, 1, 1);
 
         label_5 = new QLabel(frame2);
-        label_5->setObjectName(QStringLiteral("label_5"));
+        label_5->setObjectName(QString::fromUtf8("label_5"));
 
         gridLayout->addWidget(label_5, 2, 2, 1, 1);
 
         label_2 = new QLabel(frame2);
-        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         gridLayout->addWidget(label_2, 4, 0, 1, 1);
 
         label = new QLabel(frame2);
-        label->setObjectName(QStringLiteral("label"));
+        label->setObjectName(QString::fromUtf8("label"));
         label->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         gridLayout->addWidget(label, 5, 0, 1, 1);
 
         reqAmount = new BitcoinAmountField(frame2);
-        reqAmount->setObjectName(QStringLiteral("reqAmount"));
+        reqAmount->setObjectName(QString::fromUtf8("reqAmount"));
         reqAmount->setMinimumSize(QSize(80, 0));
 
         gridLayout->addWidget(reqAmount, 5, 2, 1, 1);
 
         horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         receiveButton = new QPushButton(frame2);
-        receiveButton->setObjectName(QStringLiteral("receiveButton"));
+        receiveButton->setObjectName(QString::fromUtf8("receiveButton"));
         receiveButton->setMinimumSize(QSize(150, 0));
         QIcon icon;
-        icon.addFile(QStringLiteral(":/icons/receiving_addresses"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/icons/receiving_addresses"), QSize(), QIcon::Normal, QIcon::Off);
         receiveButton->setIcon(icon);
 
         horizontalLayout->addWidget(receiveButton);
 
         clearButton = new QPushButton(frame2);
-        clearButton->setObjectName(QStringLiteral("clearButton"));
+        clearButton->setObjectName(QString::fromUtf8("clearButton"));
         QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(clearButton->sizePolicy().hasHeightForWidth());
         clearButton->setSizePolicy(sizePolicy1);
         QIcon icon1;
-        icon1.addFile(QStringLiteral(":/icons/remove"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QString::fromUtf8(":/icons/remove"), QSize(), QIcon::Normal, QIcon::Off);
         clearButton->setIcon(icon1);
         clearButton->setAutoDefault(false);
 
@@ -162,7 +161,7 @@ public:
         gridLayout->addLayout(horizontalLayout, 8, 2, 1, 1);
 
         label_7 = new QLabel(frame2);
-        label_7->setObjectName(QStringLiteral("label_7"));
+        label_7->setObjectName(QString::fromUtf8("label_7"));
 
         gridLayout->addWidget(label_7, 8, 0, 1, 1);
 
@@ -177,15 +176,15 @@ public:
         verticalLayout->addItem(verticalSpacer_2);
 
         frame = new QFrame(ReceiveCoinsDialog);
-        frame->setObjectName(QStringLiteral("frame"));
+        frame->setObjectName(QString::fromUtf8("frame"));
         sizePolicy.setHeightForWidth(frame->sizePolicy().hasHeightForWidth());
         frame->setSizePolicy(sizePolicy);
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
         verticalLayout_2 = new QVBoxLayout(frame);
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         label_6 = new QLabel(frame);
-        label_6->setObjectName(QStringLiteral("label_6"));
+        label_6->setObjectName(QString::fromUtf8("label_6"));
         QFont font;
         font.setBold(true);
         font.setWeight(75);
@@ -194,7 +193,7 @@ public:
         verticalLayout_2->addWidget(label_6);
 
         recentRequestsView = new QTableView(frame);
-        recentRequestsView->setObjectName(QStringLiteral("recentRequestsView"));
+        recentRequestsView->setObjectName(QString::fromUtf8("recentRequestsView"));
         recentRequestsView->setContextMenuPolicy(Qt::CustomContextMenu);
         recentRequestsView->setTabKeyNavigation(false);
         recentRequestsView->setSortingEnabled(true);
@@ -202,19 +201,19 @@ public:
         verticalLayout_2->addWidget(recentRequestsView);
 
         horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         showRequestButton = new QPushButton(frame);
-        showRequestButton->setObjectName(QStringLiteral("showRequestButton"));
+        showRequestButton->setObjectName(QString::fromUtf8("showRequestButton"));
         showRequestButton->setEnabled(false);
         QIcon icon2;
-        icon2.addFile(QStringLiteral(":/icons/edit"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QString::fromUtf8(":/icons/edit"), QSize(), QIcon::Normal, QIcon::Off);
         showRequestButton->setIcon(icon2);
         showRequestButton->setAutoDefault(false);
 
         horizontalLayout_2->addWidget(showRequestButton);
 
         removeRequestButton = new QPushButton(frame);
-        removeRequestButton->setObjectName(QStringLiteral("removeRequestButton"));
+        removeRequestButton->setObjectName(QString::fromUtf8("removeRequestButton"));
         removeRequestButton->setEnabled(false);
         removeRequestButton->setIcon(icon1);
         removeRequestButton->setAutoDefault(false);
@@ -254,47 +253,47 @@ public:
     void retranslateUi(QWidget *ReceiveCoinsDialog)
     {
 #ifndef QT_NO_TOOLTIP
-        reuseAddress->setToolTip(QApplication::translate("ReceiveCoinsDialog", "Reuse one of the previously used receiving addresses. Reusing addresses has security and privacy issues. Do not use this unless re-generating a payment request made before.", 0));
+        reuseAddress->setToolTip(QApplication::translate("ReceiveCoinsDialog", "Reuse one of the previously used receiving addresses. Reusing addresses has security and privacy issues. Do not use this unless re-generating a payment request made before.", nullptr));
 #endif // QT_NO_TOOLTIP
-        reuseAddress->setText(QApplication::translate("ReceiveCoinsDialog", "R&euse an existing receiving address (not recommended)", 0));
+        reuseAddress->setText(QApplication::translate("ReceiveCoinsDialog", "R&euse an existing receiving address (not recommended)", nullptr));
         label_4->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        label_3->setToolTip(QApplication::translate("ReceiveCoinsDialog", "An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the MicroBitcoin network.", 0));
+        label_3->setToolTip(QApplication::translate("ReceiveCoinsDialog", "An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the AdventureCoin network.", nullptr));
 #endif // QT_NO_TOOLTIP
-        label_3->setText(QApplication::translate("ReceiveCoinsDialog", "&Message:", 0));
+        label_3->setText(QApplication::translate("ReceiveCoinsDialog", "&Message:", nullptr));
 #ifndef QT_NO_TOOLTIP
-        reqLabel->setToolTip(QApplication::translate("ReceiveCoinsDialog", "An optional label to associate with the new receiving address.", 0));
+        reqLabel->setToolTip(QApplication::translate("ReceiveCoinsDialog", "An optional label to associate with the new receiving address.", nullptr));
 #endif // QT_NO_TOOLTIP
 #ifndef QT_NO_TOOLTIP
-        reqMessage->setToolTip(QApplication::translate("ReceiveCoinsDialog", "An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the MicroBitcoin network.", 0));
+        reqMessage->setToolTip(QApplication::translate("ReceiveCoinsDialog", "An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the AdventureCoin network.", nullptr));
 #endif // QT_NO_TOOLTIP
-        label_5->setText(QApplication::translate("ReceiveCoinsDialog", "Use this form to request payments. All fields are <b>optional</b>.", 0));
+        label_5->setText(QApplication::translate("ReceiveCoinsDialog", "Use this form to request payments. All fields are <b>optional</b>.", nullptr));
 #ifndef QT_NO_TOOLTIP
-        label_2->setToolTip(QApplication::translate("ReceiveCoinsDialog", "An optional label to associate with the new receiving address.", 0));
+        label_2->setToolTip(QApplication::translate("ReceiveCoinsDialog", "An optional label to associate with the new receiving address.", nullptr));
 #endif // QT_NO_TOOLTIP
-        label_2->setText(QApplication::translate("ReceiveCoinsDialog", "&Label:", 0));
+        label_2->setText(QApplication::translate("ReceiveCoinsDialog", "&Label:", nullptr));
 #ifndef QT_NO_TOOLTIP
-        label->setToolTip(QApplication::translate("ReceiveCoinsDialog", "An optional amount to request. Leave this empty or zero to not request a specific amount.", 0));
+        label->setToolTip(QApplication::translate("ReceiveCoinsDialog", "An optional amount to request. Leave this empty or zero to not request a specific amount.", nullptr));
 #endif // QT_NO_TOOLTIP
-        label->setText(QApplication::translate("ReceiveCoinsDialog", "&Amount:", 0));
+        label->setText(QApplication::translate("ReceiveCoinsDialog", "&Amount:", nullptr));
 #ifndef QT_NO_TOOLTIP
-        reqAmount->setToolTip(QApplication::translate("ReceiveCoinsDialog", "An optional amount to request. Leave this empty or zero to not request a specific amount.", 0));
+        reqAmount->setToolTip(QApplication::translate("ReceiveCoinsDialog", "An optional amount to request. Leave this empty or zero to not request a specific amount.", nullptr));
 #endif // QT_NO_TOOLTIP
-        receiveButton->setText(QApplication::translate("ReceiveCoinsDialog", "&Request payment", 0));
+        receiveButton->setText(QApplication::translate("ReceiveCoinsDialog", "&Request payment", nullptr));
 #ifndef QT_NO_TOOLTIP
-        clearButton->setToolTip(QApplication::translate("ReceiveCoinsDialog", "Clear all fields of the form.", 0));
+        clearButton->setToolTip(QApplication::translate("ReceiveCoinsDialog", "Clear all fields of the form.", nullptr));
 #endif // QT_NO_TOOLTIP
-        clearButton->setText(QApplication::translate("ReceiveCoinsDialog", "Clear", 0));
+        clearButton->setText(QApplication::translate("ReceiveCoinsDialog", "Clear", nullptr));
         label_7->setText(QString());
-        label_6->setText(QApplication::translate("ReceiveCoinsDialog", "Requested payments history", 0));
+        label_6->setText(QApplication::translate("ReceiveCoinsDialog", "Requested payments history", nullptr));
 #ifndef QT_NO_TOOLTIP
-        showRequestButton->setToolTip(QApplication::translate("ReceiveCoinsDialog", "Show the selected request (does the same as double clicking an entry)", 0));
+        showRequestButton->setToolTip(QApplication::translate("ReceiveCoinsDialog", "Show the selected request (does the same as double clicking an entry)", nullptr));
 #endif // QT_NO_TOOLTIP
-        showRequestButton->setText(QApplication::translate("ReceiveCoinsDialog", "Show", 0));
+        showRequestButton->setText(QApplication::translate("ReceiveCoinsDialog", "Show", nullptr));
 #ifndef QT_NO_TOOLTIP
-        removeRequestButton->setToolTip(QApplication::translate("ReceiveCoinsDialog", "Remove the selected entries from the list", 0));
+        removeRequestButton->setToolTip(QApplication::translate("ReceiveCoinsDialog", "Remove the selected entries from the list", nullptr));
 #endif // QT_NO_TOOLTIP
-        removeRequestButton->setText(QApplication::translate("ReceiveCoinsDialog", "Remove", 0));
+        removeRequestButton->setText(QApplication::translate("ReceiveCoinsDialog", "Remove", nullptr));
         Q_UNUSED(ReceiveCoinsDialog);
     } // retranslateUi
 

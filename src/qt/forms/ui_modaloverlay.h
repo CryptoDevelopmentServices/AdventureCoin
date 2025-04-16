@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'modaloverlay.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,12 +10,10 @@
 #define UI_MODALOVERLAY_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
@@ -63,39 +61,39 @@ public:
     void setupUi(ModalOverlay *ModalOverlay)
     {
         if (ModalOverlay->objectName().isEmpty())
-            ModalOverlay->setObjectName(QStringLiteral("ModalOverlay"));
+            ModalOverlay->setObjectName(QString::fromUtf8("ModalOverlay"));
         ModalOverlay->resize(640, 385);
         verticalLayout = new QVBoxLayout(ModalOverlay);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         bgWidget = new QWidget(ModalOverlay);
-        bgWidget->setObjectName(QStringLiteral("bgWidget"));
-        bgWidget->setStyleSheet(QStringLiteral("#bgWidget { background: rgba(0,0,0,220); }"));
+        bgWidget->setObjectName(QString::fromUtf8("bgWidget"));
+        bgWidget->setStyleSheet(QString::fromUtf8("#bgWidget { background: rgba(0,0,0,220); }"));
         verticalLayoutMain = new QVBoxLayout(bgWidget);
-        verticalLayoutMain->setObjectName(QStringLiteral("verticalLayoutMain"));
+        verticalLayoutMain->setObjectName(QString::fromUtf8("verticalLayoutMain"));
         verticalLayoutMain->setContentsMargins(60, 60, 60, 60);
         contentWidget = new QWidget(bgWidget);
-        contentWidget->setObjectName(QStringLiteral("contentWidget"));
-        contentWidget->setStyleSheet(QLatin1String("#contentWidget { background: rgba(255,255,255,240); border-radius: 6px; }\n"
+        contentWidget->setObjectName(QString::fromUtf8("contentWidget"));
+        contentWidget->setStyleSheet(QString::fromUtf8("#contentWidget { background: rgba(255,255,255,240); border-radius: 6px; }\n"
 "\n"
 "QLabel { color: rgb(40,40,40);  }"));
         verticalLayoutSub = new QVBoxLayout(contentWidget);
         verticalLayoutSub->setSpacing(0);
-        verticalLayoutSub->setObjectName(QStringLiteral("verticalLayoutSub"));
+        verticalLayoutSub->setObjectName(QString::fromUtf8("verticalLayoutSub"));
         verticalLayoutSub->setContentsMargins(10, 10, 10, 10);
         horizontalLayoutIconText = new QHBoxLayout();
-        horizontalLayoutIconText->setObjectName(QStringLiteral("horizontalLayoutIconText"));
+        horizontalLayoutIconText->setObjectName(QString::fromUtf8("horizontalLayoutIconText"));
         horizontalLayoutIconText->setContentsMargins(-1, 20, -1, -1);
         verticalLayoutIcon = new QVBoxLayout();
-        verticalLayoutIcon->setObjectName(QStringLiteral("verticalLayoutIcon"));
+        verticalLayoutIcon->setObjectName(QString::fromUtf8("verticalLayoutIcon"));
         verticalLayoutIcon->setContentsMargins(0, -1, -1, -1);
         warningIcon = new QPushButton(contentWidget);
-        warningIcon->setObjectName(QStringLiteral("warningIcon"));
+        warningIcon->setObjectName(QString::fromUtf8("warningIcon"));
         warningIcon->setEnabled(false);
         QIcon icon;
-        icon.addFile(QStringLiteral(":/icons/warning"), QSize(), QIcon::Normal, QIcon::Off);
-        icon.addFile(QStringLiteral(":/icons/warning"), QSize(), QIcon::Disabled, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/icons/warning"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/icons/warning"), QSize(), QIcon::Disabled, QIcon::Off);
         warningIcon->setIcon(icon);
         warningIcon->setIconSize(QSize(48, 48));
         warningIcon->setFlat(true);
@@ -110,17 +108,17 @@ public:
         horizontalLayoutIconText->addLayout(verticalLayoutIcon);
 
         verticalLayoutInfoText = new QVBoxLayout();
-        verticalLayoutInfoText->setObjectName(QStringLiteral("verticalLayoutInfoText"));
+        verticalLayoutInfoText->setObjectName(QString::fromUtf8("verticalLayoutInfoText"));
         verticalLayoutInfoText->setContentsMargins(0, 0, -1, -1);
         infoText = new QLabel(contentWidget);
-        infoText->setObjectName(QStringLiteral("infoText"));
+        infoText->setObjectName(QString::fromUtf8("infoText"));
         infoText->setTextFormat(Qt::RichText);
         infoText->setWordWrap(true);
 
         verticalLayoutInfoText->addWidget(infoText);
 
         infoTextStrong = new QLabel(contentWidget);
-        infoTextStrong->setObjectName(QStringLiteral("infoTextStrong"));
+        infoTextStrong->setObjectName(QString::fromUtf8("infoTextStrong"));
         QFont font;
         font.setBold(true);
         font.setWeight(75);
@@ -146,30 +144,30 @@ public:
         verticalLayoutSub->addItem(verticalSpacerAfterText);
 
         formLayout = new QFormLayout();
-        formLayout->setObjectName(QStringLiteral("formLayout"));
+        formLayout->setObjectName(QString::fromUtf8("formLayout"));
         formLayout->setFieldGrowthPolicy(QFormLayout::FieldsStayAtSizeHint);
         formLayout->setHorizontalSpacing(6);
         formLayout->setVerticalSpacing(6);
         formLayout->setContentsMargins(-1, 10, -1, -1);
         labelNumberOfBlocksLeft = new QLabel(contentWidget);
-        labelNumberOfBlocksLeft->setObjectName(QStringLiteral("labelNumberOfBlocksLeft"));
+        labelNumberOfBlocksLeft->setObjectName(QString::fromUtf8("labelNumberOfBlocksLeft"));
         labelNumberOfBlocksLeft->setFont(font);
 
         formLayout->setWidget(0, QFormLayout::LabelRole, labelNumberOfBlocksLeft);
 
         numberOfBlocksLeft = new QLabel(contentWidget);
-        numberOfBlocksLeft->setObjectName(QStringLiteral("numberOfBlocksLeft"));
+        numberOfBlocksLeft->setObjectName(QString::fromUtf8("numberOfBlocksLeft"));
 
         formLayout->setWidget(0, QFormLayout::FieldRole, numberOfBlocksLeft);
 
         labelLastBlockTime = new QLabel(contentWidget);
-        labelLastBlockTime->setObjectName(QStringLiteral("labelLastBlockTime"));
+        labelLastBlockTime->setObjectName(QString::fromUtf8("labelLastBlockTime"));
         labelLastBlockTime->setFont(font);
 
         formLayout->setWidget(1, QFormLayout::LabelRole, labelLastBlockTime);
 
         newestBlockDate = new QLabel(contentWidget);
-        newestBlockDate->setObjectName(QStringLiteral("newestBlockDate"));
+        newestBlockDate->setObjectName(QString::fromUtf8("newestBlockDate"));
         QSizePolicy sizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -179,21 +177,21 @@ public:
         formLayout->setWidget(1, QFormLayout::FieldRole, newestBlockDate);
 
         labelSyncDone = new QLabel(contentWidget);
-        labelSyncDone->setObjectName(QStringLiteral("labelSyncDone"));
+        labelSyncDone->setObjectName(QString::fromUtf8("labelSyncDone"));
         labelSyncDone->setFont(font);
 
         formLayout->setWidget(2, QFormLayout::LabelRole, labelSyncDone);
 
         horizontalLayoutSync = new QHBoxLayout();
-        horizontalLayoutSync->setObjectName(QStringLiteral("horizontalLayoutSync"));
+        horizontalLayoutSync->setObjectName(QString::fromUtf8("horizontalLayoutSync"));
         percentageProgress = new QLabel(contentWidget);
-        percentageProgress->setObjectName(QStringLiteral("percentageProgress"));
-        percentageProgress->setText(QStringLiteral("~"));
+        percentageProgress->setObjectName(QString::fromUtf8("percentageProgress"));
+        percentageProgress->setText(QString::fromUtf8("~"));
 
         horizontalLayoutSync->addWidget(percentageProgress);
 
         progressBar = new QProgressBar(contentWidget);
-        progressBar->setObjectName(QStringLiteral("progressBar"));
+        progressBar->setObjectName(QString::fromUtf8("progressBar"));
         progressBar->setValue(24);
 
         horizontalLayoutSync->addWidget(progressBar);
@@ -203,24 +201,24 @@ public:
         formLayout->setLayout(2, QFormLayout::FieldRole, horizontalLayoutSync);
 
         labelProgressIncrease = new QLabel(contentWidget);
-        labelProgressIncrease->setObjectName(QStringLiteral("labelProgressIncrease"));
+        labelProgressIncrease->setObjectName(QString::fromUtf8("labelProgressIncrease"));
         labelProgressIncrease->setFont(font);
 
         formLayout->setWidget(4, QFormLayout::LabelRole, labelProgressIncrease);
 
         progressIncreasePerH = new QLabel(contentWidget);
-        progressIncreasePerH->setObjectName(QStringLiteral("progressIncreasePerH"));
+        progressIncreasePerH->setObjectName(QString::fromUtf8("progressIncreasePerH"));
 
         formLayout->setWidget(4, QFormLayout::FieldRole, progressIncreasePerH);
 
         labelEstimatedTimeLeft = new QLabel(contentWidget);
-        labelEstimatedTimeLeft->setObjectName(QStringLiteral("labelEstimatedTimeLeft"));
+        labelEstimatedTimeLeft->setObjectName(QString::fromUtf8("labelEstimatedTimeLeft"));
         labelEstimatedTimeLeft->setFont(font);
 
         formLayout->setWidget(5, QFormLayout::LabelRole, labelEstimatedTimeLeft);
 
         expectedTimeLeft = new QLabel(contentWidget);
-        expectedTimeLeft->setObjectName(QStringLiteral("expectedTimeLeft"));
+        expectedTimeLeft->setObjectName(QString::fromUtf8("expectedTimeLeft"));
 
         formLayout->setWidget(5, QFormLayout::FieldRole, expectedTimeLeft);
 
@@ -228,14 +226,14 @@ public:
         verticalLayoutSub->addLayout(formLayout);
 
         horizontalLayoutButtons = new QHBoxLayout();
-        horizontalLayoutButtons->setObjectName(QStringLiteral("horizontalLayoutButtons"));
+        horizontalLayoutButtons->setObjectName(QString::fromUtf8("horizontalLayoutButtons"));
         horizontalLayoutButtons->setContentsMargins(10, 10, -1, -1);
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayoutButtons->addItem(horizontalSpacer);
 
         closeButton = new QPushButton(contentWidget);
-        closeButton->setObjectName(QStringLiteral("closeButton"));
+        closeButton->setObjectName(QString::fromUtf8("closeButton"));
 
         horizontalLayoutButtons->addWidget(closeButton);
 
@@ -258,21 +256,21 @@ public:
 
     void retranslateUi(ModalOverlay *ModalOverlay)
     {
-        ModalOverlay->setWindowTitle(QApplication::translate("ModalOverlay", "Form", 0));
+        ModalOverlay->setWindowTitle(QApplication::translate("ModalOverlay", "Form", nullptr));
         warningIcon->setText(QString());
-        infoText->setText(QApplication::translate("ModalOverlay", "Recent transactions may not yet be visible, and therefore your wallet's balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the MicroBitcoin network, as detailed below.", 0));
-        infoTextStrong->setText(QApplication::translate("ModalOverlay", "Attempting to spend microbitcoins that are affected by not-yet-displayed transactions will not be accepted by the network.", 0));
-        labelNumberOfBlocksLeft->setText(QApplication::translate("ModalOverlay", "Number of blocks left", 0));
-        numberOfBlocksLeft->setText(QApplication::translate("ModalOverlay", "Unknown...", 0));
-        labelLastBlockTime->setText(QApplication::translate("ModalOverlay", "Last block time", 0));
-        newestBlockDate->setText(QApplication::translate("ModalOverlay", "Unknown...", 0));
-        labelSyncDone->setText(QApplication::translate("ModalOverlay", "Progress", 0));
+        infoText->setText(QApplication::translate("ModalOverlay", "Recent transactions may not yet be visible, and therefore your wallet's balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the AdventureCoin network, as detailed below.", nullptr));
+        infoTextStrong->setText(QApplication::translate("ModalOverlay", "Attempting to spend adventurecoins that are affected by not-yet-displayed transactions will not be accepted by the network.", nullptr));
+        labelNumberOfBlocksLeft->setText(QApplication::translate("ModalOverlay", "Number of blocks left", nullptr));
+        numberOfBlocksLeft->setText(QApplication::translate("ModalOverlay", "Unknown...", nullptr));
+        labelLastBlockTime->setText(QApplication::translate("ModalOverlay", "Last block time", nullptr));
+        newestBlockDate->setText(QApplication::translate("ModalOverlay", "Unknown...", nullptr));
+        labelSyncDone->setText(QApplication::translate("ModalOverlay", "Progress", nullptr));
         progressBar->setFormat(QString());
-        labelProgressIncrease->setText(QApplication::translate("ModalOverlay", "Progress increase per hour", 0));
-        progressIncreasePerH->setText(QApplication::translate("ModalOverlay", "calculating...", 0));
-        labelEstimatedTimeLeft->setText(QApplication::translate("ModalOverlay", "Estimated time left until synced", 0));
-        expectedTimeLeft->setText(QApplication::translate("ModalOverlay", "calculating...", 0));
-        closeButton->setText(QApplication::translate("ModalOverlay", "Hide", 0));
+        labelProgressIncrease->setText(QApplication::translate("ModalOverlay", "Progress increase per hour", nullptr));
+        progressIncreasePerH->setText(QApplication::translate("ModalOverlay", "calculating...", nullptr));
+        labelEstimatedTimeLeft->setText(QApplication::translate("ModalOverlay", "Estimated time left until synced", nullptr));
+        expectedTimeLeft->setText(QApplication::translate("ModalOverlay", "calculating...", nullptr));
+        closeButton->setText(QApplication::translate("ModalOverlay", "Hide", nullptr));
     } // retranslateUi
 
 };

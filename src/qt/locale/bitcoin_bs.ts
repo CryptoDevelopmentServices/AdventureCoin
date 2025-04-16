@@ -12,10 +12,10 @@
     <name>BanTableModel</name>
     </context>
 <context>
-    <name>MicroBitcoinGUI</name>
+    <name>AdventureCoinGUI</name>
     <message>
-        <source>MicroBitcoin</source>
-        <translation>MicroBitcoin</translation>
+        <source>AdventureCoin</source>
+        <translation>AdventureCoin</translation>
     </message>
     </context>
 <context>
@@ -154,10 +154,10 @@
     <name>WalletView</name>
     </context>
 <context>
-    <name>MicroBitcoin-core</name>
+    <name>AdventureCoin-core</name>
     <message>
-        <source>MicroBitcoin Core</source>
-        <translation>MicroBitcoin Jezrga</translation>
+        <source>AdventureCoin Core</source>
+        <translation>AdventureCoin Jezrga</translation>
     </message>
     </context>
 </TS>

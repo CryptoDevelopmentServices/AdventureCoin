@@ -152,7 +152,7 @@
     <name>BanTableModel</name>
     </context>
 <context>
-    <name>MicroBitcoinGUI</name>
+    <name>AdventureCoinGUI</name>
     <message>
         <source>Sign &amp;message...</source>
         <translation>Подписать &amp;сообщение...</translation>
@@ -230,8 +230,8 @@
         <translation>&amp;Проверить сообщение...</translation>
     </message>
     <message>
-        <source>MicroBitcoin</source>
-        <translation>MicroBitcoin Core</translation>
+        <source>AdventureCoin</source>
+        <translation>AdventureCoin Core</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -442,8 +442,8 @@
         <translation>Пробросить порт через &amp;UPnP</translation>
     </message>
     <message>
-        <source>Connect to the MicroBitcoin network through a SOCKS5 proxy.</source>
-        <translation>Подключится к сети MicroBitcoin через SOCKS5 прокси.</translation>
+        <source>Connect to the AdventureCoin network through a SOCKS5 proxy.</source>
+        <translation>Подключится к сети AdventureCoin через SOCKS5 прокси.</translation>
     </message>
     <message>
         <source>Proxy &amp;IP:</source>
@@ -522,7 +522,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <source>Enter a MicroBitcoin address (e.g. %1)</source>
+        <source>Enter a AdventureCoin address (e.g. %1)</source>
         <translation>Введите МикроБиткоин-адрес (напр. %1)</translation>
     </message>
     <message numerus="yes">
@@ -830,14 +830,14 @@
     </message>
     </context>
 <context>
-    <name>MicroBitcoin-core</name>
+    <name>AdventureCoin-core</name>
     <message>
-        <source>MicroBitcoin Core</source>
-        <translation>MicroBitcoin Core</translation>
+        <source>AdventureCoin Core</source>
+        <translation>AdventureCoin Core</translation>
     </message>
     <message>
         <source>Whitelisted peers cannot be DoS banned and their transactions are always relayed, even if they are already in the mempool, useful e.g. for a gateway</source>
-        <translation>MicroBitcoin-core</translation>
+        <translation>AdventureCoin-core</translation>
     </message>
     <message>
         <source>Information</source>

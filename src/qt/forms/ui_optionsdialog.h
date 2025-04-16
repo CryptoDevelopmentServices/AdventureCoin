@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'optionsdialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,15 +10,12 @@
 #define UI_OPTIONSDIALOG_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
@@ -125,37 +122,37 @@ public:
     void setupUi(QDialog *OptionsDialog)
     {
         if (OptionsDialog->objectName().isEmpty())
-            OptionsDialog->setObjectName(QStringLiteral("OptionsDialog"));
+            OptionsDialog->setObjectName(QString::fromUtf8("OptionsDialog"));
         OptionsDialog->resize(560, 440);
         OptionsDialog->setModal(true);
         verticalLayout = new QVBoxLayout(OptionsDialog);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         tabWidget = new QTabWidget(OptionsDialog);
-        tabWidget->setObjectName(QStringLiteral("tabWidget"));
+        tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
         tabMain = new QWidget();
-        tabMain->setObjectName(QStringLiteral("tabMain"));
+        tabMain->setObjectName(QString::fromUtf8("tabMain"));
         verticalLayout_Main = new QVBoxLayout(tabMain);
-        verticalLayout_Main->setObjectName(QStringLiteral("verticalLayout_Main"));
+        verticalLayout_Main->setObjectName(QString::fromUtf8("verticalLayout_Main"));
         bitcoinAtStartup = new QCheckBox(tabMain);
-        bitcoinAtStartup->setObjectName(QStringLiteral("bitcoinAtStartup"));
+        bitcoinAtStartup->setObjectName(QString::fromUtf8("bitcoinAtStartup"));
 
         verticalLayout_Main->addWidget(bitcoinAtStartup);
 
         horizontalLayout_2_Main = new QHBoxLayout();
-        horizontalLayout_2_Main->setObjectName(QStringLiteral("horizontalLayout_2_Main"));
+        horizontalLayout_2_Main->setObjectName(QString::fromUtf8("horizontalLayout_2_Main"));
         databaseCacheLabel = new QLabel(tabMain);
-        databaseCacheLabel->setObjectName(QStringLiteral("databaseCacheLabel"));
+        databaseCacheLabel->setObjectName(QString::fromUtf8("databaseCacheLabel"));
         databaseCacheLabel->setTextFormat(Qt::PlainText);
 
         horizontalLayout_2_Main->addWidget(databaseCacheLabel);
 
         databaseCache = new QSpinBox(tabMain);
-        databaseCache->setObjectName(QStringLiteral("databaseCache"));
+        databaseCache->setObjectName(QString::fromUtf8("databaseCache"));
 
         horizontalLayout_2_Main->addWidget(databaseCache);
 
         databaseCacheUnitLabel = new QLabel(tabMain);
-        databaseCacheUnitLabel->setObjectName(QStringLiteral("databaseCacheUnitLabel"));
+        databaseCacheUnitLabel->setObjectName(QString::fromUtf8("databaseCacheUnitLabel"));
         databaseCacheUnitLabel->setTextFormat(Qt::PlainText);
 
         horizontalLayout_2_Main->addWidget(databaseCacheUnitLabel);
@@ -168,15 +165,15 @@ public:
         verticalLayout_Main->addLayout(horizontalLayout_2_Main);
 
         horizontalLayout_3_Main = new QHBoxLayout();
-        horizontalLayout_3_Main->setObjectName(QStringLiteral("horizontalLayout_3_Main"));
+        horizontalLayout_3_Main->setObjectName(QString::fromUtf8("horizontalLayout_3_Main"));
         threadsScriptVerifLabel = new QLabel(tabMain);
-        threadsScriptVerifLabel->setObjectName(QStringLiteral("threadsScriptVerifLabel"));
+        threadsScriptVerifLabel->setObjectName(QString::fromUtf8("threadsScriptVerifLabel"));
         threadsScriptVerifLabel->setTextFormat(Qt::PlainText);
 
         horizontalLayout_3_Main->addWidget(threadsScriptVerifLabel);
 
         threadsScriptVerif = new QSpinBox(tabMain);
-        threadsScriptVerif->setObjectName(QStringLiteral("threadsScriptVerif"));
+        threadsScriptVerif->setObjectName(QString::fromUtf8("threadsScriptVerif"));
 
         horizontalLayout_3_Main->addWidget(threadsScriptVerif);
 
@@ -193,20 +190,20 @@ public:
 
         tabWidget->addTab(tabMain, QString());
         tabWallet = new QWidget();
-        tabWallet->setObjectName(QStringLiteral("tabWallet"));
+        tabWallet->setObjectName(QString::fromUtf8("tabWallet"));
         verticalLayout_Wallet = new QVBoxLayout(tabWallet);
-        verticalLayout_Wallet->setObjectName(QStringLiteral("verticalLayout_Wallet"));
+        verticalLayout_Wallet->setObjectName(QString::fromUtf8("verticalLayout_Wallet"));
         groupBox = new QGroupBox(tabWallet);
-        groupBox->setObjectName(QStringLiteral("groupBox"));
+        groupBox->setObjectName(QString::fromUtf8("groupBox"));
         verticalLayout_2 = new QVBoxLayout(groupBox);
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         coinControlFeatures = new QCheckBox(groupBox);
-        coinControlFeatures->setObjectName(QStringLiteral("coinControlFeatures"));
+        coinControlFeatures->setObjectName(QString::fromUtf8("coinControlFeatures"));
 
         verticalLayout_2->addWidget(coinControlFeatures);
 
         spendZeroConfChange = new QCheckBox(groupBox);
-        spendZeroConfChange->setObjectName(QStringLiteral("spendZeroConfChange"));
+        spendZeroConfChange->setObjectName(QString::fromUtf8("spendZeroConfChange"));
 
         verticalLayout_2->addWidget(spendZeroConfChange);
 
@@ -219,47 +216,47 @@ public:
 
         tabWidget->addTab(tabWallet, QString());
         tabNetwork = new QWidget();
-        tabNetwork->setObjectName(QStringLiteral("tabNetwork"));
+        tabNetwork->setObjectName(QString::fromUtf8("tabNetwork"));
         verticalLayout_Network = new QVBoxLayout(tabNetwork);
-        verticalLayout_Network->setObjectName(QStringLiteral("verticalLayout_Network"));
+        verticalLayout_Network->setObjectName(QString::fromUtf8("verticalLayout_Network"));
         mapPortUpnp = new QCheckBox(tabNetwork);
-        mapPortUpnp->setObjectName(QStringLiteral("mapPortUpnp"));
+        mapPortUpnp->setObjectName(QString::fromUtf8("mapPortUpnp"));
 
         verticalLayout_Network->addWidget(mapPortUpnp);
 
         allowIncoming = new QCheckBox(tabNetwork);
-        allowIncoming->setObjectName(QStringLiteral("allowIncoming"));
+        allowIncoming->setObjectName(QString::fromUtf8("allowIncoming"));
 
         verticalLayout_Network->addWidget(allowIncoming);
 
         connectSocks = new QCheckBox(tabNetwork);
-        connectSocks->setObjectName(QStringLiteral("connectSocks"));
+        connectSocks->setObjectName(QString::fromUtf8("connectSocks"));
 
         verticalLayout_Network->addWidget(connectSocks);
 
         horizontalLayout_1_Network = new QHBoxLayout();
-        horizontalLayout_1_Network->setObjectName(QStringLiteral("horizontalLayout_1_Network"));
+        horizontalLayout_1_Network->setObjectName(QString::fromUtf8("horizontalLayout_1_Network"));
         proxyIpLabel = new QLabel(tabNetwork);
-        proxyIpLabel->setObjectName(QStringLiteral("proxyIpLabel"));
+        proxyIpLabel->setObjectName(QString::fromUtf8("proxyIpLabel"));
         proxyIpLabel->setTextFormat(Qt::PlainText);
 
         horizontalLayout_1_Network->addWidget(proxyIpLabel);
 
         proxyIp = new QValidatedLineEdit(tabNetwork);
-        proxyIp->setObjectName(QStringLiteral("proxyIp"));
+        proxyIp->setObjectName(QString::fromUtf8("proxyIp"));
         proxyIp->setMinimumSize(QSize(140, 0));
         proxyIp->setMaximumSize(QSize(140, 16777215));
 
         horizontalLayout_1_Network->addWidget(proxyIp);
 
         proxyPortLabel = new QLabel(tabNetwork);
-        proxyPortLabel->setObjectName(QStringLiteral("proxyPortLabel"));
+        proxyPortLabel->setObjectName(QString::fromUtf8("proxyPortLabel"));
         proxyPortLabel->setTextFormat(Qt::PlainText);
 
         horizontalLayout_1_Network->addWidget(proxyPortLabel);
 
         proxyPort = new QLineEdit(tabNetwork);
-        proxyPort->setObjectName(QStringLiteral("proxyPort"));
+        proxyPort->setObjectName(QString::fromUtf8("proxyPort"));
         proxyPort->setMinimumSize(QSize(55, 0));
         proxyPort->setMaximumSize(QSize(55, 16777215));
 
@@ -273,45 +270,45 @@ public:
         verticalLayout_Network->addLayout(horizontalLayout_1_Network);
 
         horizontalLayout_2_Network = new QHBoxLayout();
-        horizontalLayout_2_Network->setObjectName(QStringLiteral("horizontalLayout_2_Network"));
+        horizontalLayout_2_Network->setObjectName(QString::fromUtf8("horizontalLayout_2_Network"));
         proxyActiveNets = new QLabel(tabNetwork);
-        proxyActiveNets->setObjectName(QStringLiteral("proxyActiveNets"));
+        proxyActiveNets->setObjectName(QString::fromUtf8("proxyActiveNets"));
         proxyActiveNets->setTextFormat(Qt::PlainText);
 
         horizontalLayout_2_Network->addWidget(proxyActiveNets);
 
         proxyReachIPv4 = new QCheckBox(tabNetwork);
-        proxyReachIPv4->setObjectName(QStringLiteral("proxyReachIPv4"));
+        proxyReachIPv4->setObjectName(QString::fromUtf8("proxyReachIPv4"));
         proxyReachIPv4->setEnabled(false);
 
         horizontalLayout_2_Network->addWidget(proxyReachIPv4);
 
         proxyReachIPv4Label = new QLabel(tabNetwork);
-        proxyReachIPv4Label->setObjectName(QStringLiteral("proxyReachIPv4Label"));
+        proxyReachIPv4Label->setObjectName(QString::fromUtf8("proxyReachIPv4Label"));
         proxyReachIPv4Label->setTextFormat(Qt::PlainText);
 
         horizontalLayout_2_Network->addWidget(proxyReachIPv4Label);
 
         proxyReachIPv6 = new QCheckBox(tabNetwork);
-        proxyReachIPv6->setObjectName(QStringLiteral("proxyReachIPv6"));
+        proxyReachIPv6->setObjectName(QString::fromUtf8("proxyReachIPv6"));
         proxyReachIPv6->setEnabled(false);
 
         horizontalLayout_2_Network->addWidget(proxyReachIPv6);
 
         proxyReachIPv6Label = new QLabel(tabNetwork);
-        proxyReachIPv6Label->setObjectName(QStringLiteral("proxyReachIPv6Label"));
+        proxyReachIPv6Label->setObjectName(QString::fromUtf8("proxyReachIPv6Label"));
         proxyReachIPv6Label->setTextFormat(Qt::PlainText);
 
         horizontalLayout_2_Network->addWidget(proxyReachIPv6Label);
 
         proxyReachTor = new QCheckBox(tabNetwork);
-        proxyReachTor->setObjectName(QStringLiteral("proxyReachTor"));
+        proxyReachTor->setObjectName(QString::fromUtf8("proxyReachTor"));
         proxyReachTor->setEnabled(false);
 
         horizontalLayout_2_Network->addWidget(proxyReachTor);
 
         proxyReachTorLabel = new QLabel(tabNetwork);
-        proxyReachTorLabel->setObjectName(QStringLiteral("proxyReachTorLabel"));
+        proxyReachTorLabel->setObjectName(QString::fromUtf8("proxyReachTorLabel"));
         proxyReachTorLabel->setTextFormat(Qt::PlainText);
 
         horizontalLayout_2_Network->addWidget(proxyReachTorLabel);
@@ -324,33 +321,33 @@ public:
         verticalLayout_Network->addLayout(horizontalLayout_2_Network);
 
         connectSocksTor = new QCheckBox(tabNetwork);
-        connectSocksTor->setObjectName(QStringLiteral("connectSocksTor"));
+        connectSocksTor->setObjectName(QString::fromUtf8("connectSocksTor"));
 
         verticalLayout_Network->addWidget(connectSocksTor);
 
         horizontalLayout_3_Network = new QHBoxLayout();
-        horizontalLayout_3_Network->setObjectName(QStringLiteral("horizontalLayout_3_Network"));
+        horizontalLayout_3_Network->setObjectName(QString::fromUtf8("horizontalLayout_3_Network"));
         proxyIpTorLabel = new QLabel(tabNetwork);
-        proxyIpTorLabel->setObjectName(QStringLiteral("proxyIpTorLabel"));
+        proxyIpTorLabel->setObjectName(QString::fromUtf8("proxyIpTorLabel"));
         proxyIpTorLabel->setTextFormat(Qt::PlainText);
 
         horizontalLayout_3_Network->addWidget(proxyIpTorLabel);
 
         proxyIpTor = new QValidatedLineEdit(tabNetwork);
-        proxyIpTor->setObjectName(QStringLiteral("proxyIpTor"));
+        proxyIpTor->setObjectName(QString::fromUtf8("proxyIpTor"));
         proxyIpTor->setMinimumSize(QSize(140, 0));
         proxyIpTor->setMaximumSize(QSize(140, 16777215));
 
         horizontalLayout_3_Network->addWidget(proxyIpTor);
 
         proxyPortTorLabel = new QLabel(tabNetwork);
-        proxyPortTorLabel->setObjectName(QStringLiteral("proxyPortTorLabel"));
+        proxyPortTorLabel->setObjectName(QString::fromUtf8("proxyPortTorLabel"));
         proxyPortTorLabel->setTextFormat(Qt::PlainText);
 
         horizontalLayout_3_Network->addWidget(proxyPortTorLabel);
 
         proxyPortTor = new QLineEdit(tabNetwork);
-        proxyPortTor->setObjectName(QStringLiteral("proxyPortTor"));
+        proxyPortTor->setObjectName(QString::fromUtf8("proxyPortTor"));
         proxyPortTor->setMinimumSize(QSize(55, 0));
         proxyPortTor->setMaximumSize(QSize(55, 16777215));
 
@@ -369,21 +366,21 @@ public:
 
         tabWidget->addTab(tabNetwork, QString());
         tabWindow = new QWidget();
-        tabWindow->setObjectName(QStringLiteral("tabWindow"));
+        tabWindow->setObjectName(QString::fromUtf8("tabWindow"));
         verticalLayout_Window = new QVBoxLayout(tabWindow);
-        verticalLayout_Window->setObjectName(QStringLiteral("verticalLayout_Window"));
+        verticalLayout_Window->setObjectName(QString::fromUtf8("verticalLayout_Window"));
         hideTrayIcon = new QCheckBox(tabWindow);
-        hideTrayIcon->setObjectName(QStringLiteral("hideTrayIcon"));
+        hideTrayIcon->setObjectName(QString::fromUtf8("hideTrayIcon"));
 
         verticalLayout_Window->addWidget(hideTrayIcon);
 
         minimizeToTray = new QCheckBox(tabWindow);
-        minimizeToTray->setObjectName(QStringLiteral("minimizeToTray"));
+        minimizeToTray->setObjectName(QString::fromUtf8("minimizeToTray"));
 
         verticalLayout_Window->addWidget(minimizeToTray);
 
         minimizeOnClose = new QCheckBox(tabWindow);
-        minimizeOnClose->setObjectName(QStringLiteral("minimizeOnClose"));
+        minimizeOnClose->setObjectName(QString::fromUtf8("minimizeOnClose"));
 
         verticalLayout_Window->addWidget(minimizeOnClose);
 
@@ -393,19 +390,19 @@ public:
 
         tabWidget->addTab(tabWindow, QString());
         tabDisplay = new QWidget();
-        tabDisplay->setObjectName(QStringLiteral("tabDisplay"));
+        tabDisplay->setObjectName(QString::fromUtf8("tabDisplay"));
         verticalLayout_Display = new QVBoxLayout(tabDisplay);
-        verticalLayout_Display->setObjectName(QStringLiteral("verticalLayout_Display"));
+        verticalLayout_Display->setObjectName(QString::fromUtf8("verticalLayout_Display"));
         horizontalLayout_1_Display = new QHBoxLayout();
-        horizontalLayout_1_Display->setObjectName(QStringLiteral("horizontalLayout_1_Display"));
+        horizontalLayout_1_Display->setObjectName(QString::fromUtf8("horizontalLayout_1_Display"));
         langLabel = new QLabel(tabDisplay);
-        langLabel->setObjectName(QStringLiteral("langLabel"));
+        langLabel->setObjectName(QString::fromUtf8("langLabel"));
         langLabel->setTextFormat(Qt::PlainText);
 
         horizontalLayout_1_Display->addWidget(langLabel);
 
         lang = new QValueComboBox(tabDisplay);
-        lang->setObjectName(QStringLiteral("lang"));
+        lang->setObjectName(QString::fromUtf8("lang"));
 
         horizontalLayout_1_Display->addWidget(lang);
 
@@ -413,15 +410,15 @@ public:
         verticalLayout_Display->addLayout(horizontalLayout_1_Display);
 
         horizontalLayout_2_Display = new QHBoxLayout();
-        horizontalLayout_2_Display->setObjectName(QStringLiteral("horizontalLayout_2_Display"));
+        horizontalLayout_2_Display->setObjectName(QString::fromUtf8("horizontalLayout_2_Display"));
         unitLabel = new QLabel(tabDisplay);
-        unitLabel->setObjectName(QStringLiteral("unitLabel"));
+        unitLabel->setObjectName(QString::fromUtf8("unitLabel"));
         unitLabel->setTextFormat(Qt::PlainText);
 
         horizontalLayout_2_Display->addWidget(unitLabel);
 
         unit = new QValueComboBox(tabDisplay);
-        unit->setObjectName(QStringLiteral("unit"));
+        unit->setObjectName(QString::fromUtf8("unit"));
 
         horizontalLayout_2_Display->addWidget(unit);
 
@@ -429,14 +426,14 @@ public:
         verticalLayout_Display->addLayout(horizontalLayout_2_Display);
 
         horizontalLayout_3_Display = new QHBoxLayout();
-        horizontalLayout_3_Display->setObjectName(QStringLiteral("horizontalLayout_3_Display"));
+        horizontalLayout_3_Display->setObjectName(QString::fromUtf8("horizontalLayout_3_Display"));
         thirdPartyTxUrlsLabel = new QLabel(tabDisplay);
-        thirdPartyTxUrlsLabel->setObjectName(QStringLiteral("thirdPartyTxUrlsLabel"));
+        thirdPartyTxUrlsLabel->setObjectName(QString::fromUtf8("thirdPartyTxUrlsLabel"));
 
         horizontalLayout_3_Display->addWidget(thirdPartyTxUrlsLabel);
 
         thirdPartyTxUrls = new QLineEdit(tabDisplay);
-        thirdPartyTxUrls->setObjectName(QStringLiteral("thirdPartyTxUrls"));
+        thirdPartyTxUrls->setObjectName(QString::fromUtf8("thirdPartyTxUrls"));
 
         horizontalLayout_3_Display->addWidget(thirdPartyTxUrls);
 
@@ -452,13 +449,13 @@ public:
         verticalLayout->addWidget(tabWidget);
 
         frame = new QFrame(OptionsDialog);
-        frame->setObjectName(QStringLiteral("frame"));
+        frame->setObjectName(QString::fromUtf8("frame"));
         verticalLayout_Bottom = new QVBoxLayout(frame);
-        verticalLayout_Bottom->setObjectName(QStringLiteral("verticalLayout_Bottom"));
+        verticalLayout_Bottom->setObjectName(QString::fromUtf8("verticalLayout_Bottom"));
         horizontalLayout_Bottom = new QHBoxLayout();
-        horizontalLayout_Bottom->setObjectName(QStringLiteral("horizontalLayout_Bottom"));
+        horizontalLayout_Bottom->setObjectName(QString::fromUtf8("horizontalLayout_Bottom"));
         overriddenByCommandLineInfoLabel = new QLabel(frame);
-        overriddenByCommandLineInfoLabel->setObjectName(QStringLiteral("overriddenByCommandLineInfoLabel"));
+        overriddenByCommandLineInfoLabel->setObjectName(QString::fromUtf8("overriddenByCommandLineInfoLabel"));
         overriddenByCommandLineInfoLabel->setTextFormat(Qt::PlainText);
 
         horizontalLayout_Bottom->addWidget(overriddenByCommandLineInfoLabel);
@@ -471,7 +468,7 @@ public:
         verticalLayout_Bottom->addLayout(horizontalLayout_Bottom);
 
         overriddenByCommandLineLabel = new QLabel(frame);
-        overriddenByCommandLineLabel->setObjectName(QStringLiteral("overriddenByCommandLineLabel"));
+        overriddenByCommandLineLabel->setObjectName(QString::fromUtf8("overriddenByCommandLineLabel"));
         overriddenByCommandLineLabel->setTextFormat(Qt::PlainText);
         overriddenByCommandLineLabel->setWordWrap(true);
 
@@ -481,17 +478,17 @@ public:
         verticalLayout->addWidget(frame);
 
         horizontalLayout_Buttons = new QHBoxLayout();
-        horizontalLayout_Buttons->setObjectName(QStringLiteral("horizontalLayout_Buttons"));
+        horizontalLayout_Buttons->setObjectName(QString::fromUtf8("horizontalLayout_Buttons"));
         verticalLayout_Buttons = new QVBoxLayout();
-        verticalLayout_Buttons->setObjectName(QStringLiteral("verticalLayout_Buttons"));
+        verticalLayout_Buttons->setObjectName(QString::fromUtf8("verticalLayout_Buttons"));
         openBitcoinConfButton = new QPushButton(OptionsDialog);
-        openBitcoinConfButton->setObjectName(QStringLiteral("openBitcoinConfButton"));
+        openBitcoinConfButton->setObjectName(QString::fromUtf8("openBitcoinConfButton"));
         openBitcoinConfButton->setAutoDefault(false);
 
         verticalLayout_Buttons->addWidget(openBitcoinConfButton);
 
         resetButton = new QPushButton(OptionsDialog);
-        resetButton->setObjectName(QStringLiteral("resetButton"));
+        resetButton->setObjectName(QString::fromUtf8("resetButton"));
         resetButton->setAutoDefault(false);
 
         verticalLayout_Buttons->addWidget(resetButton);
@@ -504,7 +501,7 @@ public:
         horizontalLayout_Buttons->addItem(horizontalSpacer_1);
 
         statusLabel = new QLabel(OptionsDialog);
-        statusLabel->setObjectName(QStringLiteral("statusLabel"));
+        statusLabel->setObjectName(QString::fromUtf8("statusLabel"));
         statusLabel->setMinimumSize(QSize(200, 0));
         QFont font;
         font.setBold(true);
@@ -520,21 +517,21 @@ public:
         horizontalLayout_Buttons->addItem(horizontalSpacer_2);
 
         verticalLayout_4 = new QVBoxLayout();
-        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout_4->addItem(verticalSpacer);
 
         horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         okButton = new QPushButton(OptionsDialog);
-        okButton->setObjectName(QStringLiteral("okButton"));
+        okButton->setObjectName(QString::fromUtf8("okButton"));
         okButton->setAutoDefault(false);
 
         horizontalLayout->addWidget(okButton);
 
         cancelButton = new QPushButton(OptionsDialog);
-        cancelButton->setObjectName(QStringLiteral("cancelButton"));
+        cancelButton->setObjectName(QString::fromUtf8("cancelButton"));
         cancelButton->setAutoDefault(false);
 
         horizontalLayout->addWidget(cancelButton);
@@ -571,119 +568,119 @@ public:
 
     void retranslateUi(QDialog *OptionsDialog)
     {
-        OptionsDialog->setWindowTitle(QApplication::translate("OptionsDialog", "Options", 0));
+        OptionsDialog->setWindowTitle(QApplication::translate("OptionsDialog", "Options", nullptr));
 #ifndef QT_NO_TOOLTIP
-        bitcoinAtStartup->setToolTip(QApplication::translate("OptionsDialog", "Automatically start %1 after logging in to the system.", 0));
+        bitcoinAtStartup->setToolTip(QApplication::translate("OptionsDialog", "Automatically start %1 after logging in to the system.", nullptr));
 #endif // QT_NO_TOOLTIP
-        bitcoinAtStartup->setText(QApplication::translate("OptionsDialog", "&Start %1 on system login", 0));
-        databaseCacheLabel->setText(QApplication::translate("OptionsDialog", "Size of &database cache", 0));
-        databaseCacheUnitLabel->setText(QApplication::translate("OptionsDialog", "MB", 0));
-        threadsScriptVerifLabel->setText(QApplication::translate("OptionsDialog", "Number of script &verification threads", 0));
+        bitcoinAtStartup->setText(QApplication::translate("OptionsDialog", "&Start %1 on system login", nullptr));
+        databaseCacheLabel->setText(QApplication::translate("OptionsDialog", "Size of &database cache", nullptr));
+        databaseCacheUnitLabel->setText(QApplication::translate("OptionsDialog", "MB", nullptr));
+        threadsScriptVerifLabel->setText(QApplication::translate("OptionsDialog", "Number of script &verification threads", nullptr));
 #ifndef QT_NO_TOOLTIP
-        threadsScriptVerif->setToolTip(QApplication::translate("OptionsDialog", "(0 = auto, <0 = leave that many cores free)", 0));
+        threadsScriptVerif->setToolTip(QApplication::translate("OptionsDialog", "(0 = auto, <0 = leave that many cores free)", nullptr));
 #endif // QT_NO_TOOLTIP
-        tabWidget->setTabText(tabWidget->indexOf(tabMain), QApplication::translate("OptionsDialog", "&Main", 0));
-        groupBox->setTitle(QApplication::translate("OptionsDialog", "Expert", 0));
+        tabWidget->setTabText(tabWidget->indexOf(tabMain), QApplication::translate("OptionsDialog", "&Main", nullptr));
+        groupBox->setTitle(QApplication::translate("OptionsDialog", "Expert", nullptr));
 #ifndef QT_NO_TOOLTIP
-        coinControlFeatures->setToolTip(QApplication::translate("OptionsDialog", "Whether to show coin control features or not.", 0));
+        coinControlFeatures->setToolTip(QApplication::translate("OptionsDialog", "Whether to show coin control features or not.", nullptr));
 #endif // QT_NO_TOOLTIP
-        coinControlFeatures->setText(QApplication::translate("OptionsDialog", "Enable coin &control features", 0));
+        coinControlFeatures->setText(QApplication::translate("OptionsDialog", "Enable coin &control features", nullptr));
 #ifndef QT_NO_TOOLTIP
-        spendZeroConfChange->setToolTip(QApplication::translate("OptionsDialog", "If you disable the spending of unconfirmed change, the change from a transaction cannot be used until that transaction has at least one confirmation. This also affects how your balance is computed.", 0));
+        spendZeroConfChange->setToolTip(QApplication::translate("OptionsDialog", "If you disable the spending of unconfirmed change, the change from a transaction cannot be used until that transaction has at least one confirmation. This also affects how your balance is computed.", nullptr));
 #endif // QT_NO_TOOLTIP
-        spendZeroConfChange->setText(QApplication::translate("OptionsDialog", "&Spend unconfirmed change", 0));
-        tabWidget->setTabText(tabWidget->indexOf(tabWallet), QApplication::translate("OptionsDialog", "W&allet", 0));
+        spendZeroConfChange->setText(QApplication::translate("OptionsDialog", "&Spend unconfirmed change", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tabWallet), QApplication::translate("OptionsDialog", "W&allet", nullptr));
 #ifndef QT_NO_TOOLTIP
-        mapPortUpnp->setToolTip(QApplication::translate("OptionsDialog", "Automatically open the MicroBitcoin client port on the router. This only works when your router supports UPnP and it is enabled.", 0));
+        mapPortUpnp->setToolTip(QApplication::translate("OptionsDialog", "Automatically open the AdventureCoin client port on the router. This only works when your router supports UPnP and it is enabled.", nullptr));
 #endif // QT_NO_TOOLTIP
-        mapPortUpnp->setText(QApplication::translate("OptionsDialog", "Map port using &UPnP", 0));
+        mapPortUpnp->setText(QApplication::translate("OptionsDialog", "Map port using &UPnP", nullptr));
 #ifndef QT_NO_TOOLTIP
-        allowIncoming->setToolTip(QApplication::translate("OptionsDialog", "Accept connections from outside", 0));
+        allowIncoming->setToolTip(QApplication::translate("OptionsDialog", "Accept connections from outside", nullptr));
 #endif // QT_NO_TOOLTIP
-        allowIncoming->setText(QApplication::translate("OptionsDialog", "Allow incoming connections", 0));
+        allowIncoming->setText(QApplication::translate("OptionsDialog", "Allow incoming connections", nullptr));
 #ifndef QT_NO_TOOLTIP
-        connectSocks->setToolTip(QApplication::translate("OptionsDialog", "Connect to the MicroBitcoin network through a SOCKS5 proxy.", 0));
+        connectSocks->setToolTip(QApplication::translate("OptionsDialog", "Connect to the AdventureCoin network through a SOCKS5 proxy.", nullptr));
 #endif // QT_NO_TOOLTIP
-        connectSocks->setText(QApplication::translate("OptionsDialog", "&Connect through SOCKS5 proxy (default proxy):", 0));
-        proxyIpLabel->setText(QApplication::translate("OptionsDialog", "Proxy &IP:", 0));
+        connectSocks->setText(QApplication::translate("OptionsDialog", "&Connect through SOCKS5 proxy (default proxy):", nullptr));
+        proxyIpLabel->setText(QApplication::translate("OptionsDialog", "Proxy &IP:", nullptr));
 #ifndef QT_NO_TOOLTIP
-        proxyIp->setToolTip(QApplication::translate("OptionsDialog", "IP address of the proxy (e.g. IPv4: 127.0.0.1 / IPv6: ::1)", 0));
+        proxyIp->setToolTip(QApplication::translate("OptionsDialog", "IP address of the proxy (e.g. IPv4: 127.0.0.1 / IPv6: ::1)", nullptr));
 #endif // QT_NO_TOOLTIP
-        proxyPortLabel->setText(QApplication::translate("OptionsDialog", "&Port:", 0));
+        proxyPortLabel->setText(QApplication::translate("OptionsDialog", "&Port:", nullptr));
 #ifndef QT_NO_TOOLTIP
-        proxyPort->setToolTip(QApplication::translate("OptionsDialog", "Port of the proxy (e.g. 9050)", 0));
+        proxyPort->setToolTip(QApplication::translate("OptionsDialog", "Port of the proxy (e.g. 9050)", nullptr));
 #endif // QT_NO_TOOLTIP
-        proxyActiveNets->setText(QApplication::translate("OptionsDialog", "Used for reaching peers via:", 0));
+        proxyActiveNets->setText(QApplication::translate("OptionsDialog", "Used for reaching peers via:", nullptr));
 #ifndef QT_NO_TOOLTIP
-        proxyReachIPv4->setToolTip(QApplication::translate("OptionsDialog", "Shows if the supplied default SOCKS5 proxy is used to reach peers via this network type.", 0));
+        proxyReachIPv4->setToolTip(QApplication::translate("OptionsDialog", "Shows if the supplied default SOCKS5 proxy is used to reach peers via this network type.", nullptr));
 #endif // QT_NO_TOOLTIP
         proxyReachIPv4->setText(QString());
-        proxyReachIPv4Label->setText(QApplication::translate("OptionsDialog", "IPv4", 0));
+        proxyReachIPv4Label->setText(QApplication::translate("OptionsDialog", "IPv4", nullptr));
 #ifndef QT_NO_TOOLTIP
-        proxyReachIPv6->setToolTip(QApplication::translate("OptionsDialog", "Shows if the supplied default SOCKS5 proxy is used to reach peers via this network type.", 0));
+        proxyReachIPv6->setToolTip(QApplication::translate("OptionsDialog", "Shows if the supplied default SOCKS5 proxy is used to reach peers via this network type.", nullptr));
 #endif // QT_NO_TOOLTIP
         proxyReachIPv6->setText(QString());
-        proxyReachIPv6Label->setText(QApplication::translate("OptionsDialog", "IPv6", 0));
+        proxyReachIPv6Label->setText(QApplication::translate("OptionsDialog", "IPv6", nullptr));
 #ifndef QT_NO_TOOLTIP
-        proxyReachTor->setToolTip(QApplication::translate("OptionsDialog", "Shows if the supplied default SOCKS5 proxy is used to reach peers via this network type.", 0));
+        proxyReachTor->setToolTip(QApplication::translate("OptionsDialog", "Shows if the supplied default SOCKS5 proxy is used to reach peers via this network type.", nullptr));
 #endif // QT_NO_TOOLTIP
         proxyReachTor->setText(QString());
-        proxyReachTorLabel->setText(QApplication::translate("OptionsDialog", "Tor", 0));
+        proxyReachTorLabel->setText(QApplication::translate("OptionsDialog", "Tor", nullptr));
 #ifndef QT_NO_TOOLTIP
-        connectSocksTor->setToolTip(QApplication::translate("OptionsDialog", "Connect to the MicroBitcoin network through a separate SOCKS5 proxy for Tor hidden services.", 0));
+        connectSocksTor->setToolTip(QApplication::translate("OptionsDialog", "Connect to the AdventureCoin network through a separate SOCKS5 proxy for Tor hidden services.", nullptr));
 #endif // QT_NO_TOOLTIP
-        connectSocksTor->setText(QApplication::translate("OptionsDialog", "Use separate SOCKS5 proxy to reach peers via Tor hidden services:", 0));
-        proxyIpTorLabel->setText(QApplication::translate("OptionsDialog", "Proxy &IP:", 0));
+        connectSocksTor->setText(QApplication::translate("OptionsDialog", "Use separate SOCKS5 proxy to reach peers via Tor hidden services:", nullptr));
+        proxyIpTorLabel->setText(QApplication::translate("OptionsDialog", "Proxy &IP:", nullptr));
 #ifndef QT_NO_TOOLTIP
-        proxyIpTor->setToolTip(QApplication::translate("OptionsDialog", "IP address of the proxy (e.g. IPv4: 127.0.0.1 / IPv6: ::1)", 0));
+        proxyIpTor->setToolTip(QApplication::translate("OptionsDialog", "IP address of the proxy (e.g. IPv4: 127.0.0.1 / IPv6: ::1)", nullptr));
 #endif // QT_NO_TOOLTIP
-        proxyPortTorLabel->setText(QApplication::translate("OptionsDialog", "&Port:", 0));
+        proxyPortTorLabel->setText(QApplication::translate("OptionsDialog", "&Port:", nullptr));
 #ifndef QT_NO_TOOLTIP
-        proxyPortTor->setToolTip(QApplication::translate("OptionsDialog", "Port of the proxy (e.g. 9050)", 0));
+        proxyPortTor->setToolTip(QApplication::translate("OptionsDialog", "Port of the proxy (e.g. 9050)", nullptr));
 #endif // QT_NO_TOOLTIP
-        tabWidget->setTabText(tabWidget->indexOf(tabNetwork), QApplication::translate("OptionsDialog", "&Network", 0));
+        tabWidget->setTabText(tabWidget->indexOf(tabNetwork), QApplication::translate("OptionsDialog", "&Network", nullptr));
 #ifndef QT_NO_TOOLTIP
-        hideTrayIcon->setToolTip(QApplication::translate("OptionsDialog", "&Hide the icon from the system tray.", 0));
+        hideTrayIcon->setToolTip(QApplication::translate("OptionsDialog", "&Hide the icon from the system tray.", nullptr));
 #endif // QT_NO_TOOLTIP
-        hideTrayIcon->setText(QApplication::translate("OptionsDialog", "Hide tray icon", 0));
+        hideTrayIcon->setText(QApplication::translate("OptionsDialog", "Hide tray icon", nullptr));
 #ifndef QT_NO_TOOLTIP
-        minimizeToTray->setToolTip(QApplication::translate("OptionsDialog", "Show only a tray icon after minimizing the window.", 0));
+        minimizeToTray->setToolTip(QApplication::translate("OptionsDialog", "Show only a tray icon after minimizing the window.", nullptr));
 #endif // QT_NO_TOOLTIP
-        minimizeToTray->setText(QApplication::translate("OptionsDialog", "&Minimize to the tray instead of the taskbar", 0));
+        minimizeToTray->setText(QApplication::translate("OptionsDialog", "&Minimize to the tray instead of the taskbar", nullptr));
 #ifndef QT_NO_TOOLTIP
-        minimizeOnClose->setToolTip(QApplication::translate("OptionsDialog", "Minimize instead of exit the application when the window is closed. When this option is enabled, the application will be closed only after selecting Exit in the menu.", 0));
+        minimizeOnClose->setToolTip(QApplication::translate("OptionsDialog", "Minimize instead of exit the application when the window is closed. When this option is enabled, the application will be closed only after selecting Exit in the menu.", nullptr));
 #endif // QT_NO_TOOLTIP
-        minimizeOnClose->setText(QApplication::translate("OptionsDialog", "M&inimize on close", 0));
-        tabWidget->setTabText(tabWidget->indexOf(tabWindow), QApplication::translate("OptionsDialog", "&Window", 0));
-        langLabel->setText(QApplication::translate("OptionsDialog", "User Interface &language:", 0));
+        minimizeOnClose->setText(QApplication::translate("OptionsDialog", "M&inimize on close", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tabWindow), QApplication::translate("OptionsDialog", "&Window", nullptr));
+        langLabel->setText(QApplication::translate("OptionsDialog", "User Interface &language:", nullptr));
 #ifndef QT_NO_TOOLTIP
-        lang->setToolTip(QApplication::translate("OptionsDialog", "The user interface language can be set here. This setting will take effect after restarting %1.", 0));
+        lang->setToolTip(QApplication::translate("OptionsDialog", "The user interface language can be set here. This setting will take effect after restarting %1.", nullptr));
 #endif // QT_NO_TOOLTIP
-        unitLabel->setText(QApplication::translate("OptionsDialog", "&Unit to show amounts in:", 0));
+        unitLabel->setText(QApplication::translate("OptionsDialog", "&Unit to show amounts in:", nullptr));
 #ifndef QT_NO_TOOLTIP
-        unit->setToolTip(QApplication::translate("OptionsDialog", "Choose the default subdivision unit to show in the interface and when sending coins.", 0));
+        unit->setToolTip(QApplication::translate("OptionsDialog", "Choose the default subdivision unit to show in the interface and when sending coins.", nullptr));
 #endif // QT_NO_TOOLTIP
 #ifndef QT_NO_TOOLTIP
-        thirdPartyTxUrlsLabel->setToolTip(QApplication::translate("OptionsDialog", "Third party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items. %s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.", 0));
+        thirdPartyTxUrlsLabel->setToolTip(QApplication::translate("OptionsDialog", "Third party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items. %s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.", nullptr));
 #endif // QT_NO_TOOLTIP
-        thirdPartyTxUrlsLabel->setText(QApplication::translate("OptionsDialog", "Third party transaction URLs", 0));
+        thirdPartyTxUrlsLabel->setText(QApplication::translate("OptionsDialog", "Third party transaction URLs", nullptr));
 #ifndef QT_NO_TOOLTIP
-        thirdPartyTxUrls->setToolTip(QApplication::translate("OptionsDialog", "Third party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items. %s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.", 0));
+        thirdPartyTxUrls->setToolTip(QApplication::translate("OptionsDialog", "Third party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items. %s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.", nullptr));
 #endif // QT_NO_TOOLTIP
-        tabWidget->setTabText(tabWidget->indexOf(tabDisplay), QApplication::translate("OptionsDialog", "&Display", 0));
-        overriddenByCommandLineInfoLabel->setText(QApplication::translate("OptionsDialog", "Active command-line options that override above options:", 0));
+        tabWidget->setTabText(tabWidget->indexOf(tabDisplay), QApplication::translate("OptionsDialog", "&Display", nullptr));
+        overriddenByCommandLineInfoLabel->setText(QApplication::translate("OptionsDialog", "Active command-line options that override above options:", nullptr));
         overriddenByCommandLineLabel->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        openBitcoinConfButton->setToolTip(QApplication::translate("OptionsDialog", "Open the %1 configuration file from the working directory.", 0));
+        openBitcoinConfButton->setToolTip(QApplication::translate("OptionsDialog", "Open the %1 configuration file from the working directory.", nullptr));
 #endif // QT_NO_TOOLTIP
-        openBitcoinConfButton->setText(QApplication::translate("OptionsDialog", "Open Configuration File", 0));
+        openBitcoinConfButton->setText(QApplication::translate("OptionsDialog", "Open Configuration File", nullptr));
 #ifndef QT_NO_TOOLTIP
-        resetButton->setToolTip(QApplication::translate("OptionsDialog", "Reset all client options to default.", 0));
+        resetButton->setToolTip(QApplication::translate("OptionsDialog", "Reset all client options to default.", nullptr));
 #endif // QT_NO_TOOLTIP
-        resetButton->setText(QApplication::translate("OptionsDialog", "&Reset Options", 0));
+        resetButton->setText(QApplication::translate("OptionsDialog", "&Reset Options", nullptr));
         statusLabel->setText(QString());
-        okButton->setText(QApplication::translate("OptionsDialog", "&OK", 0));
-        cancelButton->setText(QApplication::translate("OptionsDialog", "&Cancel", 0));
+        okButton->setText(QApplication::translate("OptionsDialog", "&OK", nullptr));
+        cancelButton->setText(QApplication::translate("OptionsDialog", "&Cancel", nullptr));
     } // retranslateUi
 
 };

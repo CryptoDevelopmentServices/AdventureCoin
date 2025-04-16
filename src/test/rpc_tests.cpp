@@ -232,7 +232,7 @@ BOOST_AUTO_TEST_CASE(json_parse_errors)
     // Invalid, trailing garbage
     BOOST_CHECK_THROW(ParseNonRFCJSONValue("1.0sds"), std::runtime_error);
     BOOST_CHECK_THROW(ParseNonRFCJSONValue("1.0]"), std::runtime_error);
-    // MBC addresses should fail parsing
+    // ADVC addresses should fail parsing
     BOOST_CHECK_THROW(ParseNonRFCJSONValue("B75tWpb8K1S7NmH4Zx6rewF9WQrcZv245W"), std::runtime_error);
     BOOST_CHECK_THROW(ParseNonRFCJSONValue("MJ98t1WpEZ73CNmQviecrnyiWrnqRhWNL"), std::runtime_error);
 }

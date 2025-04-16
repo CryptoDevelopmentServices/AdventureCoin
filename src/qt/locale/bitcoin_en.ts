@@ -80,12 +80,12 @@
     </message>
     <message>
         <location line="+7"/>
-        <source>These are your MicroBitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <source>These are your AdventureCoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>These are your MicroBitcoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <source>These are your AdventureCoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -227,7 +227,7 @@
     </message>
     <message>
         <location line="-56"/>
-        <source>%1 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your MicroBitcoins from being stolen by malware infecting your computer.</source>
+        <source>%1 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your AdventureCoins from being stolen by malware infecting your computer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -297,9 +297,9 @@
     </message>
 </context>
 <context>
-    <name>MicroBitcoinGUI</name>
+    <name>AdventureCoinGUI</name>
     <message>
-        <location filename="../MicroBitcoingui.cpp" line="+357"/>
+        <location filename="../AdventureCoingui.cpp" line="+357"/>
         <source>Sign &amp;message...</source>
         <translation>Sign &amp;message...</translation>
     </message>
@@ -430,8 +430,8 @@
     </message>
     <message>
         <location line="-510"/>
-        <source>Send coins to a MicroBitcoin address</source>
-        <translation>Send coins to a MicroBitcoin address</translation>
+        <source>Send coins to a AdventureCoin address</source>
+        <translation>Send coins to a AdventureCoin address</translation>
     </message>
     <message>
         <location line="+67"/>
@@ -460,8 +460,8 @@
     </message>
     <message>
         <location line="+516"/>
-        <source>MicroBitcoin</source>
-        <translation>MicroBitcoin</translation>
+        <source>AdventureCoin</source>
+        <translation>AdventureCoin</translation>
     </message>
     <message>
         <location line="-741"/>
@@ -495,13 +495,13 @@
     </message>
     <message>
         <location line="+7"/>
-        <source>Sign messages with your MicroBitcoin addresses to prove you own them</source>
-        <translation>Sign messages with your MicroBitcoin addresses to prove you own them</translation>
+        <source>Sign messages with your AdventureCoin addresses to prove you own them</source>
+        <translation>Sign messages with your AdventureCoin addresses to prove you own them</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Verify messages to ensure they were signed with specified MicroBitcoin addresses</source>
-        <translation>Verify messages to ensure they were signed with specified MicroBitcoin addresses</translation>
+        <source>Verify messages to ensure they were signed with specified AdventureCoin addresses</source>
+        <translation>Verify messages to ensure they were signed with specified AdventureCoin addresses</translation>
     </message>
     <message>
         <location line="+58"/>
@@ -525,7 +525,7 @@
     </message>
     <message>
         <location line="-158"/>
-        <source>Request payments (generates QR codes and MicroBitcoin: URIs)</source>
+        <source>Request payments (generates QR codes and AdventureCoin: URIs)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -540,7 +540,7 @@
     </message>
     <message>
         <location line="+3"/>
-        <source>Open a MicroBitcoin: URI or payment request</source>
+        <source>Open a AdventureCoin: URI or payment request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -550,10 +550,10 @@
     </message>
     <message numerus="yes">
         <location line="+356"/>
-        <source>%n active connection(s) to MicroBitcoin network</source>
+        <source>%n active connection(s) to AdventureCoin network</source>
         <translation>
-            <numerusform>%n active connection to MicroBitcoin network</numerusform>
-            <numerusform>%n active connections to MicroBitcoin network</numerusform>
+            <numerusform>%n active connection to AdventureCoin network</numerusform>
+            <numerusform>%n active connections to AdventureCoin network</numerusform>
         </translation>
     </message>
     <message>
@@ -611,7 +611,7 @@
     </message>
     <message>
         <location line="-440"/>
-        <source>Show the %1 help message to get a list with possible MicroBitcoin command-line options</source>
+        <source>Show the %1 help message to get a list with possible AdventureCoin command-line options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -690,8 +690,8 @@
         <translation>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../MicroBitcoin.cpp" line="+534"/>
-        <source>A fatal error occurred. MicroBitcoin can no longer continue safely and will quit.</source>
+        <location filename="../AdventureCoin.cpp" line="+534"/>
+        <source>A fatal error occurred. AdventureCoin can no longer continue safely and will quit.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -934,7 +934,7 @@
     </message>
     <message>
         <location line="+71"/>
-        <source>The entered address &quot;%1&quot; is not a valid MicroBitcoin address.</source>
+        <source>The entered address &quot;%1&quot; is not a valid AdventureCoin address.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1094,8 +1094,8 @@
     </message>
     <message>
         <location filename="../intro.cpp" line="+20"/>
-        <source>MicroBitcoin</source>
-        <translation type="unfinished">MicroBitcoin</translation>
+        <source>AdventureCoin</source>
+        <translation type="unfinished">AdventureCoin</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -1109,7 +1109,7 @@
     </message>
     <message>
         <location line="+8"/>
-        <source>%1 will download and store a copy of the MicroBitcoin block chain.</source>
+        <source>%1 will download and store a copy of the AdventureCoin block chain.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1153,12 +1153,12 @@
     </message>
     <message>
         <location line="+119"/>
-        <source>Recent transactions may not yet be visible, and therefore your wallet&apos;s balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the MicroBitcoin network, as detailed below.</source>
+        <source>Recent transactions may not yet be visible, and therefore your wallet&apos;s balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the AdventureCoin network, as detailed below.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+19"/>
-        <source>Attempting to spend MicroBitcoins that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
+        <source>Attempting to spend AdventureCoins that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1376,8 +1376,8 @@
     </message>
     <message>
         <location line="+30"/>
-        <source>Automatically open the MicroBitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Automatically open the MicroBitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</translation>
+        <source>Automatically open the AdventureCoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Automatically open the AdventureCoin client port on the router. This only works when your router supports UPnP and it is enabled.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1386,7 +1386,7 @@
     </message>
     <message>
         <location line="+17"/>
-        <source>Connect to the MicroBitcoin network through a SOCKS5 proxy.</source>
+        <source>Connect to the AdventureCoin network through a SOCKS5 proxy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1434,7 +1434,7 @@
     </message>
     <message>
         <location line="+25"/>
-        <source>Connect to the MicroBitcoin network through a separate SOCKS5 proxy for Tor hidden services.</source>
+        <source>Connect to the AdventureCoin network through a separate SOCKS5 proxy for Tor hidden services.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1579,8 +1579,8 @@
     <message>
         <location line="+62"/>
         <location line="+386"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the MicroBitcoin network after a connection is established, but this process has not completed yet.</source>
-        <translation>The displayed information may be out of date. Your wallet automatically synchronizes with the MicroBitcoin network after a connection is established, but this process has not completed yet.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the AdventureCoin network after a connection is established, but this process has not completed yet.</source>
+        <translation>The displayed information may be out of date. Your wallet automatically synchronizes with the AdventureCoin network after a connection is established, but this process has not completed yet.</translation>
     </message>
     <message>
         <location line="-139"/>
@@ -1677,7 +1677,7 @@
     </message>
     <message>
         <location line="-402"/>
-        <source>Cannot start MicroBitcoin: click-to-pay handler</source>
+        <source>Cannot start AdventureCoin: click-to-pay handler</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1699,7 +1699,7 @@
     </message>
     <message>
         <location line="+8"/>
-        <source>URI cannot be parsed! This can be caused by an invalid MicroBitcoin address or malformed URI parameters.</source>
+        <source>URI cannot be parsed! This can be caused by an invalid AdventureCoin address or malformed URI parameters.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1815,13 +1815,13 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../MicroBitcoinunits.cpp" line="+176"/>
+        <location filename="../AdventureCoinunits.cpp" line="+176"/>
         <source>Amount</source>
         <translation type="unfinished">Amount</translation>
     </message>
     <message>
         <location filename="../guiutil.cpp" line="+130"/>
-        <source>Enter a MicroBitcoin address (e.g. %1)</source>
+        <source>Enter a AdventureCoin address (e.g. %1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1915,7 +1915,7 @@
         </translation>
     </message>
     <message>
-        <location filename="../MicroBitcoin.cpp" line="+178"/>
+        <location filename="../AdventureCoin.cpp" line="+178"/>
         <source>%1 didn&apos;t yet exit safely...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2407,7 +2407,7 @@
     <message>
         <location line="+14"/>
         <location line="+23"/>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the MicroBitcoin network.</source>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the AdventureCoin network.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2705,7 +2705,7 @@
     <message>
         <location line="+84"/>
         <location line="+13"/>
-        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks. But be aware that this can end up in a never confirming transaction once there is more demand for MicroBitcoin transactions than the network can process.</source>
+        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks. But be aware that this can end up in a never confirming transaction once there is more demand for AdventureCoin transactions than the network can process.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2921,7 +2921,7 @@
     </message>
     <message>
         <location line="+101"/>
-        <source>Warning: Invalid MicroBitcoin address</source>
+        <source>Warning: Invalid AdventureCoin address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2976,7 +2976,7 @@
     </message>
     <message>
         <location line="+39"/>
-        <source>The MicroBitcoin address to send the payment to</source>
+        <source>The AdventureCoin address to send the payment to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3003,7 +3003,7 @@
     </message>
     <message>
         <location line="-1021"/>
-        <source>The fee will be deducted from the amount being sent. The recipient will receive less MicroBitcoins than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</source>
+        <source>The fee will be deducted from the amount being sent. The recipient will receive less AdventureCoins than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3033,7 +3033,7 @@
     </message>
     <message>
         <location line="+47"/>
-        <source>A message that was attached to the MicroBitcoin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the MicroBitcoin network.</source>
+        <source>A message that was attached to the AdventureCoin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the AdventureCoin network.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3090,12 +3090,12 @@
     </message>
     <message>
         <location line="+6"/>
-        <source>You can sign messages/agreements with your addresses to prove you can receive MicroBitcoins sent to them. Be careful not to sign anything vague or random, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</source>
+        <source>You can sign messages/agreements with your addresses to prove you can receive AdventureCoins sent to them. Be careful not to sign anything vague or random, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+18"/>
-        <source>The MicroBitcoin address to sign the message with</source>
+        <source>The AdventureCoin address to sign the message with</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3137,8 +3137,8 @@
     </message>
     <message>
         <location line="+21"/>
-        <source>Sign the message to prove you own this MicroBitcoin address</source>
-        <translation>Sign the message to prove you own this MicroBitcoin address</translation>
+        <source>Sign the message to prove you own this AdventureCoin address</source>
+        <translation>Sign the message to prove you own this AdventureCoin address</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -3168,13 +3168,13 @@
     </message>
     <message>
         <location line="+21"/>
-        <source>The MicroBitcoin address the message was signed with</source>
+        <source>The AdventureCoin address the message was signed with</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+37"/>
-        <source>Verify the message to ensure it was signed with the specified MicroBitcoin address</source>
-        <translation>Verify the message to ensure it was signed with the specified MicroBitcoin address</translation>
+        <source>Verify the message to ensure it was signed with the specified AdventureCoin address</source>
+        <translation>Verify the message to ensure it was signed with the specified AdventureCoin address</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -3876,7 +3876,7 @@
 <context>
     <name>UnitDisplayStatusBarControl</name>
     <message>
-        <location filename="../MicroBitcoingui.cpp" line="+129"/>
+        <location filename="../AdventureCoingui.cpp" line="+129"/>
         <source>Unit to show amounts in. Click to select another unit.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3988,9 +3988,9 @@
     </message>
 </context>
 <context>
-    <name>MicroBitcoin-core</name>
+    <name>AdventureCoin-core</name>
     <message>
-        <location filename="../MicroBitcoinstrings.cpp" line="+341"/>
+        <location filename="../AdventureCoinstrings.cpp" line="+341"/>
         <source>Options:</source>
         <translation>Options:</translation>
     </message>
@@ -4066,8 +4066,8 @@
     </message>
     <message>
         <location line="-384"/>
-        <source>MicroBitcoin Core</source>
-        <translation type="unfinished">MicroBitcoin Core</translation>
+        <source>AdventureCoin Core</source>
+        <translation type="unfinished">AdventureCoin Core</translation>
     </message>
     <message>
         <location line="+1"/>

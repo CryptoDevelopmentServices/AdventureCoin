@@ -1,5 +1,5 @@
 # Copyright (c) 2013-2016 The Bitcoin Core developers
-# Copyright (c) 2018 MicroBitcoin developers
+# Copyright (c) 2018 AdventureCoin developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -67,11 +67,11 @@ TESTS =
 BENCHMARKS =
 
 if BUILD_BITCOIND
-  bin_PROGRAMS += microbitcoind
+  bin_PROGRAMS += adventurecoind
 endif
 
 if BUILD_BITCOIN_UTILS
-  bin_PROGRAMS += microbitcoin-cli microbitcoin-tx
+  bin_PROGRAMS += adventurecoin-cli adventurecoin-tx
 endif
 
 .PHONY: FORCE check-symbols check-security
@@ -178,7 +178,7 @@ BITCOIN_CORE_H = \
   zmq/zmqconfig.h\
   zmq/zmqnotificationinterface.h \
   zmq/zmqpublishnotifier.h \
-  microbitcoin.h
+  adventurecoin.h
 
 obj/build.h: FORCE
 	@$(MKDIR_P) $(builddir)/obj
@@ -186,7 +186,7 @@ obj/build.h: FORCE
 	  "$(abs_top_srcdir)"
 libbitcoin_util_a-clientversion.$(OBJEXT): obj/build.h
 
-# server: shared between microbitcoind and microbitcoin-qt
+# server: shared between adventurecoind and adventurecoin-qt
 libbitcoin_server_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(MINIUPNPC_CPPFLAGS) $(EVENT_CFLAGS) $(EVENT_PTHREADS_CFLAGS)
 libbitcoin_server_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_server_a_SOURCES = \
@@ -228,7 +228,7 @@ libbitcoin_server_a_SOURCES = \
   validation.cpp \
   validationinterface.cpp \
   versionbits.cpp \
-  microbitcoin.cpp \
+  adventurecoin.cpp \
   $(BITCOIN_CORE_H)
 
 if ENABLE_ZMQ
@@ -241,7 +241,7 @@ libbitcoin_zmq_a_SOURCES = \
 endif
 
 
-# wallet: shared between microbitcoind and microbitcoin-qt, but only linked
+# wallet: shared between adventurecoind and adventurecoin-qt, but only linked
 # when wallet enabled
 libbitcoin_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
@@ -327,7 +327,7 @@ libbitcoin_consensus_a_SOURCES = \
   utilstrencodings.h \
   version.h
 
-# common: shared between microbitcoind, and microbitcoin-qt and non-server tools
+# common: shared between adventurecoind, and adventurecoin-qt and non-server tools
 libbitcoin_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_common_a_SOURCES = \
@@ -380,7 +380,7 @@ if GLIBC_BACK_COMPAT
 libbitcoin_util_a_SOURCES += compat/glibc_compat.cpp
 endif
 
-# cli: shared between microbitcoin-cli and microbitcoin-qt
+# cli: shared between adventurecoin-cli and adventurecoin-qt
 libbitcoin_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_cli_a_SOURCES = \
@@ -390,17 +390,17 @@ libbitcoin_cli_a_SOURCES = \
 nodist_libbitcoin_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
-# microbitcoind binary #
-microbitcoind_SOURCES = bitcoind.cpp
-microbitcoind_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-microbitcoind_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-microbitcoind_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# adventurecoind binary #
+adventurecoind_SOURCES = bitcoind.cpp
+adventurecoind_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+adventurecoind_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+adventurecoind_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-microbitcoind_SOURCES += bitcoind-res.rc
+adventurecoind_SOURCES += bitcoind-res.rc
 endif
 
-microbitcoind_LDADD = \
+adventurecoind_LDADD = \
   $(LIBBITCOIN_SERVER) \
   $(LIBBITCOIN_COMMON) \
   $(LIBUNIVALUE) \
@@ -414,38 +414,38 @@ microbitcoind_LDADD = \
   $(LIBMEMENV) \
   $(LIBSECP256K1)
 
-microbitcoind_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS)
+adventurecoind_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS)
 
-# microbitcoin-cli binary #
-microbitcoin_cli_SOURCES = bitcoin-cli.cpp
-microbitcoin_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
-microbitcoin_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-microbitcoin_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# adventurecoin-cli binary #
+adventurecoin_cli_SOURCES = bitcoin-cli.cpp
+adventurecoin_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
+adventurecoin_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+adventurecoin_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-microbitcoin_cli_SOURCES += bitcoin-cli-res.rc
+adventurecoin_cli_SOURCES += bitcoin-cli-res.rc
 endif
 
-microbitcoin_cli_LDADD = \
+adventurecoin_cli_LDADD = \
   $(LIBBITCOIN_CLI) \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_UTIL) \
   $(LIBBITCOIN_CRYPTO)
 
-microbitcoin_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
+adventurecoin_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
 #
 
-# microbitcoin-tx binary #
-microbitcoin_tx_SOURCES = bitcoin-tx.cpp
-microbitcoin_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-microbitcoin_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-microbitcoin_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# adventurecoin-tx binary #
+adventurecoin_tx_SOURCES = bitcoin-tx.cpp
+adventurecoin_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+adventurecoin_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+adventurecoin_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-microbitcoin_tx_SOURCES += bitcoin-tx-res.rc
+adventurecoin_tx_SOURCES += bitcoin-tx-res.rc
 endif
 
-microbitcoin_tx_LDADD = \
+adventurecoin_tx_LDADD = \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_UTIL) \
@@ -453,7 +453,7 @@ microbitcoin_tx_LDADD = \
   $(LIBBITCOIN_CRYPTO) \
   $(LIBSECP256K1)
 
-microbitcoin_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
+adventurecoin_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
 #
 
 # bitcoinconsensus library #

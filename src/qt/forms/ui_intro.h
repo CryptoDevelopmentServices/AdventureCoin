@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'intro.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,13 +10,10 @@
 #define UI_INTRO_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
@@ -55,13 +52,13 @@ public:
     void setupUi(QDialog *Intro)
     {
         if (Intro->objectName().isEmpty())
-            Intro->setObjectName(QStringLiteral("Intro"));
+            Intro->setObjectName(QString::fromUtf8("Intro"));
         Intro->resize(674, 415);
         verticalLayout = new QVBoxLayout(Intro);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         welcomeLabel = new QLabel(Intro);
-        welcomeLabel->setObjectName(QStringLiteral("welcomeLabel"));
-        welcomeLabel->setStyleSheet(QStringLiteral("QLabel { font-style:italic; }"));
+        welcomeLabel->setObjectName(QString::fromUtf8("welcomeLabel"));
+        welcomeLabel->setStyleSheet(QString::fromUtf8("QLabel { font-style:italic; }"));
         welcomeLabel->setWordWrap(true);
 
         verticalLayout->addWidget(welcomeLabel);
@@ -71,47 +68,47 @@ public:
         verticalLayout->addItem(verticalSpacer_4);
 
         storageLabel = new QLabel(Intro);
-        storageLabel->setObjectName(QStringLiteral("storageLabel"));
+        storageLabel->setObjectName(QString::fromUtf8("storageLabel"));
         storageLabel->setWordWrap(true);
 
         verticalLayout->addWidget(storageLabel);
 
         sizeWarningLabel = new QLabel(Intro);
-        sizeWarningLabel->setObjectName(QStringLiteral("sizeWarningLabel"));
+        sizeWarningLabel->setObjectName(QString::fromUtf8("sizeWarningLabel"));
         sizeWarningLabel->setWordWrap(true);
 
         verticalLayout->addWidget(sizeWarningLabel);
 
         dataDirDefault = new QRadioButton(Intro);
-        dataDirDefault->setObjectName(QStringLiteral("dataDirDefault"));
+        dataDirDefault->setObjectName(QString::fromUtf8("dataDirDefault"));
 
         verticalLayout->addWidget(dataDirDefault);
 
         dataDirCustom = new QRadioButton(Intro);
-        dataDirCustom->setObjectName(QStringLiteral("dataDirCustom"));
+        dataDirCustom->setObjectName(QString::fromUtf8("dataDirCustom"));
 
         verticalLayout->addWidget(dataDirCustom);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(0);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
         horizontalSpacer = new QSpacerItem(60, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);
 
         verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         verticalLayout_2->setSizeConstraint(QLayout::SetDefaultConstraint);
         horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         dataDirectory = new QLineEdit(Intro);
-        dataDirectory->setObjectName(QStringLiteral("dataDirectory"));
+        dataDirectory->setObjectName(QString::fromUtf8("dataDirectory"));
 
         horizontalLayout_2->addWidget(dataDirectory);
 
         ellipsisButton = new QPushButton(Intro);
-        ellipsisButton->setObjectName(QStringLiteral("ellipsisButton"));
+        ellipsisButton->setObjectName(QString::fromUtf8("ellipsisButton"));
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -131,7 +128,7 @@ public:
         verticalLayout_2->addItem(verticalSpacer_3);
 
         freeSpace = new QLabel(Intro);
-        freeSpace->setObjectName(QStringLiteral("freeSpace"));
+        freeSpace->setObjectName(QString::fromUtf8("freeSpace"));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy1.setHorizontalStretch(1);
         sizePolicy1.setVerticalStretch(0);
@@ -146,7 +143,7 @@ public:
         verticalLayout_2->addItem(verticalSpacer_2);
 
         errorMessage = new QLabel(Intro);
-        errorMessage->setObjectName(QStringLiteral("errorMessage"));
+        errorMessage->setObjectName(QString::fromUtf8("errorMessage"));
         QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
@@ -164,19 +161,19 @@ public:
         verticalLayout->addLayout(horizontalLayout);
 
         lblExplanation1 = new QLabel(Intro);
-        lblExplanation1->setObjectName(QStringLiteral("lblExplanation1"));
+        lblExplanation1->setObjectName(QString::fromUtf8("lblExplanation1"));
         lblExplanation1->setWordWrap(true);
 
         verticalLayout->addWidget(lblExplanation1);
 
         lblExplanation2 = new QLabel(Intro);
-        lblExplanation2->setObjectName(QStringLiteral("lblExplanation2"));
+        lblExplanation2->setObjectName(QString::fromUtf8("lblExplanation2"));
         lblExplanation2->setWordWrap(true);
 
         verticalLayout->addWidget(lblExplanation2);
 
         lblExplanation3 = new QLabel(Intro);
-        lblExplanation3->setObjectName(QStringLiteral("lblExplanation3"));
+        lblExplanation3->setObjectName(QString::fromUtf8("lblExplanation3"));
         lblExplanation3->setWordWrap(true);
 
         verticalLayout->addWidget(lblExplanation3);
@@ -186,7 +183,7 @@ public:
         verticalLayout->addItem(verticalSpacer);
 
         buttonBox = new QDialogButtonBox(Intro);
-        buttonBox->setObjectName(QStringLiteral("buttonBox"));
+        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 
@@ -202,15 +199,15 @@ public:
 
     void retranslateUi(QDialog *Intro)
     {
-        Intro->setWindowTitle(QApplication::translate("Intro", "Welcome", 0));
-        welcomeLabel->setText(QApplication::translate("Intro", "Welcome to %1.", 0));
-        storageLabel->setText(QApplication::translate("Intro", "As this is the first time the program is launched, you can choose where %1 will store its data.", 0));
-        dataDirDefault->setText(QApplication::translate("Intro", "Use the default data directory", 0));
-        dataDirCustom->setText(QApplication::translate("Intro", "Use a custom data directory:", 0));
+        Intro->setWindowTitle(QApplication::translate("Intro", "Welcome", nullptr));
+        welcomeLabel->setText(QApplication::translate("Intro", "Welcome to %1.", nullptr));
+        storageLabel->setText(QApplication::translate("Intro", "As this is the first time the program is launched, you can choose where %1 will store its data.", nullptr));
+        dataDirDefault->setText(QApplication::translate("Intro", "Use the default data directory", nullptr));
+        dataDirCustom->setText(QApplication::translate("Intro", "Use a custom data directory:", nullptr));
         freeSpace->setText(QString());
-        lblExplanation1->setText(QApplication::translate("Intro", "When you click OK, %1 will begin to download and process the full %4 block chain (%2GB) starting with the earliest transactions in %3 when %4 initially launched.", 0));
-        lblExplanation2->setText(QApplication::translate("Intro", "This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off.", 0));
-        lblExplanation3->setText(QApplication::translate("Intro", "If you have chosen to limit block chain storage (pruning), the historical data must still be downloaded and processed, but will be deleted afterward to keep your disk usage low.", 0));
+        lblExplanation1->setText(QApplication::translate("Intro", "When you click OK, %1 will begin to download and process the full %4 block chain (%2GB) starting with the earliest transactions in %3 when %4 initially launched.", nullptr));
+        lblExplanation2->setText(QApplication::translate("Intro", "This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off.", nullptr));
+        lblExplanation3->setText(QApplication::translate("Intro", "If you have chosen to limit block chain storage (pruning), the historical data must still be downloaded and processed, but will be deleted afterward to keep your disk usage low.", nullptr));
     } // retranslateUi
 
 };

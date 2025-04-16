@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'addressbookpage.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,9 +10,8 @@
 #define UI_ADDRESSBOOKPAGE_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -41,19 +40,19 @@ public:
     void setupUi(QWidget *AddressBookPage)
     {
         if (AddressBookPage->objectName().isEmpty())
-            AddressBookPage->setObjectName(QStringLiteral("AddressBookPage"));
+            AddressBookPage->setObjectName(QString::fromUtf8("AddressBookPage"));
         AddressBookPage->resize(760, 380);
         verticalLayout = new QVBoxLayout(AddressBookPage);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         labelExplanation = new QLabel(AddressBookPage);
-        labelExplanation->setObjectName(QStringLiteral("labelExplanation"));
+        labelExplanation->setObjectName(QString::fromUtf8("labelExplanation"));
         labelExplanation->setTextFormat(Qt::PlainText);
         labelExplanation->setWordWrap(true);
 
         verticalLayout->addWidget(labelExplanation);
 
         tableView = new QTableView(AddressBookPage);
-        tableView->setObjectName(QStringLiteral("tableView"));
+        tableView->setObjectName(QString::fromUtf8("tableView"));
         tableView->setContextMenuPolicy(Qt::CustomContextMenu);
         tableView->setTabKeyNavigation(false);
         tableView->setAlternatingRowColors(true);
@@ -65,29 +64,29 @@ public:
         verticalLayout->addWidget(tableView);
 
         horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         newAddress = new QPushButton(AddressBookPage);
-        newAddress->setObjectName(QStringLiteral("newAddress"));
+        newAddress->setObjectName(QString::fromUtf8("newAddress"));
         QIcon icon;
-        icon.addFile(QStringLiteral(":/icons/add"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/icons/add"), QSize(), QIcon::Normal, QIcon::Off);
         newAddress->setIcon(icon);
         newAddress->setAutoDefault(false);
 
         horizontalLayout->addWidget(newAddress);
 
         copyAddress = new QPushButton(AddressBookPage);
-        copyAddress->setObjectName(QStringLiteral("copyAddress"));
+        copyAddress->setObjectName(QString::fromUtf8("copyAddress"));
         QIcon icon1;
-        icon1.addFile(QStringLiteral(":/icons/editcopy"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QString::fromUtf8(":/icons/editcopy"), QSize(), QIcon::Normal, QIcon::Off);
         copyAddress->setIcon(icon1);
         copyAddress->setAutoDefault(false);
 
         horizontalLayout->addWidget(copyAddress);
 
         deleteAddress = new QPushButton(AddressBookPage);
-        deleteAddress->setObjectName(QStringLiteral("deleteAddress"));
+        deleteAddress->setObjectName(QString::fromUtf8("deleteAddress"));
         QIcon icon2;
-        icon2.addFile(QStringLiteral(":/icons/remove"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QString::fromUtf8(":/icons/remove"), QSize(), QIcon::Normal, QIcon::Off);
         deleteAddress->setIcon(icon2);
         deleteAddress->setAutoDefault(false);
 
@@ -98,16 +97,16 @@ public:
         horizontalLayout->addItem(horizontalSpacer);
 
         exportButton = new QPushButton(AddressBookPage);
-        exportButton->setObjectName(QStringLiteral("exportButton"));
+        exportButton->setObjectName(QString::fromUtf8("exportButton"));
         QIcon icon3;
-        icon3.addFile(QStringLiteral(":/icons/export"), QSize(), QIcon::Normal, QIcon::Off);
+        icon3.addFile(QString::fromUtf8(":/icons/export"), QSize(), QIcon::Normal, QIcon::Off);
         exportButton->setIcon(icon3);
         exportButton->setAutoDefault(false);
 
         horizontalLayout->addWidget(exportButton);
 
         closeButton = new QPushButton(AddressBookPage);
-        closeButton->setObjectName(QStringLiteral("closeButton"));
+        closeButton->setObjectName(QString::fromUtf8("closeButton"));
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -129,25 +128,25 @@ public:
     void retranslateUi(QWidget *AddressBookPage)
     {
 #ifndef QT_NO_TOOLTIP
-        tableView->setToolTip(QApplication::translate("AddressBookPage", "Right-click to edit address or label", 0));
+        tableView->setToolTip(QApplication::translate("AddressBookPage", "Right-click to edit address or label", nullptr));
 #endif // QT_NO_TOOLTIP
 #ifndef QT_NO_TOOLTIP
-        newAddress->setToolTip(QApplication::translate("AddressBookPage", "Create a new address", 0));
+        newAddress->setToolTip(QApplication::translate("AddressBookPage", "Create a new address", nullptr));
 #endif // QT_NO_TOOLTIP
-        newAddress->setText(QApplication::translate("AddressBookPage", "&New", 0));
+        newAddress->setText(QApplication::translate("AddressBookPage", "&New", nullptr));
 #ifndef QT_NO_TOOLTIP
-        copyAddress->setToolTip(QApplication::translate("AddressBookPage", "Copy the currently selected address to the system clipboard", 0));
+        copyAddress->setToolTip(QApplication::translate("AddressBookPage", "Copy the currently selected address to the system clipboard", nullptr));
 #endif // QT_NO_TOOLTIP
-        copyAddress->setText(QApplication::translate("AddressBookPage", "&Copy", 0));
+        copyAddress->setText(QApplication::translate("AddressBookPage", "&Copy", nullptr));
 #ifndef QT_NO_TOOLTIP
-        deleteAddress->setToolTip(QApplication::translate("AddressBookPage", "Delete the currently selected address from the list", 0));
+        deleteAddress->setToolTip(QApplication::translate("AddressBookPage", "Delete the currently selected address from the list", nullptr));
 #endif // QT_NO_TOOLTIP
-        deleteAddress->setText(QApplication::translate("AddressBookPage", "&Delete", 0));
+        deleteAddress->setText(QApplication::translate("AddressBookPage", "&Delete", nullptr));
 #ifndef QT_NO_TOOLTIP
-        exportButton->setToolTip(QApplication::translate("AddressBookPage", "Export the data in the current tab to a file", 0));
+        exportButton->setToolTip(QApplication::translate("AddressBookPage", "Export the data in the current tab to a file", nullptr));
 #endif // QT_NO_TOOLTIP
-        exportButton->setText(QApplication::translate("AddressBookPage", "&Export", 0));
-        closeButton->setText(QApplication::translate("AddressBookPage", "C&lose", 0));
+        exportButton->setText(QApplication::translate("AddressBookPage", "&Export", nullptr));
+        closeButton->setText(QApplication::translate("AddressBookPage", "C&lose", nullptr));
         Q_UNUSED(AddressBookPage);
     } // retranslateUi
 

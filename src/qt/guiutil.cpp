@@ -128,7 +128,7 @@ void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent)
 #if QT_VERSION >= 0x040700
     // We don't want translators to use own addresses in translations
     // and this is the only place, where this address is supplied.
-    widget->setPlaceholderText(QObject::tr("Enter a MicroBitcoin address (e.g. %1)").arg(
+    widget->setPlaceholderText(QObject::tr("Enter a AdventureCoin address (e.g. %1)").arg(
         QString::fromStdString(DummyAddress(Params()))));
 #endif
     widget->setValidator(new BitcoinAddressEntryValidator(parent));
@@ -146,8 +146,8 @@ void setupAmountWidget(QLineEdit *widget, QWidget *parent)
 
 bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 {
-    // return if URI is not valid or is no microbitcoin: URI
-    if(!uri.isValid() || uri.scheme() != QString("microbitcoin"))
+    // return if URI is not valid or is no adventurecoin: URI
+    if(!uri.isValid() || uri.scheme() != QString("adventurecoin"))
         return false;
 
     SendCoinsRecipient rv;
@@ -187,7 +187,7 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
         {
             if(!i->second.isEmpty())
             {
-                if(!BitcoinUnits::parse(BitcoinUnits::MBC, i->second, &rv.amount))
+                if(!BitcoinUnits::parse(BitcoinUnits::ADVC, i->second, &rv.amount))
                 {
                     return false;
                 }
@@ -207,13 +207,13 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 
 bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
 {
-    // Convert microbitcoin:// to microbitcoin:
+    // Convert adventurecoin:// to adventurecoin:
     //
-    //    Cannot handle this later, because microbitcoin:// will cause Qt to see the part after // as host,
+    //    Cannot handle this later, because adventurecoin:// will cause Qt to see the part after // as host,
     //    which will lower-case it (and thus invalidate the address).
-    if(uri.startsWith("microbitcoin://", Qt::CaseInsensitive))
+    if(uri.startsWith("adventurecoin://", Qt::CaseInsensitive))
     {
-        uri.replace(0, 15, "microbitcoin:");
+        uri.replace(0, 15, "adventurecoin:");
     }
     QUrl uriInstance(uri);
     return parseBitcoinURI(uriInstance, out);
@@ -221,12 +221,12 @@ bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
 
 QString formatBitcoinURI(const SendCoinsRecipient &info)
 {
-    QString ret = QString("microbitcoin:%1").arg(info.address);
+    QString ret = QString("adventurecoin:%1").arg(info.address);
     int paramCount = 0;
 
     if (info.amount)
     {
-        ret += QString("?amount=%1").arg(BitcoinUnits::format(BitcoinUnits::MBC, info.amount, false, BitcoinUnits::separatorNever));
+        ret += QString("?amount=%1").arg(BitcoinUnits::format(BitcoinUnits::ADVC, info.amount, false, BitcoinUnits::separatorNever));
         paramCount++;
     }
 

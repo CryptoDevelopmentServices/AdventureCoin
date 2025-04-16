@@ -1,6 +1,6 @@
 ### TestGen ###
 
-Utilities to generate test vectors for the data-driven MicroBitcoin tests.
+Utilities to generate test vectors for the data-driven AdventureCoin tests.
 
 Usage: 
 

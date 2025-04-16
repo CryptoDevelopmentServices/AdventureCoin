@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'debugwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,9 +10,8 @@
 #define UI_DEBUGWINDOW_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
@@ -151,19 +150,19 @@ public:
     void setupUi(QWidget *RPCConsole)
     {
         if (RPCConsole->objectName().isEmpty())
-            RPCConsole->setObjectName(QStringLiteral("RPCConsole"));
+            RPCConsole->setObjectName(QString::fromUtf8("RPCConsole"));
         RPCConsole->resize(740, 430);
         verticalLayout_2 = new QVBoxLayout(RPCConsole);
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         tabWidget = new QTabWidget(RPCConsole);
-        tabWidget->setObjectName(QStringLiteral("tabWidget"));
+        tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
         tab_info = new QWidget();
-        tab_info->setObjectName(QStringLiteral("tab_info"));
+        tab_info->setObjectName(QString::fromUtf8("tab_info"));
         gridLayout = new QGridLayout(tab_info);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setHorizontalSpacing(12);
         label_9 = new QLabel(tab_info);
-        label_9->setObjectName(QStringLiteral("label_9"));
+        label_9->setObjectName(QString::fromUtf8("label_9"));
         QFont font;
         font.setBold(true);
         font.setWeight(75);
@@ -172,12 +171,12 @@ public:
         gridLayout->addWidget(label_9, 0, 0, 1, 1);
 
         label_6 = new QLabel(tab_info);
-        label_6->setObjectName(QStringLiteral("label_6"));
+        label_6->setObjectName(QString::fromUtf8("label_6"));
 
         gridLayout->addWidget(label_6, 1, 0, 1, 1);
 
         clientVersion = new QLabel(tab_info);
-        clientVersion->setObjectName(QStringLiteral("clientVersion"));
+        clientVersion->setObjectName(QString::fromUtf8("clientVersion"));
         clientVersion->setCursor(QCursor(Qt::IBeamCursor));
         clientVersion->setTextFormat(Qt::PlainText);
         clientVersion->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -185,13 +184,13 @@ public:
         gridLayout->addWidget(clientVersion, 1, 1, 1, 2);
 
         labelClientUserAgent = new QLabel(tab_info);
-        labelClientUserAgent->setObjectName(QStringLiteral("labelClientUserAgent"));
+        labelClientUserAgent->setObjectName(QString::fromUtf8("labelClientUserAgent"));
         labelClientUserAgent->setIndent(10);
 
         gridLayout->addWidget(labelClientUserAgent, 2, 0, 1, 1);
 
         clientUserAgent = new QLabel(tab_info);
-        clientUserAgent->setObjectName(QStringLiteral("clientUserAgent"));
+        clientUserAgent->setObjectName(QString::fromUtf8("clientUserAgent"));
         clientUserAgent->setCursor(QCursor(Qt::IBeamCursor));
         clientUserAgent->setTextFormat(Qt::PlainText);
         clientUserAgent->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -199,13 +198,13 @@ public:
         gridLayout->addWidget(clientUserAgent, 2, 1, 1, 2);
 
         label_berkeleyDBVersion = new QLabel(tab_info);
-        label_berkeleyDBVersion->setObjectName(QStringLiteral("label_berkeleyDBVersion"));
+        label_berkeleyDBVersion->setObjectName(QString::fromUtf8("label_berkeleyDBVersion"));
         label_berkeleyDBVersion->setIndent(10);
 
         gridLayout->addWidget(label_berkeleyDBVersion, 3, 0, 1, 1);
 
         berkeleyDBVersion = new QLabel(tab_info);
-        berkeleyDBVersion->setObjectName(QStringLiteral("berkeleyDBVersion"));
+        berkeleyDBVersion->setObjectName(QString::fromUtf8("berkeleyDBVersion"));
         berkeleyDBVersion->setCursor(QCursor(Qt::IBeamCursor));
         berkeleyDBVersion->setTextFormat(Qt::PlainText);
         berkeleyDBVersion->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -213,12 +212,12 @@ public:
         gridLayout->addWidget(berkeleyDBVersion, 3, 1, 1, 2);
 
         label_12 = new QLabel(tab_info);
-        label_12->setObjectName(QStringLiteral("label_12"));
+        label_12->setObjectName(QString::fromUtf8("label_12"));
 
         gridLayout->addWidget(label_12, 4, 0, 1, 1);
 
         dataDir = new QLabel(tab_info);
-        dataDir->setObjectName(QStringLiteral("dataDir"));
+        dataDir->setObjectName(QString::fromUtf8("dataDir"));
         dataDir->setCursor(QCursor(Qt::IBeamCursor));
         dataDir->setTextFormat(Qt::PlainText);
         dataDir->setWordWrap(true);
@@ -227,12 +226,12 @@ public:
         gridLayout->addWidget(dataDir, 4, 1, 1, 2);
 
         label_13 = new QLabel(tab_info);
-        label_13->setObjectName(QStringLiteral("label_13"));
+        label_13->setObjectName(QString::fromUtf8("label_13"));
 
         gridLayout->addWidget(label_13, 5, 0, 1, 1);
 
         startupTime = new QLabel(tab_info);
-        startupTime->setObjectName(QStringLiteral("startupTime"));
+        startupTime->setObjectName(QString::fromUtf8("startupTime"));
         startupTime->setCursor(QCursor(Qt::IBeamCursor));
         startupTime->setTextFormat(Qt::PlainText);
         startupTime->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -240,18 +239,18 @@ public:
         gridLayout->addWidget(startupTime, 5, 1, 1, 2);
 
         labelNetwork = new QLabel(tab_info);
-        labelNetwork->setObjectName(QStringLiteral("labelNetwork"));
+        labelNetwork->setObjectName(QString::fromUtf8("labelNetwork"));
         labelNetwork->setFont(font);
 
         gridLayout->addWidget(labelNetwork, 6, 0, 1, 1);
 
         label_8 = new QLabel(tab_info);
-        label_8->setObjectName(QStringLiteral("label_8"));
+        label_8->setObjectName(QString::fromUtf8("label_8"));
 
         gridLayout->addWidget(label_8, 7, 0, 1, 1);
 
         networkName = new QLabel(tab_info);
-        networkName->setObjectName(QStringLiteral("networkName"));
+        networkName->setObjectName(QString::fromUtf8("networkName"));
         networkName->setCursor(QCursor(Qt::IBeamCursor));
         networkName->setTextFormat(Qt::PlainText);
         networkName->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -259,12 +258,12 @@ public:
         gridLayout->addWidget(networkName, 7, 1, 1, 2);
 
         label_7 = new QLabel(tab_info);
-        label_7->setObjectName(QStringLiteral("label_7"));
+        label_7->setObjectName(QString::fromUtf8("label_7"));
 
         gridLayout->addWidget(label_7, 8, 0, 1, 1);
 
         numberOfConnections = new QLabel(tab_info);
-        numberOfConnections->setObjectName(QStringLiteral("numberOfConnections"));
+        numberOfConnections->setObjectName(QString::fromUtf8("numberOfConnections"));
         numberOfConnections->setCursor(QCursor(Qt::IBeamCursor));
         numberOfConnections->setTextFormat(Qt::PlainText);
         numberOfConnections->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -272,18 +271,18 @@ public:
         gridLayout->addWidget(numberOfConnections, 8, 1, 1, 2);
 
         label_10 = new QLabel(tab_info);
-        label_10->setObjectName(QStringLiteral("label_10"));
+        label_10->setObjectName(QString::fromUtf8("label_10"));
         label_10->setFont(font);
 
         gridLayout->addWidget(label_10, 9, 0, 1, 1);
 
         label_3 = new QLabel(tab_info);
-        label_3->setObjectName(QStringLiteral("label_3"));
+        label_3->setObjectName(QString::fromUtf8("label_3"));
 
         gridLayout->addWidget(label_3, 10, 0, 1, 1);
 
         numberOfBlocks = new QLabel(tab_info);
-        numberOfBlocks->setObjectName(QStringLiteral("numberOfBlocks"));
+        numberOfBlocks->setObjectName(QString::fromUtf8("numberOfBlocks"));
         numberOfBlocks->setCursor(QCursor(Qt::IBeamCursor));
         numberOfBlocks->setTextFormat(Qt::PlainText);
         numberOfBlocks->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -291,12 +290,12 @@ public:
         gridLayout->addWidget(numberOfBlocks, 10, 1, 1, 2);
 
         labelLastBlockTime = new QLabel(tab_info);
-        labelLastBlockTime->setObjectName(QStringLiteral("labelLastBlockTime"));
+        labelLastBlockTime->setObjectName(QString::fromUtf8("labelLastBlockTime"));
 
         gridLayout->addWidget(labelLastBlockTime, 11, 0, 1, 1);
 
         lastBlockTime = new QLabel(tab_info);
-        lastBlockTime->setObjectName(QStringLiteral("lastBlockTime"));
+        lastBlockTime->setObjectName(QString::fromUtf8("lastBlockTime"));
         lastBlockTime->setCursor(QCursor(Qt::IBeamCursor));
         lastBlockTime->setTextFormat(Qt::PlainText);
         lastBlockTime->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -304,18 +303,18 @@ public:
         gridLayout->addWidget(lastBlockTime, 11, 1, 1, 2);
 
         labelMempoolTitle = new QLabel(tab_info);
-        labelMempoolTitle->setObjectName(QStringLiteral("labelMempoolTitle"));
+        labelMempoolTitle->setObjectName(QString::fromUtf8("labelMempoolTitle"));
         labelMempoolTitle->setFont(font);
 
         gridLayout->addWidget(labelMempoolTitle, 12, 0, 1, 1);
 
         labelNumberOfTransactions = new QLabel(tab_info);
-        labelNumberOfTransactions->setObjectName(QStringLiteral("labelNumberOfTransactions"));
+        labelNumberOfTransactions->setObjectName(QString::fromUtf8("labelNumberOfTransactions"));
 
         gridLayout->addWidget(labelNumberOfTransactions, 13, 0, 1, 1);
 
         mempoolNumberTxs = new QLabel(tab_info);
-        mempoolNumberTxs->setObjectName(QStringLiteral("mempoolNumberTxs"));
+        mempoolNumberTxs->setObjectName(QString::fromUtf8("mempoolNumberTxs"));
         mempoolNumberTxs->setCursor(QCursor(Qt::IBeamCursor));
         mempoolNumberTxs->setTextFormat(Qt::PlainText);
         mempoolNumberTxs->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -323,12 +322,12 @@ public:
         gridLayout->addWidget(mempoolNumberTxs, 13, 1, 1, 1);
 
         labelMemoryUsage = new QLabel(tab_info);
-        labelMemoryUsage->setObjectName(QStringLiteral("labelMemoryUsage"));
+        labelMemoryUsage->setObjectName(QString::fromUtf8("labelMemoryUsage"));
 
         gridLayout->addWidget(labelMemoryUsage, 14, 0, 1, 1);
 
         mempoolSize = new QLabel(tab_info);
-        mempoolSize->setObjectName(QStringLiteral("mempoolSize"));
+        mempoolSize->setObjectName(QString::fromUtf8("mempoolSize"));
         mempoolSize->setCursor(QCursor(Qt::IBeamCursor));
         mempoolSize->setTextFormat(Qt::PlainText);
         mempoolSize->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -337,18 +336,18 @@ public:
 
         verticalLayoutDebugButton = new QVBoxLayout();
         verticalLayoutDebugButton->setSpacing(3);
-        verticalLayoutDebugButton->setObjectName(QStringLiteral("verticalLayoutDebugButton"));
+        verticalLayoutDebugButton->setObjectName(QString::fromUtf8("verticalLayoutDebugButton"));
         verticalSpacer_2 = new QSpacerItem(10, 5, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayoutDebugButton->addItem(verticalSpacer_2);
 
         labelDebugLogfile = new QLabel(tab_info);
-        labelDebugLogfile->setObjectName(QStringLiteral("labelDebugLogfile"));
+        labelDebugLogfile->setObjectName(QString::fromUtf8("labelDebugLogfile"));
 
         verticalLayoutDebugButton->addWidget(labelDebugLogfile);
 
         openDebugLogfileButton = new QPushButton(tab_info);
-        openDebugLogfileButton->setObjectName(QStringLiteral("openDebugLogfileButton"));
+        openDebugLogfileButton->setObjectName(QString::fromUtf8("openDebugLogfileButton"));
         openDebugLogfileButton->setAutoDefault(false);
 
         verticalLayoutDebugButton->addWidget(openDebugLogfileButton);
@@ -363,23 +362,23 @@ public:
         gridLayout->setColumnStretch(1, 1);
         tabWidget->addTab(tab_info, QString());
         tab_console = new QWidget();
-        tab_console->setObjectName(QStringLiteral("tab_console"));
+        tab_console->setObjectName(QString::fromUtf8("tab_console"));
         verticalLayout_3 = new QVBoxLayout(tab_console);
         verticalLayout_3->setSpacing(3);
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(-1, -1, -1, 5);
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(4);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);
 
         fontSmallerButton = new QPushButton(tab_console);
-        fontSmallerButton->setObjectName(QStringLiteral("fontSmallerButton"));
+        fontSmallerButton->setObjectName(QString::fromUtf8("fontSmallerButton"));
         fontSmallerButton->setMaximumSize(QSize(24, 24));
         QIcon icon;
-        icon.addFile(QStringLiteral(":/icons/fontsmaller"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/icons/fontsmaller"), QSize(), QIcon::Normal, QIcon::Off);
         fontSmallerButton->setIcon(icon);
         fontSmallerButton->setIconSize(QSize(24, 16));
         fontSmallerButton->setAutoDefault(false);
@@ -388,10 +387,10 @@ public:
         horizontalLayout->addWidget(fontSmallerButton);
 
         fontBiggerButton = new QPushButton(tab_console);
-        fontBiggerButton->setObjectName(QStringLiteral("fontBiggerButton"));
+        fontBiggerButton->setObjectName(QString::fromUtf8("fontBiggerButton"));
         fontBiggerButton->setMaximumSize(QSize(24, 24));
         QIcon icon1;
-        icon1.addFile(QStringLiteral(":/icons/fontbigger"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QString::fromUtf8(":/icons/fontbigger"), QSize(), QIcon::Normal, QIcon::Off);
         fontBiggerButton->setIcon(icon1);
         fontBiggerButton->setIconSize(QSize(24, 16));
         fontBiggerButton->setAutoDefault(false);
@@ -400,13 +399,15 @@ public:
         horizontalLayout->addWidget(fontBiggerButton);
 
         clearButton = new QPushButton(tab_console);
-        clearButton->setObjectName(QStringLiteral("clearButton"));
+        clearButton->setObjectName(QString::fromUtf8("clearButton"));
         clearButton->setMaximumSize(QSize(24, 24));
         clearButton->setLayoutDirection(Qt::LeftToRight);
         QIcon icon2;
-        icon2.addFile(QStringLiteral(":/icons/remove"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QString::fromUtf8(":/icons/remove"), QSize(), QIcon::Normal, QIcon::Off);
         clearButton->setIcon(icon2);
-        clearButton->setShortcut(QStringLiteral("Ctrl+L"));
+#ifndef QT_NO_SHORTCUT
+        clearButton->setShortcut(QString::fromUtf8("Ctrl+L"));
+#endif // QT_NO_SHORTCUT
         clearButton->setAutoDefault(false);
         clearButton->setFlat(true);
 
@@ -416,7 +417,7 @@ public:
         verticalLayout_3->addLayout(horizontalLayout);
 
         messagesWidget = new QTextEdit(tab_console);
-        messagesWidget->setObjectName(QStringLiteral("messagesWidget"));
+        messagesWidget->setObjectName(QString::fromUtf8("messagesWidget"));
         messagesWidget->setMinimumSize(QSize(0, 100));
         messagesWidget->setReadOnly(true);
         messagesWidget->setProperty("tabKeyNavigation", QVariant(false));
@@ -426,14 +427,14 @@ public:
 
         horizontalLayoutPrompt = new QHBoxLayout();
         horizontalLayoutPrompt->setSpacing(3);
-        horizontalLayoutPrompt->setObjectName(QStringLiteral("horizontalLayoutPrompt"));
+        horizontalLayoutPrompt->setObjectName(QString::fromUtf8("horizontalLayoutPrompt"));
         promptIcon = new QPushButton(tab_console);
-        promptIcon->setObjectName(QStringLiteral("promptIcon"));
+        promptIcon->setObjectName(QString::fromUtf8("promptIcon"));
         promptIcon->setEnabled(false);
         promptIcon->setMaximumSize(QSize(16, 24));
         QIcon icon3;
-        icon3.addFile(QStringLiteral(":/icons/prompticon"), QSize(), QIcon::Normal, QIcon::Off);
-        icon3.addFile(QStringLiteral(":/icons/prompticon"), QSize(), QIcon::Disabled, QIcon::Off);
+        icon3.addFile(QString::fromUtf8(":/icons/prompticon"), QSize(), QIcon::Normal, QIcon::Off);
+        icon3.addFile(QString::fromUtf8(":/icons/prompticon"), QSize(), QIcon::Disabled, QIcon::Off);
         promptIcon->setIcon(icon3);
         promptIcon->setIconSize(QSize(14, 14));
         promptIcon->setAutoDefault(false);
@@ -442,7 +443,7 @@ public:
         horizontalLayoutPrompt->addWidget(promptIcon);
 
         lineEdit = new QLineEdit(tab_console);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
 
         horizontalLayoutPrompt->addWidget(lineEdit);
 
@@ -451,13 +452,13 @@ public:
 
         tabWidget->addTab(tab_console, QString());
         tab_nettraffic = new QWidget();
-        tab_nettraffic->setObjectName(QStringLiteral("tab_nettraffic"));
+        tab_nettraffic->setObjectName(QString::fromUtf8("tab_nettraffic"));
         horizontalLayout_3 = new QHBoxLayout(tab_nettraffic);
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         verticalLayout_4 = new QVBoxLayout();
-        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
         trafficGraph = new TrafficGraphWidget(tab_nettraffic);
-        trafficGraph->setObjectName(QStringLiteral("trafficGraph"));
+        trafficGraph->setObjectName(QString::fromUtf8("trafficGraph"));
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -467,9 +468,9 @@ public:
         verticalLayout_4->addWidget(trafficGraph);
 
         horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         sldGraphRange = new QSlider(tab_nettraffic);
-        sldGraphRange->setObjectName(QStringLiteral("sldGraphRange"));
+        sldGraphRange->setObjectName(QString::fromUtf8("sldGraphRange"));
         sldGraphRange->setMinimum(1);
         sldGraphRange->setMaximum(288);
         sldGraphRange->setPageStep(12);
@@ -479,14 +480,14 @@ public:
         horizontalLayout_2->addWidget(sldGraphRange);
 
         lblGraphRange = new QLabel(tab_nettraffic);
-        lblGraphRange->setObjectName(QStringLiteral("lblGraphRange"));
+        lblGraphRange->setObjectName(QString::fromUtf8("lblGraphRange"));
         lblGraphRange->setMinimumSize(QSize(100, 0));
         lblGraphRange->setAlignment(Qt::AlignCenter);
 
         horizontalLayout_2->addWidget(lblGraphRange);
 
         btnClearTrafficGraph = new QPushButton(tab_nettraffic);
-        btnClearTrafficGraph->setObjectName(QStringLiteral("btnClearTrafficGraph"));
+        btnClearTrafficGraph->setObjectName(QString::fromUtf8("btnClearTrafficGraph"));
         btnClearTrafficGraph->setAutoDefault(false);
 
         horizontalLayout_2->addWidget(btnClearTrafficGraph);
@@ -498,15 +499,15 @@ public:
         horizontalLayout_3->addLayout(verticalLayout_4);
 
         verticalLayout = new QVBoxLayout();
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         groupBox = new QGroupBox(tab_nettraffic);
-        groupBox->setObjectName(QStringLiteral("groupBox"));
+        groupBox->setObjectName(QString::fromUtf8("groupBox"));
         verticalLayout_5 = new QVBoxLayout(groupBox);
-        verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
+        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
         horizontalLayout_4 = new QHBoxLayout();
-        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         line = new QFrame(groupBox);
-        line->setObjectName(QStringLiteral("line"));
+        line->setObjectName(QString::fromUtf8("line"));
         QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -526,12 +527,12 @@ public:
         horizontalLayout_4->addWidget(line);
 
         label_16 = new QLabel(groupBox);
-        label_16->setObjectName(QStringLiteral("label_16"));
+        label_16->setObjectName(QString::fromUtf8("label_16"));
 
         horizontalLayout_4->addWidget(label_16);
 
         lblBytesIn = new QLabel(groupBox);
-        lblBytesIn->setObjectName(QStringLiteral("lblBytesIn"));
+        lblBytesIn->setObjectName(QString::fromUtf8("lblBytesIn"));
         lblBytesIn->setMinimumSize(QSize(50, 0));
         lblBytesIn->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
@@ -541,9 +542,9 @@ public:
         verticalLayout_5->addLayout(horizontalLayout_4);
 
         horizontalLayout_5 = new QHBoxLayout();
-        horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
+        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
         line_2 = new QFrame(groupBox);
-        line_2->setObjectName(QStringLiteral("line_2"));
+        line_2->setObjectName(QString::fromUtf8("line_2"));
         sizePolicy1.setHeightForWidth(line_2->sizePolicy().hasHeightForWidth());
         line_2->setSizePolicy(sizePolicy1);
         line_2->setMinimumSize(QSize(10, 0));
@@ -560,12 +561,12 @@ public:
         horizontalLayout_5->addWidget(line_2);
 
         label_17 = new QLabel(groupBox);
-        label_17->setObjectName(QStringLiteral("label_17"));
+        label_17->setObjectName(QString::fromUtf8("label_17"));
 
         horizontalLayout_5->addWidget(label_17);
 
         lblBytesOut = new QLabel(groupBox);
-        lblBytesOut->setObjectName(QStringLiteral("lblBytesOut"));
+        lblBytesOut->setObjectName(QString::fromUtf8("lblBytesOut"));
         lblBytesOut->setMinimumSize(QSize(50, 0));
         lblBytesOut->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
@@ -586,14 +587,14 @@ public:
 
         tabWidget->addTab(tab_nettraffic, QString());
         tab_peers = new QWidget();
-        tab_peers->setObjectName(QStringLiteral("tab_peers"));
+        tab_peers->setObjectName(QString::fromUtf8("tab_peers"));
         gridLayout_2 = new QGridLayout(tab_peers);
-        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         verticalLayout_101 = new QVBoxLayout();
         verticalLayout_101->setSpacing(0);
-        verticalLayout_101->setObjectName(QStringLiteral("verticalLayout_101"));
+        verticalLayout_101->setObjectName(QString::fromUtf8("verticalLayout_101"));
         peerWidget = new QTableView(tab_peers);
-        peerWidget->setObjectName(QStringLiteral("peerWidget"));
+        peerWidget->setObjectName(QString::fromUtf8("peerWidget"));
         peerWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         peerWidget->setTabKeyNavigation(false);
         peerWidget->setSortingEnabled(true);
@@ -602,7 +603,7 @@ public:
         verticalLayout_101->addWidget(peerWidget);
 
         banHeading = new QLabel(tab_peers);
-        banHeading->setObjectName(QStringLiteral("banHeading"));
+        banHeading->setObjectName(QString::fromUtf8("banHeading"));
         QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Minimum);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
@@ -621,7 +622,7 @@ public:
         verticalLayout_101->addWidget(banHeading);
 
         banlistWidget = new QTableView(tab_peers);
-        banlistWidget->setObjectName(QStringLiteral("banlistWidget"));
+        banlistWidget->setObjectName(QString::fromUtf8("banlistWidget"));
         sizePolicy.setHeightForWidth(banlistWidget->sizePolicy().hasHeightForWidth());
         banlistWidget->setSizePolicy(sizePolicy);
         banlistWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
@@ -635,7 +636,7 @@ public:
         gridLayout_2->addLayout(verticalLayout_101, 0, 0, 2, 1);
 
         peerHeading = new QLabel(tab_peers);
-        peerHeading->setObjectName(QStringLiteral("peerHeading"));
+        peerHeading->setObjectName(QString::fromUtf8("peerHeading"));
         sizePolicy2.setHeightForWidth(peerHeading->sizePolicy().hasHeightForWidth());
         peerHeading->setSizePolicy(sizePolicy2);
         peerHeading->setMinimumSize(QSize(300, 32));
@@ -650,17 +651,17 @@ public:
         gridLayout_2->addWidget(peerHeading, 0, 1, 1, 1);
 
         detailWidget = new QWidget(tab_peers);
-        detailWidget->setObjectName(QStringLiteral("detailWidget"));
+        detailWidget->setObjectName(QString::fromUtf8("detailWidget"));
         detailWidget->setMinimumSize(QSize(300, 0));
         gridLayout_3 = new QGridLayout(detailWidget);
-        gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
+        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
         label_30 = new QLabel(detailWidget);
-        label_30->setObjectName(QStringLiteral("label_30"));
+        label_30->setObjectName(QString::fromUtf8("label_30"));
 
         gridLayout_3->addWidget(label_30, 0, 0, 1, 1);
 
         peerWhitelisted = new QLabel(detailWidget);
-        peerWhitelisted->setObjectName(QStringLiteral("peerWhitelisted"));
+        peerWhitelisted->setObjectName(QString::fromUtf8("peerWhitelisted"));
         peerWhitelisted->setCursor(QCursor(Qt::IBeamCursor));
         peerWhitelisted->setTextFormat(Qt::PlainText);
         peerWhitelisted->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -668,12 +669,12 @@ public:
         gridLayout_3->addWidget(peerWhitelisted, 0, 2, 1, 1);
 
         label_23 = new QLabel(detailWidget);
-        label_23->setObjectName(QStringLiteral("label_23"));
+        label_23->setObjectName(QString::fromUtf8("label_23"));
 
         gridLayout_3->addWidget(label_23, 1, 0, 1, 1);
 
         peerDirection = new QLabel(detailWidget);
-        peerDirection->setObjectName(QStringLiteral("peerDirection"));
+        peerDirection->setObjectName(QString::fromUtf8("peerDirection"));
         peerDirection->setCursor(QCursor(Qt::IBeamCursor));
         peerDirection->setTextFormat(Qt::PlainText);
         peerDirection->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -681,12 +682,12 @@ public:
         gridLayout_3->addWidget(peerDirection, 1, 2, 1, 1);
 
         label_21 = new QLabel(detailWidget);
-        label_21->setObjectName(QStringLiteral("label_21"));
+        label_21->setObjectName(QString::fromUtf8("label_21"));
 
         gridLayout_3->addWidget(label_21, 2, 0, 1, 1);
 
         peerVersion = new QLabel(detailWidget);
-        peerVersion->setObjectName(QStringLiteral("peerVersion"));
+        peerVersion->setObjectName(QString::fromUtf8("peerVersion"));
         peerVersion->setCursor(QCursor(Qt::IBeamCursor));
         peerVersion->setTextFormat(Qt::PlainText);
         peerVersion->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -694,12 +695,12 @@ public:
         gridLayout_3->addWidget(peerVersion, 2, 2, 1, 1);
 
         label_28 = new QLabel(detailWidget);
-        label_28->setObjectName(QStringLiteral("label_28"));
+        label_28->setObjectName(QString::fromUtf8("label_28"));
 
         gridLayout_3->addWidget(label_28, 3, 0, 1, 1);
 
         peerSubversion = new QLabel(detailWidget);
-        peerSubversion->setObjectName(QStringLiteral("peerSubversion"));
+        peerSubversion->setObjectName(QString::fromUtf8("peerSubversion"));
         peerSubversion->setCursor(QCursor(Qt::IBeamCursor));
         peerSubversion->setTextFormat(Qt::PlainText);
         peerSubversion->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -707,12 +708,12 @@ public:
         gridLayout_3->addWidget(peerSubversion, 3, 2, 1, 1);
 
         label_4 = new QLabel(detailWidget);
-        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setObjectName(QString::fromUtf8("label_4"));
 
         gridLayout_3->addWidget(label_4, 4, 0, 1, 1);
 
         peerServices = new QLabel(detailWidget);
-        peerServices->setObjectName(QStringLiteral("peerServices"));
+        peerServices->setObjectName(QString::fromUtf8("peerServices"));
         peerServices->setCursor(QCursor(Qt::IBeamCursor));
         peerServices->setTextFormat(Qt::PlainText);
         peerServices->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -720,12 +721,12 @@ public:
         gridLayout_3->addWidget(peerServices, 4, 2, 1, 1);
 
         label_29 = new QLabel(detailWidget);
-        label_29->setObjectName(QStringLiteral("label_29"));
+        label_29->setObjectName(QString::fromUtf8("label_29"));
 
         gridLayout_3->addWidget(label_29, 5, 0, 1, 1);
 
         peerHeight = new QLabel(detailWidget);
-        peerHeight->setObjectName(QStringLiteral("peerHeight"));
+        peerHeight->setObjectName(QString::fromUtf8("peerHeight"));
         peerHeight->setCursor(QCursor(Qt::IBeamCursor));
         peerHeight->setTextFormat(Qt::PlainText);
         peerHeight->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -733,12 +734,12 @@ public:
         gridLayout_3->addWidget(peerHeight, 5, 2, 1, 1);
 
         label_27 = new QLabel(detailWidget);
-        label_27->setObjectName(QStringLiteral("label_27"));
+        label_27->setObjectName(QString::fromUtf8("label_27"));
 
         gridLayout_3->addWidget(label_27, 6, 0, 1, 1);
 
         peerSyncHeight = new QLabel(detailWidget);
-        peerSyncHeight->setObjectName(QStringLiteral("peerSyncHeight"));
+        peerSyncHeight->setObjectName(QString::fromUtf8("peerSyncHeight"));
         peerSyncHeight->setCursor(QCursor(Qt::IBeamCursor));
         peerSyncHeight->setTextFormat(Qt::PlainText);
         peerSyncHeight->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -746,12 +747,12 @@ public:
         gridLayout_3->addWidget(peerSyncHeight, 6, 2, 1, 1);
 
         label_25 = new QLabel(detailWidget);
-        label_25->setObjectName(QStringLiteral("label_25"));
+        label_25->setObjectName(QString::fromUtf8("label_25"));
 
         gridLayout_3->addWidget(label_25, 7, 0, 1, 1);
 
         peerCommonHeight = new QLabel(detailWidget);
-        peerCommonHeight->setObjectName(QStringLiteral("peerCommonHeight"));
+        peerCommonHeight->setObjectName(QString::fromUtf8("peerCommonHeight"));
         peerCommonHeight->setCursor(QCursor(Qt::IBeamCursor));
         peerCommonHeight->setTextFormat(Qt::PlainText);
         peerCommonHeight->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -759,12 +760,12 @@ public:
         gridLayout_3->addWidget(peerCommonHeight, 7, 2, 1, 1);
 
         label_24 = new QLabel(detailWidget);
-        label_24->setObjectName(QStringLiteral("label_24"));
+        label_24->setObjectName(QString::fromUtf8("label_24"));
 
         gridLayout_3->addWidget(label_24, 8, 0, 1, 1);
 
         peerBanScore = new QLabel(detailWidget);
-        peerBanScore->setObjectName(QStringLiteral("peerBanScore"));
+        peerBanScore->setObjectName(QString::fromUtf8("peerBanScore"));
         peerBanScore->setCursor(QCursor(Qt::IBeamCursor));
         peerBanScore->setTextFormat(Qt::PlainText);
         peerBanScore->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -772,12 +773,12 @@ public:
         gridLayout_3->addWidget(peerBanScore, 8, 2, 1, 1);
 
         label_22 = new QLabel(detailWidget);
-        label_22->setObjectName(QStringLiteral("label_22"));
+        label_22->setObjectName(QString::fromUtf8("label_22"));
 
         gridLayout_3->addWidget(label_22, 9, 0, 1, 1);
 
         peerConnTime = new QLabel(detailWidget);
-        peerConnTime->setObjectName(QStringLiteral("peerConnTime"));
+        peerConnTime->setObjectName(QString::fromUtf8("peerConnTime"));
         peerConnTime->setCursor(QCursor(Qt::IBeamCursor));
         peerConnTime->setTextFormat(Qt::PlainText);
         peerConnTime->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -785,12 +786,12 @@ public:
         gridLayout_3->addWidget(peerConnTime, 9, 2, 1, 1);
 
         label_15 = new QLabel(detailWidget);
-        label_15->setObjectName(QStringLiteral("label_15"));
+        label_15->setObjectName(QString::fromUtf8("label_15"));
 
         gridLayout_3->addWidget(label_15, 10, 0, 1, 1);
 
         peerLastSend = new QLabel(detailWidget);
-        peerLastSend->setObjectName(QStringLiteral("peerLastSend"));
+        peerLastSend->setObjectName(QString::fromUtf8("peerLastSend"));
         peerLastSend->setCursor(QCursor(Qt::IBeamCursor));
         peerLastSend->setTextFormat(Qt::PlainText);
         peerLastSend->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -798,12 +799,12 @@ public:
         gridLayout_3->addWidget(peerLastSend, 10, 2, 1, 1);
 
         label_19 = new QLabel(detailWidget);
-        label_19->setObjectName(QStringLiteral("label_19"));
+        label_19->setObjectName(QString::fromUtf8("label_19"));
 
         gridLayout_3->addWidget(label_19, 11, 0, 1, 1);
 
         peerLastRecv = new QLabel(detailWidget);
-        peerLastRecv->setObjectName(QStringLiteral("peerLastRecv"));
+        peerLastRecv->setObjectName(QString::fromUtf8("peerLastRecv"));
         peerLastRecv->setCursor(QCursor(Qt::IBeamCursor));
         peerLastRecv->setTextFormat(Qt::PlainText);
         peerLastRecv->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -811,12 +812,12 @@ public:
         gridLayout_3->addWidget(peerLastRecv, 11, 2, 1, 1);
 
         label_18 = new QLabel(detailWidget);
-        label_18->setObjectName(QStringLiteral("label_18"));
+        label_18->setObjectName(QString::fromUtf8("label_18"));
 
         gridLayout_3->addWidget(label_18, 12, 0, 1, 1);
 
         peerBytesSent = new QLabel(detailWidget);
-        peerBytesSent->setObjectName(QStringLiteral("peerBytesSent"));
+        peerBytesSent->setObjectName(QString::fromUtf8("peerBytesSent"));
         peerBytesSent->setCursor(QCursor(Qt::IBeamCursor));
         peerBytesSent->setTextFormat(Qt::PlainText);
         peerBytesSent->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -824,12 +825,12 @@ public:
         gridLayout_3->addWidget(peerBytesSent, 12, 2, 1, 1);
 
         label_20 = new QLabel(detailWidget);
-        label_20->setObjectName(QStringLiteral("label_20"));
+        label_20->setObjectName(QString::fromUtf8("label_20"));
 
         gridLayout_3->addWidget(label_20, 13, 0, 1, 1);
 
         peerBytesRecv = new QLabel(detailWidget);
-        peerBytesRecv->setObjectName(QStringLiteral("peerBytesRecv"));
+        peerBytesRecv->setObjectName(QString::fromUtf8("peerBytesRecv"));
         peerBytesRecv->setCursor(QCursor(Qt::IBeamCursor));
         peerBytesRecv->setTextFormat(Qt::PlainText);
         peerBytesRecv->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -837,12 +838,12 @@ public:
         gridLayout_3->addWidget(peerBytesRecv, 13, 2, 1, 1);
 
         label_26 = new QLabel(detailWidget);
-        label_26->setObjectName(QStringLiteral("label_26"));
+        label_26->setObjectName(QString::fromUtf8("label_26"));
 
         gridLayout_3->addWidget(label_26, 14, 0, 1, 1);
 
         peerPingTime = new QLabel(detailWidget);
-        peerPingTime->setObjectName(QStringLiteral("peerPingTime"));
+        peerPingTime->setObjectName(QString::fromUtf8("peerPingTime"));
         peerPingTime->setCursor(QCursor(Qt::IBeamCursor));
         peerPingTime->setTextFormat(Qt::PlainText);
         peerPingTime->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -850,12 +851,12 @@ public:
         gridLayout_3->addWidget(peerPingTime, 14, 2, 1, 1);
 
         peerPingWaitLabel = new QLabel(detailWidget);
-        peerPingWaitLabel->setObjectName(QStringLiteral("peerPingWaitLabel"));
+        peerPingWaitLabel->setObjectName(QString::fromUtf8("peerPingWaitLabel"));
 
         gridLayout_3->addWidget(peerPingWaitLabel, 15, 0, 1, 1);
 
         peerPingWait = new QLabel(detailWidget);
-        peerPingWait->setObjectName(QStringLiteral("peerPingWait"));
+        peerPingWait->setObjectName(QString::fromUtf8("peerPingWait"));
         peerPingWait->setCursor(QCursor(Qt::IBeamCursor));
         peerPingWait->setTextFormat(Qt::PlainText);
         peerPingWait->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -863,12 +864,12 @@ public:
         gridLayout_3->addWidget(peerPingWait, 15, 2, 1, 1);
 
         peerMinPingLabel = new QLabel(detailWidget);
-        peerMinPingLabel->setObjectName(QStringLiteral("peerMinPingLabel"));
+        peerMinPingLabel->setObjectName(QString::fromUtf8("peerMinPingLabel"));
 
         gridLayout_3->addWidget(peerMinPingLabel, 16, 0, 1, 1);
 
         peerMinPing = new QLabel(detailWidget);
-        peerMinPing->setObjectName(QStringLiteral("peerMinPing"));
+        peerMinPing->setObjectName(QString::fromUtf8("peerMinPing"));
         peerMinPing->setCursor(QCursor(Qt::IBeamCursor));
         peerMinPing->setTextFormat(Qt::PlainText);
         peerMinPing->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -876,12 +877,12 @@ public:
         gridLayout_3->addWidget(peerMinPing, 16, 2, 1, 1);
 
         label_timeoffset = new QLabel(detailWidget);
-        label_timeoffset->setObjectName(QStringLiteral("label_timeoffset"));
+        label_timeoffset->setObjectName(QString::fromUtf8("label_timeoffset"));
 
         gridLayout_3->addWidget(label_timeoffset, 17, 0, 1, 1);
 
         timeoffset = new QLabel(detailWidget);
-        timeoffset->setObjectName(QStringLiteral("timeoffset"));
+        timeoffset->setObjectName(QString::fromUtf8("timeoffset"));
         timeoffset->setCursor(QCursor(Qt::IBeamCursor));
         timeoffset->setTextFormat(Qt::PlainText);
         timeoffset->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
@@ -910,101 +911,101 @@ public:
 
     void retranslateUi(QWidget *RPCConsole)
     {
-        RPCConsole->setWindowTitle(QApplication::translate("RPCConsole", "Debug window", 0));
-        label_9->setText(QApplication::translate("RPCConsole", "General", 0));
-        label_6->setText(QApplication::translate("RPCConsole", "Client version", 0));
-        clientVersion->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        labelClientUserAgent->setText(QApplication::translate("RPCConsole", "User Agent", 0));
-        clientUserAgent->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_berkeleyDBVersion->setText(QApplication::translate("RPCConsole", "Using BerkeleyDB version", 0));
-        berkeleyDBVersion->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_12->setText(QApplication::translate("RPCConsole", "Datadir", 0));
-        dataDir->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_13->setText(QApplication::translate("RPCConsole", "Startup time", 0));
-        startupTime->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        labelNetwork->setText(QApplication::translate("RPCConsole", "Network", 0));
-        label_8->setText(QApplication::translate("RPCConsole", "Name", 0));
-        networkName->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_7->setText(QApplication::translate("RPCConsole", "Number of connections", 0));
-        numberOfConnections->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_10->setText(QApplication::translate("RPCConsole", "Block chain", 0));
-        label_3->setText(QApplication::translate("RPCConsole", "Current number of blocks", 0));
-        numberOfBlocks->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        labelLastBlockTime->setText(QApplication::translate("RPCConsole", "Last block time", 0));
-        lastBlockTime->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        labelMempoolTitle->setText(QApplication::translate("RPCConsole", "Memory Pool", 0));
-        labelNumberOfTransactions->setText(QApplication::translate("RPCConsole", "Current number of transactions", 0));
-        mempoolNumberTxs->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        labelMemoryUsage->setText(QApplication::translate("RPCConsole", "Memory usage", 0));
-        mempoolSize->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        labelDebugLogfile->setText(QApplication::translate("RPCConsole", "Debug log file", 0));
+        RPCConsole->setWindowTitle(QApplication::translate("RPCConsole", "Debug window", nullptr));
+        label_9->setText(QApplication::translate("RPCConsole", "General", nullptr));
+        label_6->setText(QApplication::translate("RPCConsole", "Client version", nullptr));
+        clientVersion->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        labelClientUserAgent->setText(QApplication::translate("RPCConsole", "User Agent", nullptr));
+        clientUserAgent->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_berkeleyDBVersion->setText(QApplication::translate("RPCConsole", "Using BerkeleyDB version", nullptr));
+        berkeleyDBVersion->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_12->setText(QApplication::translate("RPCConsole", "Datadir", nullptr));
+        dataDir->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_13->setText(QApplication::translate("RPCConsole", "Startup time", nullptr));
+        startupTime->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        labelNetwork->setText(QApplication::translate("RPCConsole", "Network", nullptr));
+        label_8->setText(QApplication::translate("RPCConsole", "Name", nullptr));
+        networkName->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_7->setText(QApplication::translate("RPCConsole", "Number of connections", nullptr));
+        numberOfConnections->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_10->setText(QApplication::translate("RPCConsole", "Block chain", nullptr));
+        label_3->setText(QApplication::translate("RPCConsole", "Current number of blocks", nullptr));
+        numberOfBlocks->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        labelLastBlockTime->setText(QApplication::translate("RPCConsole", "Last block time", nullptr));
+        lastBlockTime->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        labelMempoolTitle->setText(QApplication::translate("RPCConsole", "Memory Pool", nullptr));
+        labelNumberOfTransactions->setText(QApplication::translate("RPCConsole", "Current number of transactions", nullptr));
+        mempoolNumberTxs->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        labelMemoryUsage->setText(QApplication::translate("RPCConsole", "Memory usage", nullptr));
+        mempoolSize->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        labelDebugLogfile->setText(QApplication::translate("RPCConsole", "Debug log file", nullptr));
 #ifndef QT_NO_TOOLTIP
-        openDebugLogfileButton->setToolTip(QApplication::translate("RPCConsole", "Open the %1 debug log file from the current data directory. This can take a few seconds for large log files.", 0));
+        openDebugLogfileButton->setToolTip(QApplication::translate("RPCConsole", "Open the %1 debug log file from the current data directory. This can take a few seconds for large log files.", nullptr));
 #endif // QT_NO_TOOLTIP
-        openDebugLogfileButton->setText(QApplication::translate("RPCConsole", "&Open", 0));
-        tabWidget->setTabText(tabWidget->indexOf(tab_info), QApplication::translate("RPCConsole", "&Information", 0));
+        openDebugLogfileButton->setText(QApplication::translate("RPCConsole", "&Open", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_info), QApplication::translate("RPCConsole", "&Information", nullptr));
         fontSmallerButton->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        fontSmallerButton->setToolTip(QApplication::translate("RPCConsole", "Decrease font size", 0));
+        fontSmallerButton->setToolTip(QApplication::translate("RPCConsole", "Decrease font size", nullptr));
 #endif // QT_NO_TOOLTIP
 #ifndef QT_NO_TOOLTIP
-        fontBiggerButton->setToolTip(QApplication::translate("RPCConsole", "Increase font size", 0));
+        fontBiggerButton->setToolTip(QApplication::translate("RPCConsole", "Increase font size", nullptr));
 #endif // QT_NO_TOOLTIP
         fontBiggerButton->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        clearButton->setToolTip(QApplication::translate("RPCConsole", "Clear console", 0));
+        clearButton->setToolTip(QApplication::translate("RPCConsole", "Clear console", nullptr));
 #endif // QT_NO_TOOLTIP
         clearButton->setText(QString());
         promptIcon->setText(QString());
         lineEdit->setPlaceholderText(QString());
-        tabWidget->setTabText(tabWidget->indexOf(tab_console), QApplication::translate("RPCConsole", "&Console", 0));
-        btnClearTrafficGraph->setText(QApplication::translate("RPCConsole", "&Reset", 0));
-        groupBox->setTitle(QApplication::translate("RPCConsole", "Totals", 0));
-        label_16->setText(QApplication::translate("RPCConsole", "Received", 0));
-        label_17->setText(QApplication::translate("RPCConsole", "Sent", 0));
-        tabWidget->setTabText(tabWidget->indexOf(tab_nettraffic), QApplication::translate("RPCConsole", "&Network Traffic", 0));
-        banHeading->setText(QApplication::translate("RPCConsole", "Banned peers", 0));
-        peerHeading->setText(QApplication::translate("RPCConsole", "Select a peer to view detailed information.", 0));
-        label_30->setText(QApplication::translate("RPCConsole", "Whitelisted", 0));
-        peerWhitelisted->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_23->setText(QApplication::translate("RPCConsole", "Direction", 0));
-        peerDirection->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_21->setText(QApplication::translate("RPCConsole", "Version", 0));
-        peerVersion->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_28->setText(QApplication::translate("RPCConsole", "User Agent", 0));
-        peerSubversion->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_4->setText(QApplication::translate("RPCConsole", "Services", 0));
-        peerServices->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_29->setText(QApplication::translate("RPCConsole", "Starting Block", 0));
-        peerHeight->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_27->setText(QApplication::translate("RPCConsole", "Synced Headers", 0));
-        peerSyncHeight->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_25->setText(QApplication::translate("RPCConsole", "Synced Blocks", 0));
-        peerCommonHeight->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_24->setText(QApplication::translate("RPCConsole", "Ban Score", 0));
-        peerBanScore->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_22->setText(QApplication::translate("RPCConsole", "Connection Time", 0));
-        peerConnTime->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_15->setText(QApplication::translate("RPCConsole", "Last Send", 0));
-        peerLastSend->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_19->setText(QApplication::translate("RPCConsole", "Last Receive", 0));
-        peerLastRecv->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_18->setText(QApplication::translate("RPCConsole", "Sent", 0));
-        peerBytesSent->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_20->setText(QApplication::translate("RPCConsole", "Received", 0));
-        peerBytesRecv->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_26->setText(QApplication::translate("RPCConsole", "Ping Time", 0));
-        peerPingTime->setText(QApplication::translate("RPCConsole", "N/A", 0));
+        tabWidget->setTabText(tabWidget->indexOf(tab_console), QApplication::translate("RPCConsole", "&Console", nullptr));
+        btnClearTrafficGraph->setText(QApplication::translate("RPCConsole", "&Reset", nullptr));
+        groupBox->setTitle(QApplication::translate("RPCConsole", "Totals", nullptr));
+        label_16->setText(QApplication::translate("RPCConsole", "Received", nullptr));
+        label_17->setText(QApplication::translate("RPCConsole", "Sent", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_nettraffic), QApplication::translate("RPCConsole", "&Network Traffic", nullptr));
+        banHeading->setText(QApplication::translate("RPCConsole", "Banned peers", nullptr));
+        peerHeading->setText(QApplication::translate("RPCConsole", "Select a peer to view detailed information.", nullptr));
+        label_30->setText(QApplication::translate("RPCConsole", "Whitelisted", nullptr));
+        peerWhitelisted->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_23->setText(QApplication::translate("RPCConsole", "Direction", nullptr));
+        peerDirection->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_21->setText(QApplication::translate("RPCConsole", "Version", nullptr));
+        peerVersion->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_28->setText(QApplication::translate("RPCConsole", "User Agent", nullptr));
+        peerSubversion->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_4->setText(QApplication::translate("RPCConsole", "Services", nullptr));
+        peerServices->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_29->setText(QApplication::translate("RPCConsole", "Starting Block", nullptr));
+        peerHeight->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_27->setText(QApplication::translate("RPCConsole", "Synced Headers", nullptr));
+        peerSyncHeight->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_25->setText(QApplication::translate("RPCConsole", "Synced Blocks", nullptr));
+        peerCommonHeight->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_24->setText(QApplication::translate("RPCConsole", "Ban Score", nullptr));
+        peerBanScore->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_22->setText(QApplication::translate("RPCConsole", "Connection Time", nullptr));
+        peerConnTime->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_15->setText(QApplication::translate("RPCConsole", "Last Send", nullptr));
+        peerLastSend->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_19->setText(QApplication::translate("RPCConsole", "Last Receive", nullptr));
+        peerLastRecv->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_18->setText(QApplication::translate("RPCConsole", "Sent", nullptr));
+        peerBytesSent->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_20->setText(QApplication::translate("RPCConsole", "Received", nullptr));
+        peerBytesRecv->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_26->setText(QApplication::translate("RPCConsole", "Ping Time", nullptr));
+        peerPingTime->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
 #ifndef QT_NO_TOOLTIP
-        peerPingWaitLabel->setToolTip(QApplication::translate("RPCConsole", "The duration of a currently outstanding ping.", 0));
+        peerPingWaitLabel->setToolTip(QApplication::translate("RPCConsole", "The duration of a currently outstanding ping.", nullptr));
 #endif // QT_NO_TOOLTIP
-        peerPingWaitLabel->setText(QApplication::translate("RPCConsole", "Ping Wait", 0));
-        peerPingWait->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        peerMinPingLabel->setText(QApplication::translate("RPCConsole", "Min Ping", 0));
-        peerMinPing->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        label_timeoffset->setText(QApplication::translate("RPCConsole", "Time Offset", 0));
-        timeoffset->setText(QApplication::translate("RPCConsole", "N/A", 0));
-        tabWidget->setTabText(tabWidget->indexOf(tab_peers), QApplication::translate("RPCConsole", "&Peers", 0));
+        peerPingWaitLabel->setText(QApplication::translate("RPCConsole", "Ping Wait", nullptr));
+        peerPingWait->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        peerMinPingLabel->setText(QApplication::translate("RPCConsole", "Min Ping", nullptr));
+        peerMinPing->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        label_timeoffset->setText(QApplication::translate("RPCConsole", "Time Offset", nullptr));
+        timeoffset->setText(QApplication::translate("RPCConsole", "N/A", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_peers), QApplication::translate("RPCConsole", "&Peers", nullptr));
     } // retranslateUi
 
 };

@@ -62,12 +62,12 @@
         <translation>Vastuvõtvad aadressid</translation>
     </message>
     <message>
-        <source>These are your MicroBitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Need on sinu MicroBitcoin aadressid maksete saatmiseks. Ennem müntide saatmist kontrolli alati summat ja makse saaja aadressi.</translation>
+        <source>These are your AdventureCoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>Need on sinu AdventureCoin aadressid maksete saatmiseks. Ennem müntide saatmist kontrolli alati summat ja makse saaja aadressi.</translation>
     </message>
     <message>
-        <source>These are your MicroBitcoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Need on sinu MicroBitcoin aadressid sisenevate maksete vastu võtmiseks. Soovitav on iga tehingu tarbeks kasutada uut aadressi.</translation>
+        <source>These are your AdventureCoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <translation>Need on sinu AdventureCoin aadressid sisenevate maksete vastu võtmiseks. Soovitav on iga tehingu tarbeks kasutada uut aadressi.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -220,7 +220,7 @@
     </message>
     </context>
 <context>
-    <name>MicroBitcoinGUI</name>
+    <name>AdventureCoinGUI</name>
     <message>
         <source>Sign &amp;message...</source>
         <translation>Signeeri &amp;sõnum</translation>
@@ -290,8 +290,8 @@
         <translation>Kettal olevate blokkide re-indekseerimine...</translation>
     </message>
     <message>
-        <source>Send coins to a MicroBitcoin address</source>
-        <translation>Saada münte MicroBitcoini aadressile</translation>
+        <source>Send coins to a AdventureCoin address</source>
+        <translation>Saada münte AdventureCoini aadressile</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -314,8 +314,8 @@
         <translation>&amp;Kontrolli sõnumit...</translation>
     </message>
     <message>
-        <source>MicroBitcoin</source>
-        <translation>MicroBitcoin</translation>
+        <source>AdventureCoin</source>
+        <translation>AdventureCoin</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -342,12 +342,12 @@
         <translation>Krüpteeri oma rahakoti privaatvõtmed</translation>
     </message>
     <message>
-        <source>Sign messages with your MicroBitcoin addresses to prove you own them</source>
-        <translation>Omandi tõestamiseks allkirjasta sõnumid oma MicroBitcoini aadressiga</translation>
+        <source>Sign messages with your AdventureCoin addresses to prove you own them</source>
+        <translation>Omandi tõestamiseks allkirjasta sõnumid oma AdventureCoini aadressiga</translation>
     </message>
     <message>
-        <source>Verify messages to ensure they were signed with specified MicroBitcoin addresses</source>
-        <translation>Kinnita sõnumid kindlustamaks et need allkirjastati määratud MicroBitcoini aadressiga</translation>
+        <source>Verify messages to ensure they were signed with specified AdventureCoin addresses</source>
+        <translation>Kinnita sõnumid kindlustamaks et need allkirjastati määratud AdventureCoini aadressiga</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -366,20 +366,20 @@
         <translation>Vahelehe tööriistariba</translation>
     </message>
     <message>
-        <source>Request payments (generates QR codes and MicroBitcoin: URIs)</source>
-        <translation>Loo maksepäring (genereerib QR koodid ja MicroBitcoini: URId)</translation>
+        <source>Request payments (generates QR codes and AdventureCoin: URIs)</source>
+        <translation>Loo maksepäring (genereerib QR koodid ja AdventureCoini: URId)</translation>
     </message>
     <message>
-        <source>Open a MicroBitcoin: URI or payment request</source>
-        <translation>Ava MicroBitcoini: URI või maksepäring</translation>
+        <source>Open a AdventureCoin: URI or payment request</source>
+        <translation>Ava AdventureCoini: URI või maksepäring</translation>
     </message>
     <message>
         <source>&amp;Command-line options</source>
         <translation>Käsurea valikud</translation>
     </message>
     <message numerus="yes">
-        <source>%n active connection(s) to MicroBitcoin network</source>
-        <translation><numerusform>%n aktiivne ühendus MicroBitcoini võrku</numerusform><numerusform>%n aktiivset ühendust MicroBitcoini võrku</numerusform></translation>
+        <source>%n active connection(s) to AdventureCoin network</source>
+        <translation><numerusform>%n aktiivne ühendus AdventureCoini võrku</numerusform><numerusform>%n aktiivset ühendust AdventureCoini võrku</numerusform></translation>
     </message>
     <message>
         <source>Indexing blocks on disk...</source>
@@ -626,8 +626,8 @@
         <translation>Muuda saatvat aadressi</translation>
     </message>
     <message>
-        <source>The entered address "%1" is not a valid MicroBitcoin address.</source>
-        <translation>Sisestatud aadress "%1" ei ole korrektne MicroBitcoin aadress.</translation>
+        <source>The entered address "%1" is not a valid AdventureCoin address.</source>
+        <translation>Sisestatud aadress "%1" ei ole korrektne AdventureCoin aadress.</translation>
     </message>
     <message>
         <source>The entered address "%1" is already in the address book.</source>
@@ -756,8 +756,8 @@
         <translation>Ekspert</translation>
     </message>
     <message>
-        <source>Automatically open the MicroBitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>MicroBitcoini kliendi pordi automaatne avamine ruuteris. Toimib, kui sinu ruuter aktsepteerib UPnP ühendust.</translation>
+        <source>Automatically open the AdventureCoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>AdventureCoini kliendi pordi automaatne avamine ruuteris. Toimib, kui sinu ruuter aktsepteerib UPnP ühendust.</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
@@ -855,7 +855,7 @@
         <translation>Vorm</translation>
     </message>
     <message>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the MicroBitcoin network after a connection is established, but this process has not completed yet.</source>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the AdventureCoin network after a connection is established, but this process has not completed yet.</source>
         <translation>Kuvatav info ei pruugi olla ajakohane. Ühenduse loomisel süngitakse sinu rahakott automaatselt MicroBitconi võrgustikuga, kuid see toiming on hetkel lõpetamata.</translation>
     </message>
     <message>
@@ -1337,8 +1337,8 @@
         <translation>Maksepäring aegunud.</translation>
     </message>
     <message>
-        <source>Warning: Invalid MicroBitcoin address</source>
-        <translation>Hoiatus: Ebakorrektne MicroBitcoin aadress</translation>
+        <source>Warning: Invalid AdventureCoin address</source>
+        <translation>Hoiatus: Ebakorrektne AdventureCoin aadress</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -1417,8 +1417,8 @@
         <translation>&amp;Allkirjastamise teade</translation>
     </message>
     <message>
-        <source>The MicroBitcoin address to sign the message with</source>
-        <translation>MicroBitcoin aadress millega sõnum allkirjastada</translation>
+        <source>The AdventureCoin address to sign the message with</source>
+        <translation>AdventureCoin aadress millega sõnum allkirjastada</translation>
     </message>
     <message>
         <source>Choose previously used address</source>
@@ -1449,8 +1449,8 @@
         <translation>Kopeeri praegune signatuur vahemällu</translation>
     </message>
     <message>
-        <source>Sign the message to prove you own this MicroBitcoin address</source>
-        <translation>Allkirjasta sõnum MicroBitcoini aadressi sulle kuulumise tõestamiseks</translation>
+        <source>Sign the message to prove you own this AdventureCoin address</source>
+        <translation>Allkirjasta sõnum AdventureCoini aadressi sulle kuulumise tõestamiseks</translation>
     </message>
     <message>
         <source>Sign &amp;Message</source>
@@ -1469,12 +1469,12 @@
         <translation>&amp;Kinnita Sõnum</translation>
     </message>
     <message>
-        <source>The MicroBitcoin address the message was signed with</source>
-        <translation>MicroBitcoin aadress millega sõnum on allkirjastatud</translation>
+        <source>The AdventureCoin address the message was signed with</source>
+        <translation>AdventureCoin aadress millega sõnum on allkirjastatud</translation>
     </message>
     <message>
-        <source>Verify the message to ensure it was signed with the specified MicroBitcoin address</source>
-        <translation>Kinnita sõnum tõestamaks selle allkirjastatust määratud MicroBitcoini aadressiga.</translation>
+        <source>Verify the message to ensure it was signed with the specified AdventureCoin address</source>
+        <translation>Kinnita sõnum tõestamaks selle allkirjastatust määratud AdventureCoini aadressiga.</translation>
     </message>
     <message>
         <source>Verify &amp;Message</source>
@@ -1732,7 +1732,7 @@
     <name>WalletView</name>
     </context>
 <context>
-    <name>MicroBitcoin-core</name>
+    <name>AdventureCoin-core</name>
     <message>
         <source>Options:</source>
         <translation>Valikud:</translation>
@@ -1758,8 +1758,8 @@
         <translation>Tööta taustal ning aktsepteeri käsklusi</translation>
     </message>
     <message>
-        <source>MicroBitcoin Core</source>
-        <translation>MicroBitcoini tuumik</translation>
+        <source>AdventureCoin Core</source>
+        <translation>AdventureCoini tuumik</translation>
     </message>
     <message>
         <source>Bind to given address and always listen on it. Use [host]:port notation for IPv6</source>

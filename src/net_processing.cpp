@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2016 The Bitcoin Core developers
-// Copyright (c) 2018 MicroBitcoin developers
+// Copyright (c) 2018 AdventureCoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -32,10 +32,10 @@
 #include <utilmoneystr.h>
 #include <utilstrencodings.h>
 #include <validationinterface.h>
-#include <microbitcoin.h>
+#include <adventurecoin.h>
 
 #if defined(NDEBUG)
-# error "MicroBitcoin cannot be compiled without assertions."
+# error "AdventureCoin cannot be compiled without assertions."
 #endif
 
 std::atomic<int64_t> nTimeBestReceived(0); // Used only to inform the wallet of when we last received a block
@@ -3270,7 +3270,7 @@ bool PeerLogicValidation::SendMessages(CNode* pto, std::atomic<bool>& interruptM
         if (!state.fSyncStarted && !pto->fClient && !fImporting && !fReindex) {
             // Only actively request headers from a single peer, unless we're close to today.
             if ((nSyncStarted == 0 && fFetch) || pindexBestHeader->GetBlockTime() > GetAdjustedTime() - 24 * 60 * 60) {
-                const auto powTargetSpacing = pindexBestHeader->nHeight > consensusParams.mbcHeight
+                const auto powTargetSpacing = pindexBestHeader->nHeight > consensusParams.advcHeight
                         ? consensusParams.nPowTargetSpacing
                         : consensusParams.nBtcPowTargetSpacing;
 

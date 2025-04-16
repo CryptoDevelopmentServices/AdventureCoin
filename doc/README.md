@@ -15,12 +15,12 @@ The following are some helpful notes on how to run Bitcoin on your native platfo
 
 Unpack the files into a directory and run:
 
-- `bin/microbitcoin-qt` (GUI) or
-- `bin/microbitcoind` (headless)
+- `bin/adventurecoin-qt` (GUI) or
+- `bin/adventurecoind` (headless)
 
 ### Windows
 
-Unpack the files into a directory, and then run microbitcoin-qt.exe.
+Unpack the files into a directory, and then run adventurecoin-qt.exe.
 
 ### OS X
 

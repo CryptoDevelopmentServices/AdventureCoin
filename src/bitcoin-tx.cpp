@@ -1,5 +1,5 @@
 // Copyright (c) 2009-2016 The Bitcoin Core developers
-// Copyright (c) 2018 MicroBitcoin developers
+// Copyright (c) 2018 AdventureCoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -55,10 +55,10 @@ static int AppInitRawTx(int argc, char* argv[])
     if (argc<2 || gArgs.IsArgSet("-?") || gArgs.IsArgSet("-h") || gArgs.IsArgSet("-help"))
     {
         // First part of help message is specific to this utility
-        std::string strUsage = strprintf(_("%s microbitcoin-tx utility version"), _(PACKAGE_NAME)) + " " + FormatFullVersion() + "\n\n" +
+        std::string strUsage = strprintf(_("%s adventurecoin-tx utility version"), _(PACKAGE_NAME)) + " " + FormatFullVersion() + "\n\n" +
             _("Usage:") + "\n" +
-              "  microbitcoin-tx [options] <hex-tx> [commands]  " + _("Update hex-encoded microbitcoin transaction") + "\n" +
-              "  microbitcoin-tx [options] -create [commands]   " + _("Create hex-encoded microbitcoin transaction") + "\n" +
+              "  adventurecoin-tx [options] <hex-tx> [commands]  " + _("Update hex-encoded adventurecoin transaction") + "\n" +
+              "  adventurecoin-tx [options] -create [commands]   " + _("Create hex-encoded adventurecoin transaction") + "\n" +
               "\n";
 
         fprintf(stdout, "%s", strUsage.c_str());

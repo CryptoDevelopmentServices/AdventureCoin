@@ -272,8 +272,8 @@ def main():
 def run_tests(test_list, src_dir, build_dir, exeext, tmpdir, jobs=1, enable_coverage=False, args=[]):
     # Warn if bitcoind is already running (unix only)
     try:
-        if subprocess.check_output(["pidof", "microbitcoind"]) is not None:
-            print("%sWARNING!%s There is already a microbitcoind process running on this system. Tests may fail unexpectedly due to resource contention!" % (BOLD[1], BOLD[0]))
+        if subprocess.check_output(["pidof", "adventurecoind"]) is not None:
+            print("%sWARNING!%s There is already a adventurecoind process running on this system. Tests may fail unexpectedly due to resource contention!" % (BOLD[1], BOLD[0]))
     except (OSError, subprocess.SubprocessError):
         pass
 
@@ -284,8 +284,8 @@ def run_tests(test_list, src_dir, build_dir, exeext, tmpdir, jobs=1, enable_cove
 
     #Set env vars
     if "BITCOIND" not in os.environ:
-        os.environ["BITCOIND"] = build_dir + '/src/microbitcoind' + exeext
-        os.environ["BITCOINCLI"] = build_dir + '/src/microbitcoin-cli' + exeext
+        os.environ["BITCOIND"] = build_dir + '/src/adventurecoind' + exeext
+        os.environ["BITCOINCLI"] = build_dir + '/src/adventurecoin-cli' + exeext
 
     tests_dir = src_dir + '/test/functional/'
 

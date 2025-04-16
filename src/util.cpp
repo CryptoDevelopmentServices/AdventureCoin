@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2016 The Bitcoin Core developers
-// Copyright (c) 2018 MicroBitcoin developers
+// Copyright (c) 2018 AdventureCoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -89,8 +89,8 @@
 // Application startup time (used for uptime calculation)
 const int64_t nStartupTime = GetTime();
 
-const char * const BITCOIN_CONF_FILENAME = "microbitcoin.conf";
-const char * const BITCOIN_PID_FILENAME = "microbitcoind.pid";
+const char * const BITCOIN_CONF_FILENAME = "adventurecoin.conf";
+const char * const BITCOIN_PID_FILENAME = "adventurecoind.pid";
 
 ArgsManager gArgs;
 bool fPrintToConsole = false;
@@ -528,7 +528,7 @@ static std::string FormatException(const std::exception* pex, const char* pszThr
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(nullptr, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "microbitcoin";
+    const char* pszModule = "adventurecoin";
 #endif
     if (pex)
         return strprintf(
@@ -547,13 +547,13 @@ void PrintExceptionContinue(const std::exception* pex, const char* pszThread)
 
 fs::path GetDefaultDataDir()
 {
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\MicroBitcoin
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\MicroBitcoin
-    // Mac: ~/.microbitcoin
-    // Unix: ~/.microbitcoin
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\AdventureCoin
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\AdventureCoin
+    // Mac: ~/.adventurecoin
+    // Unix: ~/.adventurecoin
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "MicroBitcoin";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "AdventureCoin";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -563,10 +563,10 @@ fs::path GetDefaultDataDir()
         pathRet = fs::path(pszHome);
 #ifdef MAC_OSX
     // Mac
-    return pathRet / ".microbitcoin";
+    return pathRet / ".adventurecoin";
 #else
     // Unix
-    return pathRet / ".microbitcoin";
+    return pathRet / ".adventurecoin";
 #endif
 #endif
 }

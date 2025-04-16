@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'overviewpage.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,13 +10,11 @@
 #define UI_OVERVIEWPAGE_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QListView>
 #include <QtWidgets/QPushButton>
@@ -71,14 +69,14 @@ public:
     void setupUi(QWidget *OverviewPage)
     {
         if (OverviewPage->objectName().isEmpty())
-            OverviewPage->setObjectName(QStringLiteral("OverviewPage"));
+            OverviewPage->setObjectName(QString::fromUtf8("OverviewPage"));
         OverviewPage->resize(596, 342);
         topLayout = new QVBoxLayout(OverviewPage);
-        topLayout->setObjectName(QStringLiteral("topLayout"));
+        topLayout->setObjectName(QString::fromUtf8("topLayout"));
         labelAlerts = new QLabel(OverviewPage);
-        labelAlerts->setObjectName(QStringLiteral("labelAlerts"));
+        labelAlerts->setObjectName(QString::fromUtf8("labelAlerts"));
         labelAlerts->setVisible(false);
-        labelAlerts->setStyleSheet(QStringLiteral("QLabel { background-color: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop:0 #F0D0A0, stop:1 #F8D488); color:#000000; }"));
+        labelAlerts->setStyleSheet(QString::fromUtf8("QLabel { background-color: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop:0 #F0D0A0, stop:1 #F8D488); color:#000000; }"));
         labelAlerts->setWordWrap(true);
         labelAlerts->setMargin(3);
         labelAlerts->setTextInteractionFlags(Qt::TextSelectableByMouse);
@@ -86,19 +84,19 @@ public:
         topLayout->addWidget(labelAlerts);
 
         horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         frame = new QFrame(OverviewPage);
-        frame->setObjectName(QStringLiteral("frame"));
+        frame->setObjectName(QString::fromUtf8("frame"));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
         verticalLayout_4 = new QVBoxLayout(frame);
-        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
         horizontalLayout_4 = new QHBoxLayout();
-        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         label_5 = new QLabel(frame);
-        label_5->setObjectName(QStringLiteral("label_5"));
+        label_5->setObjectName(QString::fromUtf8("label_5"));
         QFont font;
         font.setBold(true);
         font.setWeight(75);
@@ -107,12 +105,12 @@ public:
         horizontalLayout_4->addWidget(label_5);
 
         labelWalletStatus = new QPushButton(frame);
-        labelWalletStatus->setObjectName(QStringLiteral("labelWalletStatus"));
+        labelWalletStatus->setObjectName(QString::fromUtf8("labelWalletStatus"));
         labelWalletStatus->setEnabled(true);
         labelWalletStatus->setMaximumSize(QSize(30, 16777215));
         QIcon icon;
-        icon.addFile(QStringLiteral(":/icons/warning"), QSize(), QIcon::Normal, QIcon::Off);
-        icon.addFile(QStringLiteral(":/icons/warning"), QSize(), QIcon::Disabled, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/icons/warning"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/icons/warning"), QSize(), QIcon::Disabled, QIcon::Off);
         labelWalletStatus->setIcon(icon);
         labelWalletStatus->setIconSize(QSize(24, 24));
         labelWalletStatus->setFlat(true);
@@ -128,46 +126,46 @@ public:
 
         gridLayout = new QGridLayout();
         gridLayout->setSpacing(12);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         labelWatchPending = new QLabel(frame);
-        labelWatchPending->setObjectName(QStringLiteral("labelWatchPending"));
+        labelWatchPending->setObjectName(QString::fromUtf8("labelWatchPending"));
         labelWatchPending->setFont(font);
         labelWatchPending->setCursor(QCursor(Qt::IBeamCursor));
-        labelWatchPending->setText(QString::fromUtf8("0.000\342\200\211000\342\200\21100 MBC"));
+        labelWatchPending->setText(QString::fromUtf8("0.000\342\200\211000\342\200\21100 ADVC"));
         labelWatchPending->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         labelWatchPending->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
 
         gridLayout->addWidget(labelWatchPending, 2, 2, 1, 1);
 
         labelUnconfirmed = new QLabel(frame);
-        labelUnconfirmed->setObjectName(QStringLiteral("labelUnconfirmed"));
+        labelUnconfirmed->setObjectName(QString::fromUtf8("labelUnconfirmed"));
         labelUnconfirmed->setFont(font);
         labelUnconfirmed->setCursor(QCursor(Qt::IBeamCursor));
-        labelUnconfirmed->setText(QString::fromUtf8("0.000\342\200\211000\342\200\21100 MBC"));
+        labelUnconfirmed->setText(QString::fromUtf8("0.000\342\200\211000\342\200\21100 ADVC"));
         labelUnconfirmed->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         labelUnconfirmed->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
 
         gridLayout->addWidget(labelUnconfirmed, 2, 1, 1, 1);
 
         labelWatchImmature = new QLabel(frame);
-        labelWatchImmature->setObjectName(QStringLiteral("labelWatchImmature"));
+        labelWatchImmature->setObjectName(QString::fromUtf8("labelWatchImmature"));
         labelWatchImmature->setFont(font);
         labelWatchImmature->setCursor(QCursor(Qt::IBeamCursor));
-        labelWatchImmature->setText(QString::fromUtf8("0.000\342\200\211000\342\200\21100 MBC"));
+        labelWatchImmature->setText(QString::fromUtf8("0.000\342\200\211000\342\200\21100 ADVC"));
         labelWatchImmature->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         labelWatchImmature->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
 
         gridLayout->addWidget(labelWatchImmature, 3, 2, 1, 1);
 
         line = new QFrame(frame);
-        line->setObjectName(QStringLiteral("line"));
+        line->setObjectName(QString::fromUtf8("line"));
         line->setFrameShape(QFrame::HLine);
         line->setFrameShadow(QFrame::Sunken);
 
         gridLayout->addWidget(line, 4, 0, 1, 2);
 
         lineWatchBalance = new QFrame(frame);
-        lineWatchBalance->setObjectName(QStringLiteral("lineWatchBalance"));
+        lineWatchBalance->setObjectName(QString::fromUtf8("lineWatchBalance"));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -180,15 +178,15 @@ public:
         gridLayout->addWidget(lineWatchBalance, 4, 2, 1, 1);
 
         labelTotalText = new QLabel(frame);
-        labelTotalText->setObjectName(QStringLiteral("labelTotalText"));
+        labelTotalText->setObjectName(QString::fromUtf8("labelTotalText"));
 
         gridLayout->addWidget(labelTotalText, 5, 0, 1, 1);
 
         labelImmature = new QLabel(frame);
-        labelImmature->setObjectName(QStringLiteral("labelImmature"));
+        labelImmature->setObjectName(QString::fromUtf8("labelImmature"));
         labelImmature->setFont(font);
         labelImmature->setCursor(QCursor(Qt::IBeamCursor));
-        labelImmature->setText(QString::fromUtf8("0.000\342\200\211000\342\200\21100 MBC"));
+        labelImmature->setText(QString::fromUtf8("0.000\342\200\211000\342\200\21100 ADVC"));
         labelImmature->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         labelImmature->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
 
@@ -199,68 +197,68 @@ public:
         gridLayout->addItem(horizontalSpacer_2, 2, 3, 1, 1);
 
         labelImmatureText = new QLabel(frame);
-        labelImmatureText->setObjectName(QStringLiteral("labelImmatureText"));
+        labelImmatureText->setObjectName(QString::fromUtf8("labelImmatureText"));
 
         gridLayout->addWidget(labelImmatureText, 3, 0, 1, 1);
 
         labelTotal = new QLabel(frame);
-        labelTotal->setObjectName(QStringLiteral("labelTotal"));
+        labelTotal->setObjectName(QString::fromUtf8("labelTotal"));
         labelTotal->setFont(font);
         labelTotal->setCursor(QCursor(Qt::IBeamCursor));
-        labelTotal->setText(QString::fromUtf8("0.000\342\200\211000\342\200\21100 MBC"));
+        labelTotal->setText(QString::fromUtf8("0.000\342\200\211000\342\200\21100 ADVC"));
         labelTotal->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         labelTotal->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
 
         gridLayout->addWidget(labelTotal, 5, 1, 1, 1);
 
         labelWatchTotal = new QLabel(frame);
-        labelWatchTotal->setObjectName(QStringLiteral("labelWatchTotal"));
+        labelWatchTotal->setObjectName(QString::fromUtf8("labelWatchTotal"));
         labelWatchTotal->setFont(font);
         labelWatchTotal->setCursor(QCursor(Qt::IBeamCursor));
-        labelWatchTotal->setText(QString::fromUtf8("0.000\342\200\211000\342\200\21100 MBC"));
+        labelWatchTotal->setText(QString::fromUtf8("0.000\342\200\211000\342\200\21100 ADVC"));
         labelWatchTotal->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         labelWatchTotal->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
 
         gridLayout->addWidget(labelWatchTotal, 5, 2, 1, 1);
 
         labelWatchonly = new QLabel(frame);
-        labelWatchonly->setObjectName(QStringLiteral("labelWatchonly"));
+        labelWatchonly->setObjectName(QString::fromUtf8("labelWatchonly"));
         labelWatchonly->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         gridLayout->addWidget(labelWatchonly, 0, 2, 1, 1);
 
         labelBalanceText = new QLabel(frame);
-        labelBalanceText->setObjectName(QStringLiteral("labelBalanceText"));
+        labelBalanceText->setObjectName(QString::fromUtf8("labelBalanceText"));
 
         gridLayout->addWidget(labelBalanceText, 1, 0, 1, 1);
 
         labelBalance = new QLabel(frame);
-        labelBalance->setObjectName(QStringLiteral("labelBalance"));
+        labelBalance->setObjectName(QString::fromUtf8("labelBalance"));
         labelBalance->setFont(font);
         labelBalance->setCursor(QCursor(Qt::IBeamCursor));
-        labelBalance->setText(QString::fromUtf8("0.000\342\200\211000\342\200\21100 MBC"));
+        labelBalance->setText(QString::fromUtf8("0.000\342\200\211000\342\200\21100 ADVC"));
         labelBalance->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         labelBalance->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
 
         gridLayout->addWidget(labelBalance, 1, 1, 1, 1);
 
         labelWatchAvailable = new QLabel(frame);
-        labelWatchAvailable->setObjectName(QStringLiteral("labelWatchAvailable"));
+        labelWatchAvailable->setObjectName(QString::fromUtf8("labelWatchAvailable"));
         labelWatchAvailable->setFont(font);
         labelWatchAvailable->setCursor(QCursor(Qt::IBeamCursor));
-        labelWatchAvailable->setText(QString::fromUtf8("0.000\342\200\211000\342\200\21100 MBC"));
+        labelWatchAvailable->setText(QString::fromUtf8("0.000\342\200\211000\342\200\21100 ADVC"));
         labelWatchAvailable->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         labelWatchAvailable->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
 
         gridLayout->addWidget(labelWatchAvailable, 1, 2, 1, 1);
 
         labelPendingText = new QLabel(frame);
-        labelPendingText->setObjectName(QStringLiteral("labelPendingText"));
+        labelPendingText->setObjectName(QString::fromUtf8("labelPendingText"));
 
         gridLayout->addWidget(labelPendingText, 2, 0, 1, 1);
 
         labelSpendable = new QLabel(frame);
-        labelSpendable->setObjectName(QStringLiteral("labelSpendable"));
+        labelSpendable->setObjectName(QString::fromUtf8("labelSpendable"));
         labelSpendable->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         gridLayout->addWidget(labelSpendable, 0, 1, 1, 1);
@@ -279,23 +277,23 @@ public:
         horizontalLayout->addLayout(verticalLayout_2);
 
         verticalLayout_3 = new QVBoxLayout();
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         frame_2 = new QFrame(OverviewPage);
-        frame_2->setObjectName(QStringLiteral("frame_2"));
+        frame_2->setObjectName(QString::fromUtf8("frame_2"));
         frame_2->setFrameShape(QFrame::StyledPanel);
         frame_2->setFrameShadow(QFrame::Raised);
         verticalLayout = new QVBoxLayout(frame_2);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         label_4 = new QLabel(frame_2);
-        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setObjectName(QString::fromUtf8("label_4"));
         label_4->setFont(font);
 
         horizontalLayout_2->addWidget(label_4);
 
         labelTransactionsStatus = new QPushButton(frame_2);
-        labelTransactionsStatus->setObjectName(QStringLiteral("labelTransactionsStatus"));
+        labelTransactionsStatus->setObjectName(QString::fromUtf8("labelTransactionsStatus"));
         labelTransactionsStatus->setEnabled(true);
         labelTransactionsStatus->setMaximumSize(QSize(30, 16777215));
         labelTransactionsStatus->setIcon(icon);
@@ -312,8 +310,8 @@ public:
         verticalLayout->addLayout(horizontalLayout_2);
 
         listTransactions = new QListView(frame_2);
-        listTransactions->setObjectName(QStringLiteral("listTransactions"));
-        listTransactions->setStyleSheet(QStringLiteral("QListView { background: transparent; }"));
+        listTransactions->setObjectName(QString::fromUtf8("listTransactions"));
+        listTransactions->setStyleSheet(QString::fromUtf8("QListView { background: transparent; }"));
         listTransactions->setFrameShape(QFrame::NoFrame);
         listTransactions->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         listTransactions->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -344,45 +342,45 @@ public:
 
     void retranslateUi(QWidget *OverviewPage)
     {
-        OverviewPage->setWindowTitle(QApplication::translate("OverviewPage", "Form", 0));
-        label_5->setText(QApplication::translate("OverviewPage", "Balances", 0));
+        OverviewPage->setWindowTitle(QApplication::translate("OverviewPage", "Form", nullptr));
+        label_5->setText(QApplication::translate("OverviewPage", "Balances", nullptr));
 #ifndef QT_NO_TOOLTIP
-        labelWalletStatus->setToolTip(QApplication::translate("OverviewPage", "The displayed information may be out of date. Your wallet automatically synchronizes with the MicroBitcoin network after a connection is established, but this process has not completed yet.", 0));
+        labelWalletStatus->setToolTip(QApplication::translate("OverviewPage", "The displayed information may be out of date. Your wallet automatically synchronizes with the AdventureCoin network after a connection is established, but this process has not completed yet.", nullptr));
 #endif // QT_NO_TOOLTIP
         labelWalletStatus->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        labelWatchPending->setToolTip(QApplication::translate("OverviewPage", "Unconfirmed transactions to watch-only addresses", 0));
+        labelWatchPending->setToolTip(QApplication::translate("OverviewPage", "Unconfirmed transactions to watch-only addresses", nullptr));
 #endif // QT_NO_TOOLTIP
 #ifndef QT_NO_TOOLTIP
-        labelUnconfirmed->setToolTip(QApplication::translate("OverviewPage", "Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance", 0));
+        labelUnconfirmed->setToolTip(QApplication::translate("OverviewPage", "Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance", nullptr));
 #endif // QT_NO_TOOLTIP
 #ifndef QT_NO_TOOLTIP
-        labelWatchImmature->setToolTip(QApplication::translate("OverviewPage", "Mined balance in watch-only addresses that has not yet matured", 0));
+        labelWatchImmature->setToolTip(QApplication::translate("OverviewPage", "Mined balance in watch-only addresses that has not yet matured", nullptr));
 #endif // QT_NO_TOOLTIP
-        labelTotalText->setText(QApplication::translate("OverviewPage", "Total:", 0));
+        labelTotalText->setText(QApplication::translate("OverviewPage", "Total:", nullptr));
 #ifndef QT_NO_TOOLTIP
-        labelImmature->setToolTip(QApplication::translate("OverviewPage", "Mined balance that has not yet matured", 0));
+        labelImmature->setToolTip(QApplication::translate("OverviewPage", "Mined balance that has not yet matured", nullptr));
 #endif // QT_NO_TOOLTIP
-        labelImmatureText->setText(QApplication::translate("OverviewPage", "Immature:", 0));
+        labelImmatureText->setText(QApplication::translate("OverviewPage", "Immature:", nullptr));
 #ifndef QT_NO_TOOLTIP
-        labelTotal->setToolTip(QApplication::translate("OverviewPage", "Your current total balance", 0));
-#endif // QT_NO_TOOLTIP
-#ifndef QT_NO_TOOLTIP
-        labelWatchTotal->setToolTip(QApplication::translate("OverviewPage", "Current total balance in watch-only addresses", 0));
-#endif // QT_NO_TOOLTIP
-        labelWatchonly->setText(QApplication::translate("OverviewPage", "Watch-only:", 0));
-        labelBalanceText->setText(QApplication::translate("OverviewPage", "Available:", 0));
-#ifndef QT_NO_TOOLTIP
-        labelBalance->setToolTip(QApplication::translate("OverviewPage", "Your current spendable balance", 0));
+        labelTotal->setToolTip(QApplication::translate("OverviewPage", "Your current total balance", nullptr));
 #endif // QT_NO_TOOLTIP
 #ifndef QT_NO_TOOLTIP
-        labelWatchAvailable->setToolTip(QApplication::translate("OverviewPage", "Your current balance in watch-only addresses", 0));
+        labelWatchTotal->setToolTip(QApplication::translate("OverviewPage", "Current total balance in watch-only addresses", nullptr));
 #endif // QT_NO_TOOLTIP
-        labelPendingText->setText(QApplication::translate("OverviewPage", "Pending:", 0));
-        labelSpendable->setText(QApplication::translate("OverviewPage", "Spendable:", 0));
-        label_4->setText(QApplication::translate("OverviewPage", "Recent transactions", 0));
+        labelWatchonly->setText(QApplication::translate("OverviewPage", "Watch-only:", nullptr));
+        labelBalanceText->setText(QApplication::translate("OverviewPage", "Available:", nullptr));
 #ifndef QT_NO_TOOLTIP
-        labelTransactionsStatus->setToolTip(QApplication::translate("OverviewPage", "The displayed information may be out of date. Your wallet automatically synchronizes with the MicroBitcoin network after a connection is established, but this process has not completed yet.", 0));
+        labelBalance->setToolTip(QApplication::translate("OverviewPage", "Your current spendable balance", nullptr));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_TOOLTIP
+        labelWatchAvailable->setToolTip(QApplication::translate("OverviewPage", "Your current balance in watch-only addresses", nullptr));
+#endif // QT_NO_TOOLTIP
+        labelPendingText->setText(QApplication::translate("OverviewPage", "Pending:", nullptr));
+        labelSpendable->setText(QApplication::translate("OverviewPage", "Spendable:", nullptr));
+        label_4->setText(QApplication::translate("OverviewPage", "Recent transactions", nullptr));
+#ifndef QT_NO_TOOLTIP
+        labelTransactionsStatus->setToolTip(QApplication::translate("OverviewPage", "The displayed information may be out of date. Your wallet automatically synchronizes with the AdventureCoin network after a connection is established, but this process has not completed yet.", nullptr));
 #endif // QT_NO_TOOLTIP
         labelTransactionsStatus->setText(QString());
     } // retranslateUi

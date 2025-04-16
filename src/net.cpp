@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2016 The Bitcoin Core developers
-// Copyright (c) 2018 MicroBitcoin developers
+// Copyright (c) 2018 AdventureCoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -1504,7 +1504,7 @@ void ThreadMapPort()
             }
         }
 
-        std::string strDesc = "MicroBitcoin " + FormatFullVersion();
+        std::string strDesc = "AdventureCoin " + FormatFullVersion();
 
         try {
             while (true) {

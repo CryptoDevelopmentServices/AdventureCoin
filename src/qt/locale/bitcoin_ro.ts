@@ -76,7 +76,7 @@
     </message>
 </context>
 <context>
-    <name>MicroBitcoinGUI</name>
+    <name>AdventureCoinGUI</name>
     <message>
         <source>Sign &amp;message...</source>
         <translation>Semnează &amp;mesajul...</translation>
@@ -142,8 +142,8 @@
         <translation>Deschide &amp;URI...</translation>
     </message>
     <message>
-        <source>Send coins to a MicroBitcoin address</source>
-        <translation>Trimite monedele către o adresă MicroBitcoin</translation>
+        <source>Send coins to a AdventureCoin address</source>
+        <translation>Trimite monedele către o adresă AdventureCoin</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -166,8 +166,8 @@
         <translation>&amp;Verifică mesajul...</translation>
     </message>
     <message>
-        <source>MicroBitcoin</source>
-        <translation>MicroBitcoin</translation>
+        <source>AdventureCoin</source>
+        <translation>AdventureCoin</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -194,12 +194,12 @@
         <translation>Criptează cheile private care aparțin portofelului tău.</translation>
     </message>
     <message>
-        <source>Sign messages with your MicroBitcoin addresses to prove you own them</source>
-        <translation>Semnează mesajele cu adresa ta de MicroBitcoin pentru a face dovada că îți aparțin.</translation>
+        <source>Sign messages with your AdventureCoin addresses to prove you own them</source>
+        <translation>Semnează mesajele cu adresa ta de AdventureCoin pentru a face dovada că îți aparțin.</translation>
     </message>
     <message>
-        <source>Verify messages to ensure they were signed with specified MicroBitcoin addresses</source>
-        <translation>Verifică mesajele cu scopul de a asigura faptul că au fost semnate cu adresa de MicroBitcoin specificată.</translation>
+        <source>Verify messages to ensure they were signed with specified AdventureCoin addresses</source>
+        <translation>Verifică mesajele cu scopul de a asigura faptul că au fost semnate cu adresa de AdventureCoin specificată.</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -214,12 +214,12 @@
         <translation>&amp;Ajutor</translation>
     </message>
     <message>
-        <source>Request payments (generates QR codes and MicroBitcoin: URIs)</source>
-        <translation>Cerere plată (generează coduri QR și MicroBitcoin: URIs)</translation>
+        <source>Request payments (generates QR codes and AdventureCoin: URIs)</source>
+        <translation>Cerere plată (generează coduri QR și AdventureCoin: URIs)</translation>
     </message>
     <message>
-        <source>Open a MicroBitcoin: URI or payment request</source>
-        <translation>Deschide un MicroBitcoin: URI sau cerere de plată</translation>
+        <source>Open a AdventureCoin: URI or payment request</source>
+        <translation>Deschide un AdventureCoin: URI sau cerere de plată</translation>
     </message>
     <message>
         <source>%1 behind</source>
@@ -746,10 +746,10 @@
     <name>WalletView</name>
     </context>
 <context>
-    <name>MicroBitcoin-core</name>
+    <name>AdventureCoin-core</name>
     <message>
-        <source>MicroBitcoin Core</source>
-        <translation>MicroBitcoin Core</translation>
+        <source>AdventureCoin Core</source>
+        <translation>AdventureCoin Core</translation>
     </message>
     <message>
         <source>Information</source>

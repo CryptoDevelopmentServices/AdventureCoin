@@ -1,2 +1,2 @@
 import os
-os.system("strip src/microbitcoind && strip src/microbitcoin-cli && strip src/qt/microbitcoin-qt")
+os.system("strip src/adventurecoind && strip src/adventurecoin-cli && strip src/qt/adventurecoin-qt")

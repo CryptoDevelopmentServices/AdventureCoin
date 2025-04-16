@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2016 The Bitcoin Core developers
-// Copyright (c) 2018-2019 MicroBitcoin developers
+// Copyright (c) 2018-2019 AdventureCoin developers
 // Copyright (c) 2017-2018 The Bitcoin Gold developers
 // Copyright (c) 2018 Zawy
 // Distributed under the MIT software license, see the accompanying
@@ -96,7 +96,7 @@ unsigned int Lwma2CalculateNextWorkRequired(const CBlockIndex* pindexLast, const
     const int64_t N = params.lwmaAveragingWindow;
     const int64_t k = N * (N + 1) * T / 2;
     const int height = pindexLast->nHeight;
-    const arith_uint256 powLimit = UintToArith256(params.powLimitMBC);
+    const arith_uint256 powLimit = UintToArith256(params.powLimitADVC);
     
     if (height < N) { return powLimit.GetCompact(); }
 
@@ -145,7 +145,7 @@ unsigned int Lwma3CalculateNextWorkRequired(const CBlockIndex* pindexLast, const
     const int64_t k = N * (N + 1) * T / 2;
     const int64_t height = pindexLast->nHeight;
 
-    arith_uint256 powLimitTmp = UintToArith256(params.powLimitMBC);    
+    arith_uint256 powLimitTmp = UintToArith256(params.powLimitADVC);    
     if (height >= params.rainforestHeightV2) {
         powLimitTmp = UintToArith256(params.powLimitRFv2);
     }
@@ -206,11 +206,11 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
     int nHeight = pindexLast->nHeight + 1;
 
     unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();
-    const auto isHardfork = nHeight > params.mbcHeight;
+    const auto isHardfork = nHeight > params.advcHeight;
     const auto isLwma2 = nHeight >= params.lwma2Height && nHeight < params.lwma3Height;
     const auto isLwma3 = nHeight >= params.lwma3Height;
 
-    const auto mbcWarmUp = (isHardfork && nHeight < (params.mbcHeight + 1) + params.nWarmUpWindow);
+    const auto advcWarmUp = (isHardfork && nHeight < (params.advcHeight + 1) + params.nWarmUpWindow);
     const auto rainforestWarmUp = (nHeight >= params.rainforestHeight && nHeight < params.rainforestHeight + params.rainforestWarmUpWindow);
     const auto rainforestWarmUpV2 = (nHeight >= params.rainforestHeightV2 && nHeight < params.rainforestHeightV2 + params.rainforestWarmUpWindowV2);
 
@@ -218,8 +218,8 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
 
     if (rainforestWarmUpV2) {
         return UintToArith256(params.powLimitRFv2).GetCompact();
-    } else if (mbcWarmUp || rainforestWarmUp) {
-        return UintToArith256(params.powLimitMBC).GetCompact();
+    } else if (advcWarmUp || rainforestWarmUp) {
+        return UintToArith256(params.powLimitADVC).GetCompact();
     }
     
     if (params.fPowNoRetargeting) return pindexLast->nBits;
@@ -255,7 +255,7 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
     } else if (isLwma3) {
         return Lwma3CalculateNextWorkRequired(pindexLast, params);
     } else {
-        return pindexLast->nHeight > params.mbcHeight
+        return pindexLast->nHeight > params.advcHeight
             ? DarkGravityWave3(pindexLast, params)
             : BitcoinNextWorkRequired(pindexLast, pblock, params);
     }
@@ -298,8 +298,8 @@ bool CheckProofOfWork(uint256 hash, unsigned int nBits, int nHeight, const Conse
     arith_uint256 bnPowLimitTmp = UintToArith256(params.powLimit);
     if (nHeight >= params.rainforestHeightV2) {
         bnPowLimitTmp = UintToArith256(params.powLimitRFv2);
-    } else if (nHeight > params.mbcHeight && nHeight < params.rainforestHeightV2) {
-        bnPowLimitTmp = UintToArith256(params.powLimitMBC);
+    } else if (nHeight > params.advcHeight && nHeight < params.rainforestHeightV2) {
+        bnPowLimitTmp = UintToArith256(params.powLimitADVC);
     }
 
     const arith_uint256 bnPowLimit = bnPowLimitTmp;
