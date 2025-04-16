@@ -1,7 +1,0 @@
-[main]
-host = https://www.transifex.com
-
-[advc.qt-translation-012x]
-file_filter = src/qt/locale/advc_<lang>.ts
-source_file = src/qt/locale/advc_en.ts
-source_lang = en
