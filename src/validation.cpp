@@ -1127,7 +1127,7 @@ bool ReadBlockFromDisk(CBlock& block, const CBlockIndex* pindex, const Consensus
 
 CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
 {
-    const CAmount initSubsidy = 50 * COIN * COIN_RATIO;
+    const CAmount initSubsidy = 100 * COIN;
 
     // Old subsidy
     if (nHeight < (consensusParams.advcHeight + 1))
