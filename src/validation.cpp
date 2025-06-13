@@ -49,9 +49,8 @@
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/thread.hpp>
-#include <boost/bind/bind.hpp>
-using namespace boost::placeholders;
-
+#include <boost/bind.hpp>
+#include <boost/bind/placeholders.hpp>
 
 #if defined(NDEBUG)
 # error "AdventureCoin cannot be compiled without assertions."
