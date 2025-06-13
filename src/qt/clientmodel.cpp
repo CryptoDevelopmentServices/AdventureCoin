@@ -315,6 +315,7 @@ static void BlockTipChanged(ClientModel *clientmodel, bool initialSync, const CB
 
 void ClientModel::subscribeToCoreSignals()
 {
+    using namespace boost::placeholders;
     // Connect signals to client
     uiInterface.ShowProgress.connect(boost::bind(ShowProgress, this, _1, _2));
     uiInterface.NotifyNumConnectionsChanged.connect(boost::bind(NotifyNumConnectionsChanged, this, _1));
