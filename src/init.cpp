@@ -68,6 +68,8 @@
 #include <zmq/zmqnotificationinterface.h>
 #endif
 
+static boost::signals2::connection connNotifyGenesisWait;
+
 bool fFeeEstimatesInitialized = false;
 static const bool DEFAULT_PROXYRANDOMIZE = true;
 static const bool DEFAULT_REST_ENABLE = false;
@@ -1664,8 +1666,7 @@ bool AppInitMain()
     // Either install a handler to notify us when genesis activates, or set fHaveGenesis directly.
     // No locking, as this happens before any background thread is started.
     if (chainActive.Tip() == nullptr) {
-        boost::signals2::connection connNotifyGenesisWait =
-            uiInterface.NotifyBlockTip.connect(BlockNotifyGenesisWait);
+        connNotifyGenesisWait = uiInterface.NotifyBlockTip.connect(BlockNotifyGenesisWait);
     } else {
         fHaveGenesis = true;
     }
