@@ -25,6 +25,7 @@
 #include <QDesktopWidget>
 #include <QPainter>
 #include <QRadialGradient>
+#include <QScreen>
 
 #include <boost/bind.hpp>
 #include <boost/bind/placeholders.hpp>
@@ -94,7 +95,7 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
     // check font size and drawing with
     pixPaint.setFont(QFont(font, 33*fontFactor));
     QFontMetrics fm = pixPaint.fontMetrics();
-    int titleTextWidth = fm.width(titleText);
+    int titleTextWidth = fm.horizontalAdvance(titleText);
     if (titleTextWidth > 176) {
         fontFactor = fontFactor * 176 / titleTextWidth;
     }
@@ -108,7 +109,7 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
 
     // if the version string is to long, reduce size
     fm = pixPaint.fontMetrics();
-    int versionTextWidth  = fm.width(versionText);
+    int versionTextWidth  = fm.horizontalAdvance(versionText);
     if(versionTextWidth > titleTextWidth+paddingRight-10) {
         pixPaint.setFont(QFont(font, 10*fontFactor));
         titleVersionVSpace -= 5;
@@ -143,7 +144,9 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
     QRect r(QPoint(), QSize(pixmap.size().width()/devicePixelRatio,pixmap.size().height()/devicePixelRatio));
     resize(r.size());
     setFixedSize(r.size());
-    move(QApplication::desktop()->screenGeometry().center() - r.center());
+    QScreen* screen = QGuiApplication::primaryScreen();
+    if (screen)
+        move(screen->geometry().center() - r.center());
 
     subscribeToCoreSignals();
     installEventFilter(this);

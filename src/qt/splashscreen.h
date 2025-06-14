@@ -8,6 +8,8 @@
 #include <functional>
 #include <QSplashScreen>
 
+#include <boost/signals2/connection.hpp>
+
 class CWallet;
 class NetworkStyle;
 
