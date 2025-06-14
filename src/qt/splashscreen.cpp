@@ -26,6 +26,7 @@
 #include <QPainter>
 #include <QRadialGradient>
 #include <QScreen>
+#include <QGuiApplication>
 
 #include <boost/bind.hpp>
 #include <boost/bind/placeholders.hpp>
@@ -102,7 +103,7 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
 
     pixPaint.setFont(QFont(font, 33*fontFactor));
     fm = pixPaint.fontMetrics();
-    titleTextWidth  = fm.width(titleText);
+    titleTextWidth  = fm.horizontalAdvance(titleText);
     pixPaint.drawText(pixmap.width()/devicePixelRatio-titleTextWidth-paddingRight,paddingTop,titleText);
 
     pixPaint.setFont(QFont(font, 15*fontFactor));
@@ -131,7 +132,7 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
         boldFont.setWeight(QFont::Bold);
         pixPaint.setFont(boldFont);
         fm = pixPaint.fontMetrics();
-        int titleAddTextWidth  = fm.width(titleAddText);
+        int titleAddTextWidth  = fm.horizontalAdvance(titleAddText);
         pixPaint.drawText(pixmap.width()/devicePixelRatio-titleAddTextWidth-10,15,titleAddText);
     }
 
@@ -146,7 +147,7 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
     setFixedSize(r.size());
     QScreen* screen = QGuiApplication::primaryScreen();
     if (screen)
-        move(screen->geometry().center() - r.center());
+        move(screen->availableGeometry().center() - frameGeometry().center());
 
     subscribeToCoreSignals();
     installEventFilter(this);

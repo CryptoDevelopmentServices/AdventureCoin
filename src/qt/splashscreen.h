@@ -1,13 +1,8 @@
-// Copyright (c) 2011-2017 The Bitcoin Core developers
-// Distributed under the MIT software license, see the accompanying
-// file COPYING or http://www.opensource.org/licenses/mit-license.php.
-
 #ifndef BITCOIN_QT_SPLASHSCREEN_H
 #define BITCOIN_QT_SPLASHSCREEN_H
 
 #include <functional>
 #include <QSplashScreen>
-
 #include <boost/signals2/connection.hpp>
 
 class CWallet;
@@ -44,7 +39,7 @@ protected:
 private:
     /** Connect core signals to splash screen */
     void subscribeToCoreSignals();
-    /** Disconnect core signals to splash screen */
+    /** Disconnect core signals from splash screen */
     void unsubscribeFromCoreSignals();
     /** Connect wallet signals to splash screen */
     void ConnectWallet(CWallet*);
@@ -55,6 +50,13 @@ private:
     int curAlignment;
 
     QList<CWallet*> connectedWallets;
+
+    // 🔧 These are required for tracking signal connections
+    boost::signals2::connection initMessageConnection;
+    boost::signals2::connection showProgressConnection;
+#ifdef ENABLE_WALLET
+    boost::signals2::connection loadWalletConnection;
+#endif
 };
 
 #endif // BITCOIN_QT_SPLASHSCREEN_H
