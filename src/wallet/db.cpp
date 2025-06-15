@@ -285,7 +285,8 @@ bool CDB::VerifyEnvironment(const std::string& walletFile, const fs::path& walle
     LogPrintf("Using wallet %s\n", walletFile);
 
     // Wallet file must be a plain filename without a directory
-    if (walletFile != walletFile.filename().stem().string() + walletFile.filename().extension().string())
+    boost::filesystem::path p(walletFile);
+    if (walletFile != p.stem().string() + p.extension().string())
     {
         errorStr = strprintf(_("Wallet %s resides outside wallet directory %s"), walletFile, walletDir.string());
         return false;
@@ -714,7 +715,7 @@ bool CWalletDBWrapper::Backup(const std::string& strDest)
                         return false;
                     }
 
-                    fs::copy_file(pathSrc, pathDest, fs::copy_options::overwrite_existing);
+                    fs::copy_file(pathSrc, pathDest, fs::copy_option::overwrite_if_exists);
                     LogPrintf("copied %s to %s\n", strFile, pathDest.string());
                     return true;
                 } catch (const fs::filesystem_error& e) {
