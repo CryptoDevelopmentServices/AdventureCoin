@@ -1016,12 +1016,7 @@ static void RelayAddress(const CAddress& addr, bool fReachable, CConnman* connma
     const CSipHasher hasher = connman->GetDeterministicRandomizer(RANDOMIZER_ID_ADDRESS_RELAY).Write(hashAddr << 32).Write((GetTime() + hashAddr) / (24*60*60));
     FastRandomContext insecure_rand;
 
-    // std::array<std::pair<uint64_t, CNode*>,2> best{{{0, nullptr}, {0, nullptr}}};
-    #ifdef ADVC_GCC13_FIX
-        std::array<std::pair<uint64_t, CNode*>, 2> best{};
-    #else
-        std::array<std::pair<uint64_t, CNode*>, 2> best{{{0, nullptr}, {0, nullptr}}};
-    #endif
+    std::array<std::pair<uint64_t, CNode*>,2> best{{{0, nullptr}, {0, nullptr}}};
     assert(nRelayNodes <= best.size());
 
     auto sortfunc = [&best, &hasher, nRelayNodes](CNode* pnode) {
