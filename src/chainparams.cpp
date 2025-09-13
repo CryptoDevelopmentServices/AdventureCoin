@@ -80,7 +80,7 @@ public:
         consensus.nSubsidyHalvingInterval = 300000;
         consensus.BIP16Height = 0; // fixed
         consensus.BIP34Height = 6333;
-        consensus.BIP34Hash = uint256S("0x0"); // TODO: update with actual hash of block 6333
+        consensus.BIP34Hash = uint256S("0x4cf9771fec1f8c739172c5c9a3a39d8647aa731c4f055135dc3954ca514d0340"); // TODO: update with actual hash of block 6333
         consensus.BIP65Height = 6333;
         consensus.BIP66Height = 6333;
         consensus.powLimit = uint256S("0x3fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
@@ -143,7 +143,7 @@ public:
         // This is fine at runtime as we'll fall back to using them as a oneshot if they dont support the
         // service bits we want, but we should get them updated to support all service bits wanted by any
         // release ASAP to avoid it where possible.
-	vSeeds.emplace_back("seed.adventurecoin.quest");
+	    vSeeds.emplace_back("seed.adventurecoin.quest");
         vSeeds.emplace_back("157.180.76.198"); // EU - NovaGrid	
         vSeeds.emplace_back("34.124.247.1"); // APAC - NovaGrid
         vSeeds.emplace_back("178.156.175.223"); // NA-EAST - NovaGrid
@@ -168,7 +168,9 @@ public:
             {
                 {0, uint256S("0xda4aaa17fd5f1c7db85cfebdb56e1b5d89739b9bf8c7a23c4cdf07a9649469a8")},
                 {5, uint256S("0xd7a52de54b9482af1ca65e2863a6e28a3af6caaeb28d71056aaa089e0fecf4a5")},
-                
+                {6333, uint256S("0x4cf9771fec1f8c739172c5c9a3a39d8647aa731c4f055135dc3954ca514d0340")},
+                {30000, uint256S("0x9a58e6980e4f9b01f79131a4161ff57a869682d74c4c2ecd93f3af81433e37fd")},
+                {60000, uint256S("0x690ffbb060c615c03cf108e8e053e3e727ec7c34499010d942e5c2d53fb200a2")},   
             }
         };
 
@@ -183,8 +185,8 @@ genesis = 1507032223
 */
 
         chainTxData = ChainTxData{
-            // Data as of block 00000017fb4512999352c3ae0a9ea0aa0fc03e8118f74d4ece68df939bb33d93 (height 156001).
-            1528276166, // * UNIX timestamp of last known number of transactions
+            // Data as of block 00000017fb4512999352c3ae0a9ea0aa0fc03e8118f74d4ece68df939bb33d93 (height 60000).
+            1757327963, // * UNIX timestamp of last known number of transactions
             839317,    // * total number of transactions between genesis and that timestamp
                         //   (the tx=... number in the SetBestChain debug.log lines)
             0.0395 // * 0.0750 -  estimated number of transactions per second after that timestamp
