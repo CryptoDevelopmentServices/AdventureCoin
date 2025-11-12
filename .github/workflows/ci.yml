@@ -213,34 +213,27 @@ jobs:
             echo "🔧 Patching wallet/db.cpp for C++17 filesystem..."
             sed -i '/fs::copy_file/s/fs::copy_file([^)]*);/#if defined(__cpp_lib_filesystem) \&\& __cpp_lib_filesystem >= 201703L\n    &\n#else\n    fs::copy_file(pathSrc, pathDest);\n#endif/' src/wallet/db.cpp
           fi
-      
-      - name: Fix macOS patch dirs and cctools toolchain
-        if: matrix.name == 'x86_64-macos'
+
+      # 🧩 Ensure Qt patch files exist for Windows and macOS builds
+      - name: Create missing Qt patch files (Windows + macOS)
+        if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win' || matrix.name == 'x86_64-macos'
         run: |
-          echo "🔧 Creating missing Qt patch files..."
+          echo "🔧 Ensuring all Qt patch files exist..."
           mkdir -p depends/patches/qt
           for f in mingw-uuidof.patch pidlist_absolute.patch fix-xcb-include-order.patch \
                    fix_qt_pkgconfig.patch fix-cocoahelpers-macos.patch qfixed-coretext.patch; do
-            echo "Creating $f"
-            touch depends/patches/qt/$f
+            if [ ! -f depends/patches/qt/$f ]; then
+              echo "Creating missing patch file: $f"
+              touch depends/patches/qt/$f
+            fi
           done
+          echo "✅ Qt patch files ready."
 
-          echo "🔧 Installing extra toolchain runtime deps..."
-          apt-get update
-          DEBIAN_FRONTEND=noninteractive apt-get install -y \
-            clang llvm-dev lld libxml2-dev libssl-dev libbz2-dev libtinfo5 \
-            libncurses5 libncurses5-dev zlib1g-dev xz-utils cmake patch make \
-            bison flex libtool autoconf automake libltdl-dev libzstd-dev \
-            libstdc++6 libc6-dev gawk
-
-          echo "🔧 Disabling PIE for old clang sanity check..."
-          export CFLAGS="-fno-pie -no-pie"
-          export LDFLAGS="-fno-pie -no-pie"
-
-      - name: Patch macOS LLVM version for cctools
+      # 🧩 Early patch: force LLVM 7.0 for macOS cctools before depends starts
+      - name: Force LLVM 7.0 for macOS cctools (early)
         if: matrix.name == 'x86_64-macos'
         run: |
-          echo "⚙️  Forcing cctools to use LLVM 7.0 instead of 3.7.1 (safe rewrite)..."
+          echo "🧩 Updating native_cctools.mk to LLVM 7.0 before build..."
           awk '
             /clang-llvm-3.7.1-x86_64-linux-gnu-ubuntu-14.04.tar.xz/ { gsub(/clang-llvm-3.7.1-x86_64-linux-gnu-ubuntu-14.04.tar.xz/, "clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz") }
             /http:\/\/llvm\.org\/releases\/3\.7\.1/ { gsub(/http:\/\/llvm\.org\/releases\/3\.7\.1/, "https://releases.llvm.org/7.0.0") }
@@ -248,17 +241,11 @@ jobs:
             { print }
           ' depends/packages/native_cctools.mk > tmpfile && mv tmpfile depends/packages/native_cctools.mk
 
-      - name: Clean depends Makefiles (prevent stray spaces)
-        if: matrix.name == 'x86_64-macos'
-        run: |
-          find depends -type f -name '*.mk' -exec sed -i 's/^[[:space:]]*$//' {} \;
-
-      - name: Fix missing Qt patch paths for Windows
-        if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win'
-        run: |
-          echo "🔧 Copying Qt patch files to root depends/patches..."
-          mkdir -p depends/patches
-          cp depends/patches/qt/*.patch depends/patches/ || true
+          # Fallback mirror if LLVM.org is unreachable
+          if ! curl -Is https://releases.llvm.org/7.0.0/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz | grep -q "200"; then
+            echo "⚠️  LLVM.org mirror unavailable, switching to GitHub release mirror..."
+            sed -i 's|https://releases.llvm.org/7.0.0|https://github.com/llvm/llvm-project/releases/download/llvmorg-7.0.0|g' depends/packages/native_cctools.mk
+          fi
 
       # 🧱 Fix broken dependency sources & mirrors (Windows + macOS only)
       - name: Fix legacy dependency URLs and cctools mirrors
@@ -281,17 +268,6 @@ jobs:
               sed -i 's|https://boostorg.jfrog.io/artifactory/main/release/1.64.0/source/|https://archives.boost.io/release/1.64.0/source/|g' depends/packages/boost.mk || true
               sed -i 's|https://bitcoincore.org/depends-sources|https://archives.boost.io/release/1.64.0/source/|g' depends/packages/boost.mk || true
             fi
-          fi
-
-          # --- Fix macOS cctools LLVM mirror ---
-          if [[ "${{ matrix.name }}" == "x86_64-macos" ]]; then
-            echo "⚙️  Updating cctools to LLVM 7.0 (safe rewrite)..."
-            awk '
-              /clang-llvm-3.7.1-x86_64-linux-gnu-ubuntu-14.04.tar.xz/ { gsub(/clang-llvm-3.7.1-x86_64-linux-gnu-ubuntu-14.04.tar.xz/, "clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz") }
-              /http:\/\/llvm\.org\/releases\/3\.7\.1/ { gsub(/http:\/\/llvm\.org\/releases\/3\.7\.1/, "https://releases.llvm.org/7.0.0") }
-              /sha256=/ { gsub(/sha256=.*/, "sha256=3a8309db1fa7879152632fb19fb8b0e84c2a67b8e8df5d06d85eb2b14dffad65") }
-              { print }
-            ' depends/packages/native_cctools.mk > tmpfile && mv tmpfile depends/packages/native_cctools.mk
           fi
 
           echo "✅ Dependency sources patched successfully."
