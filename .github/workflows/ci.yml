@@ -198,37 +198,31 @@ jobs:
           path: ./depends/built
           key: ${{ matrix.name }}-${{ env.cache-name }}-${{ hashFiles('depends/packages/*', '.github/workflows/ci.yml') }}
 
-      # 🧩 Ensure macOS uses LLVM 9.0.1 and clean out old LLVM 3.7.1 artifacts
+      # 🧩 Ensure macOS uses LLVM 9.0.1 from GitHub and clean out old LLVM 3.7.1 artifacts
       - name: Force clean & patch native_cctools.mk before depends fetch
         if: matrix.name == 'x86_64-macos'
         run: |
           echo "🧹 Cleaning old cctools/LLVM artifacts..."
           rm -rf depends/work/download/native_cctools* depends/sources/clang*llvm-* || true
 
-          echo "⚙️ Updating LLVM version and URLs to 9.0.1..."
-          # 🔥 Explicitly set version variable to 9.0.1
+          echo "⚙️ Updating LLVM version and URLs to 9.0.1 (GitHub mirror)..."
           sed -i 's/$(package)_clang_version=3.7.1/$(package)_clang_version=9.0.1/' depends/packages/native_cctools.mk
-          sed -i 's|http://llvm\.org/releases/\$($(package)_clang_version)|https://releases.llvm.org/$($(package)_clang_version)|' depends/packages/native_cctools.mk
-          sed -i 's/ubuntu-14\.04/ubuntu-18.04/' depends/packages/native_cctools.mk
+          sed -i 's|http://llvm\.org/releases/\$($(package)_clang_version)|https://github.com/llvm/llvm-project/releases/download/llvmorg-$($(package)_clang_version)|' depends/packages/native_cctools.mk
+          sed -i 's|ubuntu-14\.04|ubuntu-18.04|' depends/packages/native_cctools.mk
 
-          # 🧠 Now rewrite remaining literal lines safely
           awk '
             /clang[-+]llvm-3\.7\.1-x86_64-linux-gnu-ubuntu-14\.04\.tar\.xz/ {
               gsub(/clang[-+]llvm-3\.7\.1-x86_64-linux-gnu-ubuntu-14\.04\.tar\.xz/,
-                   "clang+llvm-9.0.1-x86_64-linux-gnu-ubuntu-18.04.tar.xz")
-            }
-            /(http|https):\/\/llvm\.org\/releases\/3\.7\.1/ {
-              gsub(/(http|https):\/\/llvm\.org\/releases\/3\.7\.1/,
-                   "https://releases.llvm.org/9.0.1")
+                  "clang+llvm-9.0.1-x86_64-linux-gnu-ubuntu-18.04.tar.xz")
             }
             /sha256=/ {
               gsub(/sha256=.*/,
-                   "sha256=1e12a0d7cfe03a72d5f64acb9e9ff2b014d02db92662d0aa3b4f611dcad0e5c8")
+                  "sha256=1e12a0d7cfe03a72d5f64acb9e9ff2b014d02db92662d0aa3b4f611dcad0e5c8")
             }
             { print }
           ' depends/packages/native_cctools.mk > tmp && mv tmp depends/packages/native_cctools.mk
 
-          echo "📦 Installing LLVM 9.0.1 runtime & compat libs..."
+          echo "📦 Installing LLVM 9.0.1 toolchain..."
           apt-get update -y
           DEBIAN_FRONTEND=noninteractive apt-get install -y \
             clang-9 llvm-9-dev libxml2-dev libedit-dev libncurses5 libtinfo5 \
@@ -237,7 +231,7 @@ jobs:
           update-alternatives --install /usr/bin/clang clang /usr/bin/clang-9 100
           update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-9 100
 
-          echo "✅ native_cctools.mk patched and old LLVM purged."
+          echo "✅ native_cctools.mk patched to use LLVM 9.0.1 (GitHub source)."
 
       - name: Fix macOS cross build dependencies
         if: matrix.name == 'x86_64-macos'
@@ -312,37 +306,35 @@ jobs:
 
           echo "✅ splashscreen.cpp compatibility patch applied safely."
 
-      # 🧩 Force zlib 1.2.12 to GitHub source archive (Windows builds), update hash, and pre-stage source
-      - name: Patch & stage zlib 1.2.12 from GitHub
+      # 🧩 Force zlib 1.2.12 to GitHub source archive (Windows builds) and rename for depends
+      - name: Patch & stage zlib 1.2.12 from GitHub (fix checksum & filename)
         if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win'
         shell: bash
         run: |
           set -euo pipefail
           ZVER="1.2.12"
-          ZNAME="v${ZVER}.tar.gz"
-          ZURL="https://github.com/madler/zlib/archive/refs/tags/${ZNAME}"
+          ZURL="https://github.com/madler/zlib/archive/refs/tags/v${ZVER}.tar.gz"
+          ZSRC="v${ZVER}.tar.gz"
+          ZDST="zlib-${ZVER}.tar.gz"
 
-          echo "📦 Fetching ${ZNAME} from GitHub source archive…"
+          echo "📦 Fetching zlib ${ZVER} from GitHub source archive…"
           mkdir -p depends/sources
-          curl -L --retry 3 --connect-timeout 15 -o "depends/sources/${ZNAME}" "${ZURL}"
+          curl -L --retry 3 --connect-timeout 15 -o "depends/sources/${ZSRC}" "${ZURL}"
 
-          echo "🔐 Computing SHA256…"
-          ZSHA=$(sha256sum "depends/sources/${ZNAME}" | awk '{print $1}')
+          echo "🌀 Renaming ${ZSRC} → ${ZDST} (depends expects this exact name)"
+          mv "depends/sources/${ZSRC}" "depends/sources/${ZDST}"
+
+          echo "🔐 Computing SHA256 for ${ZDST}…"
+          ZSHA=$(sha256sum "depends/sources/${ZDST}" | awk '{print $1}')
           echo "   -> ${ZSHA}"
 
           ZMK="depends/packages/zlib.mk"
-          echo "📝 Patching ${ZMK} to use GitHub URL and updated hash…"
-
-          # Replace fossil URLs with GitHub source archive
+          echo "📝 Patching ${ZMK} to use GitHub archive and updated hash…"
           sed -i "s|https://zlib.net/fossils|https://github.com/madler/zlib/archive/refs/tags|g" "${ZMK}" || true
-
-          # Replace file name if needed
-          sed -i "s|zlib-1.2.12.tar.gz|v1.2.12.tar.gz|g" "${ZMK}" || true
-
-          # Replace hash line
+          sed -i "s|https://bitcoincore.org/depends-sources|https://github.com/madler/zlib/archive/refs/tags|g" "${ZMK}" || true
           sed -i "s/sha256=.*/sha256=${ZSHA}/" "${ZMK}"
 
-          echo "✅ zlib ${ZVER} staged and ${ZMK} patched."
+          echo "✅ zlib ${ZVER} staged, renamed, and patched successfully."
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
