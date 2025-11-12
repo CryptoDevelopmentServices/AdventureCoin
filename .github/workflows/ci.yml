@@ -205,7 +205,13 @@ jobs:
           echo "🧹 Cleaning old cctools/LLVM artifacts..."
           rm -rf depends/work/download/native_cctools* depends/sources/clang*llvm-* || true
 
-          echo "⚙️ Rewriting native_cctools.mk to LLVM 9.0.1 (Ubuntu 18.04 build)..."
+          echo "⚙️ Updating LLVM version and URLs to 9.0.1..."
+          # 🔥 Explicitly set version variable to 9.0.1
+          sed -i 's/$(package)_clang_version=3.7.1/$(package)_clang_version=9.0.1/' depends/packages/native_cctools.mk
+          sed -i 's|http://llvm\.org/releases/\$($(package)_clang_version)|https://releases.llvm.org/$($(package)_clang_version)|' depends/packages/native_cctools.mk
+          sed -i 's/ubuntu-14\.04/ubuntu-18.04/' depends/packages/native_cctools.mk
+
+          # 🧠 Now rewrite remaining literal lines safely
           awk '
             /clang[-+]llvm-3\.7\.1-x86_64-linux-gnu-ubuntu-14\.04\.tar\.xz/ {
               gsub(/clang[-+]llvm-3\.7\.1-x86_64-linux-gnu-ubuntu-14\.04\.tar\.xz/,
@@ -306,17 +312,17 @@ jobs:
 
           echo "✅ splashscreen.cpp compatibility patch applied safely."
 
-      # 🧩 Force zlib 1.2.12 to GitHub release (Windows builds), update hash, and pre-stage source
+      # 🧩 Force zlib 1.2.12 to GitHub source archive (Windows builds), update hash, and pre-stage source
       - name: Patch & stage zlib 1.2.12 from GitHub
         if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win'
         shell: bash
         run: |
           set -euo pipefail
           ZVER="1.2.12"
-          ZNAME="zlib-${ZVER}.tar.gz"
-          ZURL="https://github.com/madler/zlib/releases/download/v${ZVER}/${ZNAME}"
+          ZNAME="v${ZVER}.tar.gz"
+          ZURL="https://github.com/madler/zlib/archive/refs/tags/${ZNAME}"
 
-          echo "📦 Fetching ${ZNAME} from GitHub releases…"
+          echo "📦 Fetching ${ZNAME} from GitHub source archive…"
           mkdir -p depends/sources
           curl -L --retry 3 --connect-timeout 15 -o "depends/sources/${ZNAME}" "${ZURL}"
 
@@ -326,17 +332,17 @@ jobs:
 
           ZMK="depends/packages/zlib.mk"
           echo "📝 Patching ${ZMK} to use GitHub URL and updated hash…"
-          # Replace any existing primary and fallback URLs with the GitHub asset URL
-          sed -i "s|https://zlib.net/fossils/${ZNAME}|${ZURL}|g" "${ZMK}" || true
-          sed -i "s|https://bitcoincore.org/depends-sources/${ZNAME}|${ZURL}|g" "${ZMK}" || true
 
-          # Normalize any other zlib URLs for this version to the GitHub asset
-          sed -i "s|https://zlib.net/fossils|${ZURL%/${ZNAME}}|g" "${ZMK}" || true
+          # Replace fossil URLs with GitHub source archive
+          sed -i "s|https://zlib.net/fossils|https://github.com/madler/zlib/archive/refs/tags|g" "${ZMK}" || true
 
-          # Update sha256= line to match the downloaded tarball
-          sed -i "s/^\s*sha256=.*/sha256=${ZSHA}/" "${ZMK}"
+          # Replace file name if needed
+          sed -i "s|zlib-1.2.12.tar.gz|v1.2.12.tar.gz|g" "${ZMK}" || true
 
-          echo "✅ zlib ${ZVER} staged and package file patched."
+          # Replace hash line
+          sed -i "s/sha256=.*/sha256=${ZSHA}/" "${ZMK}"
+
+          echo "✅ zlib ${ZVER} staged and ${ZMK} patched."
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
