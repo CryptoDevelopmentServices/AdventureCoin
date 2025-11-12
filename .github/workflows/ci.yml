@@ -237,6 +237,21 @@ jobs:
           export CFLAGS="-fno-pie -no-pie"
           export LDFLAGS="-fno-pie -no-pie"
 
+      - name: Patch macOS LLVM version for cctools
+        if: matrix.name == 'x86_64-macos'
+        run: |
+          echo "⚙️  Forcing cctools to use LLVM 7.0 instead of 3.7.1..."
+          sed -i 's/clang-llvm-3.7.1-x86_64-linux-gnu-ubuntu-14.04.tar.xz/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz/g' depends/packages/native_cctools.mk || true
+          sed -i 's|http://llvm.org/releases/3.7.1|https://releases.llvm.org/7.0.0|g' depends/packages/native_cctools.mk || true
+          sed -i '/sha256/s/.*/sha256=3a8309db1fa7879152632fb19fb8b0e84c2a67b8e8df5d06d85eb2b14dffad65/' depends/packages/native_cctools.mk || true
+
+      - name: Fix missing Qt patch paths for Windows
+        if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win'
+        run: |
+          echo "🔧 Copying Qt patch files to root depends/patches..."
+          mkdir -p depends/patches
+          cp depends/patches/qt/*.patch depends/patches/ || true
+          
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
 
