@@ -229,9 +229,9 @@ jobs:
           ./autogen.sh
           chmod +x configure || true
           ./configure --prefix=`pwd`/depends/${{ matrix.host }} ${{ matrix.config-opts }} --enable-reduce-exports \
-            CFLAGS="-DGIT_COMMIT_ID=\\\"$SHORT_COMMIT\\\"" \
+            CFLAGS="-std=c++17 -DGIT_COMMIT_ID=\\\"$SHORT_COMMIT\\\"" \
             CXXFLAGS="-std=c++17 -DGIT_COMMIT_ID=\\\"$SHORT_COMMIT\\\"" || ( cat config.log && false)
-          make $MAKEJOBS ${{ matrix.goal }} || (echo "Build failure. Verbose build follows." && make ${{ matrix.goal }} V=1 ; false)
+          make $MAKEJOBS ${{ matrix.goal }} CXXFLAGS="-std=c++17" || (echo "Build failure. Verbose build follows." && make ${{ matrix.goal }} CXXFLAGS="-std=c++17" V=1 ; false)
 
       - name: Run benchmark
         if: ${{ matrix.run-bench }}
