@@ -203,12 +203,12 @@ jobs:
         if: matrix.name == 'x86_64-macos'
         run: |
           echo "🧹 Cleaning old cctools/LLVM artifacts..."
-          rm -rf depends/work/download/native_cctools* depends/sources/clang-llvm-* || true
+          rm -rf depends/work/download/native_cctools* depends/sources/clang+llvm-* || true
 
           echo "⚙️ Rewriting native_cctools.mk to LLVM 9.0.1 (Ubuntu 18.04 build)..."
           awk '
-            /clang-llvm-3.7.1-x86_64-linux-gnu-ubuntu-14.04.tar.xz/ {
-              gsub(/clang-llvm-3.7.1-x86_64-linux-gnu-ubuntu-14.04.tar.xz/,
+            /clang\+llvm-3.7.1-x86_64-linux-gnu-ubuntu-14.04.tar.xz/ {
+              gsub(/clang\+llvm-3.7.1-x86_64-linux-gnu-ubuntu-14.04.tar.xz/,
                    "clang+llvm-9.0.1-x86_64-linux-gnu-ubuntu-18.04.tar.xz")
             }
             /http:\/\/llvm\.org\/releases\/3\.7\.1/ {
@@ -223,7 +223,7 @@ jobs:
           ' depends/packages/native_cctools.mk > tmp && mv tmp depends/packages/native_cctools.mk
 
           echo "📦 Installing LLVM 9.0.1 runtime & compat libs..."
-          apt-get update
+          apt-get update -y
           DEBIAN_FRONTEND=noninteractive apt-get install -y \
             clang-9 llvm-9-dev libxml2-dev libedit-dev libncurses5 libtinfo5 \
             libbz2-dev zlib1g-dev lld make patch autoconf automake libtool cmake gawk
@@ -281,6 +281,19 @@ jobs:
           fi
 
           echo "✅ QFontMetrics compatibility patch applied cleanly."
+
+      # 🧩 Patch Qt splashscreen.cpp QFontMetrics compatibility (for Qt 5.7.x)
+      - name: Patch splashscreen.cpp for Qt 5.7.x compatibility
+        if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win'
+        run: |
+          echo "🔧 Patching splashscreen.cpp for Qt 5.7.x compatibility..."
+          TARGET_FILE="src/qt/splashscreen.cpp"
+          if grep -q "horizontalAdvance" "$TARGET_FILE"; then
+            sed -i 's/fm.horizontalAdvance(/#if QT_VERSION < QT_VERSION_CHECK(5,11,0)\n    fm.width(/g' "$TARGET_FILE"
+            sed -i 's/);$/);\n#else\n    &\n#endif/g' "$TARGET_FILE"
+          fi
+          echo "✅ splashscreen.cpp patched cleanly."
+
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
