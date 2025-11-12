@@ -198,6 +198,41 @@ jobs:
           path: ./depends/built
           key: ${{ matrix.name }}-${{ env.cache-name }}-${{ hashFiles('depends/packages/*', '.github/workflows/ci.yml') }}
 
+      # 🧩 Ensure macOS uses LLVM 9.0.1 and clean out old LLVM 3.7.1 artifacts
+      - name: Force clean & patch native_cctools.mk before depends fetch
+        if: matrix.name == 'x86_64-macos'
+        run: |
+          echo "🧹 Cleaning old cctools/LLVM artifacts..."
+          rm -rf depends/work/download/native_cctools* depends/sources/clang-llvm-* || true
+
+          echo "⚙️ Rewriting native_cctools.mk to LLVM 9.0.1 (Ubuntu 18.04 build)..."
+          awk '
+            /clang-llvm-3.7.1-x86_64-linux-gnu-ubuntu-14.04.tar.xz/ {
+              gsub(/clang-llvm-3.7.1-x86_64-linux-gnu-ubuntu-14.04.tar.xz/,
+                   "clang+llvm-9.0.1-x86_64-linux-gnu-ubuntu-18.04.tar.xz")
+            }
+            /http:\/\/llvm\.org\/releases\/3\.7\.1/ {
+              gsub(/http:\/\/llvm\.org\/releases\/3\.7\.1/,
+                   "https://releases.llvm.org/9.0.1")
+            }
+            /sha256=/ {
+              gsub(/sha256=.*/,
+                   "sha256=1e12a0d7cfe03a72d5f64acb9e9ff2b014d02db92662d0aa3b4f611dcad0e5c8")
+            }
+            { print }
+          ' depends/packages/native_cctools.mk > tmp && mv tmp depends/packages/native_cctools.mk
+
+          echo "📦 Installing LLVM 9.0.1 runtime & compat libs..."
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y \
+            clang-9 llvm-9-dev libxml2-dev libedit-dev libncurses5 libtinfo5 \
+            libbz2-dev zlib1g-dev lld make patch autoconf automake libtool cmake gawk
+
+          update-alternatives --install /usr/bin/clang clang /usr/bin/clang-9 100
+          update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-9 100
+
+          echo "✅ native_cctools.mk patched and old LLVM purged."
+
       - name: Fix macOS cross build dependencies
         if: matrix.name == 'x86_64-macos'
         run: |
@@ -229,65 +264,23 @@ jobs:
           done
           echo "✅ Qt patch files ready."
 
-      # 🧩 Patch Qt 5.7.x builds missing horizontalAdvance() for Windows
+      # 🧩 Patch Qt QFontMetrics compatibility for old Qt versions (proper preprocessor wrapping)
       - name: Patch Qt QFontMetrics compatibility for old Qt versions
         if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win'
         run: |
-          echo "🔧 Patching bitcoingui.cpp for Qt 5.7.x compatibility..."
+          echo "🔧 Patching bitcoingui.cpp for Qt 5.7.x compatibility (clean version)..."
           TARGET_FILE="src/qt/bitcoingui.cpp"
+
           if grep -q "horizontalAdvance" "$TARGET_FILE"; then
-            sed -i 's/fm.horizontalAdvance(\([^)]*\))/(\#if QT_VERSION < QT_VERSION_CHECK(5,11,0)\nfm.width(\1)\n\#else\nfm.horizontalAdvance(\1)\n\#endif)/g' "$TARGET_FILE"
-          fi
-          echo "✅ QFontMetrics compatibility patch applied."
-
-      # 🧩 Fix macOS native_cctools build crash on Ubuntu 22.04 (use LLVM 9.0.1)
-      - name: Patch macOS cctools to LLVM 9.0.1 and install missing deps
-        if: matrix.name == 'x86_64-macos'
-        run: |
-          echo "🧩 Rewriting native_cctools.mk to LLVM 9.0.1..."
-          awk '
-            /clang\+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz/ { gsub(/clang\+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz/, "clang+llvm-9.0.1-x86_64-linux-gnu-ubuntu-18.04.tar.xz") }
-            /https:\/\/releases\.llvm\.org\/7\.0\.0/ { gsub(/https:\/\/releases\.llvm\.org\/7\.0\.0/, "https://releases.llvm.org/9.0.1") }
-            /sha256=/ { gsub(/sha256=.*/, "sha256=1e12a0d7cfe03a72d5f64acb9e9ff2b014d02db92662d0aa3b4f611dcad0e5c8") }
-            { print }
-          ' depends/packages/native_cctools.mk > tmpfile && mv tmpfile depends/packages/native_cctools.mk
-
-          echo "⚙️ Installing LLVM 9.0.1 compatible runtime deps..."
-          apt-get update
-          DEBIAN_FRONTEND=noninteractive apt-get install -y \
-            clang-9 llvm-9-dev libxml2-dev libedit-dev libncurses5 libtinfo5 \
-            zlib1g-dev libbz2-dev lld make patch autoconf automake libtool cmake gawk
-
-          # Ensure symlinks for clang/llvm 9 are visible
-          update-alternatives --install /usr/bin/clang clang /usr/bin/clang-9 100
-          update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-9 100
-
-          echo "✅ macOS cctools toolchain patched to LLVM 9.0.1"
-
-      # 🧱 Fix broken dependency sources & mirrors (Windows + macOS only)
-      - name: Fix legacy dependency URLs and cctools mirrors
-        if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win' || matrix.name == 'x86_64-macos'
-        run: |
-          echo "🔧 Patching legacy sources for AdventureCoin depends..."
-
-          # --- Fix zlib 1.2.12 mirror (Windows only) ---
-          if [[ "${{ matrix.name }}" == "i686-win" || "${{ matrix.name }}" == "x86_64-win" ]]; then
-            if grep -q "zlib-1.2.12" depends/packages/zlib.mk; then
-              echo "⚙️  Redirecting zlib source to GitHub mirror..."
-              sed -i 's|https://zlib.net/fossils/|https://github.com/madler/zlib/releases/download/v1.2.12/|g' depends/packages/zlib.mk || true
-            fi
+            echo "🧩 Applying safe preprocessor block patch..."
+            sed -i '/horizontalAdvance/s/^.*$/#if QT_VERSION < QT_VERSION_CHECK(5,11,0)\
+                    max_width = qMax(max_width, fm.width(BitcoinUnits::longName(unit)));\
+            #else\
+                    max_width = qMax(max_width, fm.horizontalAdvance(BitcoinUnits::longName(unit)));\
+            #endif/' "$TARGET_FILE"
           fi
 
-          # --- Fix Boost 1.64.0 mirror (Windows only) ---
-          if [[ "${{ matrix.name }}" == "i686-win" || "${{ matrix.name }}" == "x86_64-win" ]]; then
-            if grep -q "boost_1_64_0" depends/packages/boost.mk; then
-              echo "⚙️  Redirecting Boost 1.64.0 to official archive..."
-              sed -i 's|https://boostorg.jfrog.io/artifactory/main/release/1.64.0/source/|https://archives.boost.io/release/1.64.0/source/|g' depends/packages/boost.mk || true
-              sed -i 's|https://bitcoincore.org/depends-sources|https://archives.boost.io/release/1.64.0/source/|g' depends/packages/boost.mk || true
-            fi
-          fi
-
-          echo "✅ Dependency sources patched successfully."
+          echo "✅ QFontMetrics compatibility patch applied cleanly."
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
