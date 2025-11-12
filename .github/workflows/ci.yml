@@ -198,22 +198,22 @@ jobs:
           path: ./depends/built
           key: ${{ matrix.name }}-${{ env.cache-name }}-${{ hashFiles('depends/packages/*', '.github/workflows/ci.yml') }}
 
-      # 🧩 Ensure macOS uses LLVM 9.0.1 from GitHub and clean out old LLVM 3.7.1 artifacts
+      # 🧩 Ensure macOS uses LLVM 9.0.1 from GitHub (full URL fix)
       - name: Force clean & patch native_cctools.mk before depends fetch
         if: matrix.name == 'x86_64-macos'
         run: |
           echo "🧹 Cleaning old cctools/LLVM artifacts..."
           rm -rf depends/work/download/native_cctools* depends/sources/clang*llvm-* || true
 
-          echo "⚙️ Updating LLVM version and URLs to 9.0.1 (GitHub mirror)..."
-          sed -i 's/$(package)_clang_version=3.7.1/$(package)_clang_version=9.0.1/' depends/packages/native_cctools.mk
-          sed -i 's|http://llvm\.org/releases/\$($(package)_clang_version)|https://github.com/llvm/llvm-project/releases/download/llvmorg-$($(package)_clang_version)|' depends/packages/native_cctools.mk
-          sed -i 's|ubuntu-14\.04|ubuntu-18.04|' depends/packages/native_cctools.mk
-
+          echo "⚙️ Updating native_cctools.mk to use LLVM 9.0.1 (Ubuntu 18.04 build, GitHub mirror)..."
           awk '
             /clang[-+]llvm-3\.7\.1-x86_64-linux-gnu-ubuntu-14\.04\.tar\.xz/ {
               gsub(/clang[-+]llvm-3\.7\.1-x86_64-linux-gnu-ubuntu-14\.04\.tar\.xz/,
                   "clang+llvm-9.0.1-x86_64-linux-gnu-ubuntu-18.04.tar.xz")
+            }
+            /http:\/\/llvm\.org\/releases\/3\.7\.1/ {
+              gsub(/http:\/\/llvm\.org\/releases\/3\.7\.1/,
+                  "https://github.com/llvm/llvm-project/releases/download/llvmorg-9.0.1")
             }
             /sha256=/ {
               gsub(/sha256=.*/,
@@ -232,6 +232,7 @@ jobs:
           update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-9 100
 
           echo "✅ native_cctools.mk patched to use LLVM 9.0.1 (GitHub source)."
+
 
       - name: Fix macOS cross build dependencies
         if: matrix.name == 'x86_64-macos'
@@ -306,22 +307,22 @@ jobs:
 
           echo "✅ splashscreen.cpp compatibility patch applied safely."
 
-      # 🧩 Force zlib 1.2.12 to GitHub source archive (Windows builds) and rename for depends
-      - name: Patch & stage zlib 1.2.12 from GitHub (fix checksum & filename)
+      # 🧩 Force zlib 1.2.12 to GitHub source archive (Windows builds), rename & fix hash
+      - name: Patch & stage zlib 1.2.12 from GitHub (fix checksum & hash stamp)
         if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win'
         shell: bash
         run: |
           set -euo pipefail
           ZVER="1.2.12"
-          ZURL="https://github.com/madler/zlib/archive/refs/tags/v${ZVER}.tar.gz"
           ZSRC="v${ZVER}.tar.gz"
           ZDST="zlib-${ZVER}.tar.gz"
+          ZURL="https://github.com/madler/zlib/archive/refs/tags/${ZSRC}"
 
           echo "📦 Fetching zlib ${ZVER} from GitHub source archive…"
           mkdir -p depends/sources
           curl -L --retry 3 --connect-timeout 15 -o "depends/sources/${ZSRC}" "${ZURL}"
 
-          echo "🌀 Renaming ${ZSRC} → ${ZDST} (depends expects this exact name)"
+          echo "🌀 Renaming ${ZSRC} → ${ZDST}"
           mv "depends/sources/${ZSRC}" "depends/sources/${ZDST}"
 
           echo "🔐 Computing SHA256 for ${ZDST}…"
@@ -329,12 +330,17 @@ jobs:
           echo "   -> ${ZSHA}"
 
           ZMK="depends/packages/zlib.mk"
-          echo "📝 Patching ${ZMK} to use GitHub archive and updated hash…"
+          echo "📝 Patching ${ZMK} and hash file…"
           sed -i "s|https://zlib.net/fossils|https://github.com/madler/zlib/archive/refs/tags|g" "${ZMK}" || true
           sed -i "s|https://bitcoincore.org/depends-sources|https://github.com/madler/zlib/archive/refs/tags|g" "${ZMK}" || true
           sed -i "s/sha256=.*/sha256=${ZSHA}/" "${ZMK}"
 
-          echo "✅ zlib ${ZVER} staged, renamed, and patched successfully."
+          echo "🧾 Rewriting .hash file to match new tarball..."
+          mkdir -p depends/work/download/zlib-zlib-${ZVER}
+          echo "${ZSHA}  depends/sources/${ZDST}" > depends/work/download/zlib-zlib-${ZVER}/${ZDST}.hash
+
+          echo "✅ zlib ${ZVER} staged, renamed, and hash fixed."
+
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
