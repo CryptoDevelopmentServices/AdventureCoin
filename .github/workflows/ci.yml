@@ -229,23 +229,40 @@ jobs:
           done
           echo "✅ Qt patch files ready."
 
-      # 🧩 Early patch: force LLVM 7.0 for macOS cctools before depends starts
-      - name: Force LLVM 7.0 for macOS cctools (early)
+      # 🧩 Patch Qt 5.7.x builds missing horizontalAdvance() for Windows
+      - name: Patch Qt QFontMetrics compatibility for old Qt versions
+        if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win'
+        run: |
+          echo "🔧 Patching bitcoingui.cpp for Qt 5.7.x compatibility..."
+          TARGET_FILE="src/qt/bitcoingui.cpp"
+          if grep -q "horizontalAdvance" "$TARGET_FILE"; then
+            sed -i 's/fm.horizontalAdvance(\([^)]*\))/(\#if QT_VERSION < QT_VERSION_CHECK(5,11,0)\nfm.width(\1)\n\#else\nfm.horizontalAdvance(\1)\n\#endif)/g' "$TARGET_FILE"
+          fi
+          echo "✅ QFontMetrics compatibility patch applied."
+
+      # 🧩 Fix macOS native_cctools build crash on Ubuntu 22.04 (use LLVM 9.0.1)
+      - name: Patch macOS cctools to LLVM 9.0.1 and install missing deps
         if: matrix.name == 'x86_64-macos'
         run: |
-          echo "🧩 Updating native_cctools.mk to LLVM 7.0 before build..."
+          echo "🧩 Rewriting native_cctools.mk to LLVM 9.0.1..."
           awk '
-            /clang-llvm-3.7.1-x86_64-linux-gnu-ubuntu-14.04.tar.xz/ { gsub(/clang-llvm-3.7.1-x86_64-linux-gnu-ubuntu-14.04.tar.xz/, "clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz") }
-            /http:\/\/llvm\.org\/releases\/3\.7\.1/ { gsub(/http:\/\/llvm\.org\/releases\/3\.7\.1/, "https://releases.llvm.org/7.0.0") }
-            /sha256=/ { gsub(/sha256=.*/, "sha256=3a8309db1fa7879152632fb19fb8b0e84c2a67b8e8df5d06d85eb2b14dffad65") }
+            /clang\+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz/ { gsub(/clang\+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz/, "clang+llvm-9.0.1-x86_64-linux-gnu-ubuntu-18.04.tar.xz") }
+            /https:\/\/releases\.llvm\.org\/7\.0\.0/ { gsub(/https:\/\/releases\.llvm\.org\/7\.0\.0/, "https://releases.llvm.org/9.0.1") }
+            /sha256=/ { gsub(/sha256=.*/, "sha256=1e12a0d7cfe03a72d5f64acb9e9ff2b014d02db92662d0aa3b4f611dcad0e5c8") }
             { print }
           ' depends/packages/native_cctools.mk > tmpfile && mv tmpfile depends/packages/native_cctools.mk
 
-          # Fallback mirror if LLVM.org is unreachable
-          if ! curl -Is https://releases.llvm.org/7.0.0/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz | grep -q "200"; then
-            echo "⚠️  LLVM.org mirror unavailable, switching to GitHub release mirror..."
-            sed -i 's|https://releases.llvm.org/7.0.0|https://github.com/llvm/llvm-project/releases/download/llvmorg-7.0.0|g' depends/packages/native_cctools.mk
-          fi
+          echo "⚙️ Installing LLVM 9.0.1 compatible runtime deps..."
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y \
+            clang-9 llvm-9-dev libxml2-dev libedit-dev libncurses5 libtinfo5 \
+            zlib1g-dev libbz2-dev lld make patch autoconf automake libtool cmake gawk
+
+          # Ensure symlinks for clang/llvm 9 are visible
+          update-alternatives --install /usr/bin/clang clang /usr/bin/clang-9 100
+          update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-9 100
+
+          echo "✅ macOS cctools toolchain patched to LLVM 9.0.1"
 
       # 🧱 Fix broken dependency sources & mirrors (Windows + macOS only)
       - name: Fix legacy dependency URLs and cctools mirrors
