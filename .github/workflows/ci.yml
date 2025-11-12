@@ -150,6 +150,8 @@ jobs:
           apt-get install -y build-essential libtool autotools-dev automake \
                pkg-config bsdmainutils curl ca-certificates ccache rsync git \
                procps bison python3 python3-pip python3-setuptools python3-wheel autoconf-archive
+          # Symlink python3 -> python for legacy scripts (fixes native_biplist)
+          ln -sf /usr/bin/python3 /usr/bin/python
           apt-get install -y ${{ matrix.packages }}
           python3 -m pip install setuptools==70.3.0 --upgrade
           python3 -m pip install lief
@@ -161,7 +163,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Fetch full Git history for accurate commit information
+          fetch-depth: 0
 
       - name: Fix permissions and init submodules
         run: |
@@ -183,10 +185,9 @@ jobs:
         env:
           sdk-filename: MacOSX${{ matrix.sdk }}.sdk.tar.gz
         run: |
-          mkdir -p ./depends/sdk-sources
-          mkdir -p ./depends/SDKs
+          mkdir -p ./depends/sdk-sources ./depends/SDKs
           echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c || \
-          curl --location --fail $SDK_URL/${{ env.sdk-filename }} -o depends/sdk-sources/${{ env.sdk-filename }} &&\
+          curl --location --fail $SDK_URL/${{ env.sdk-filename }} -o depends/sdk-sources/${{ env.sdk-filename }}
           echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c
           tar -C depends/SDKs -xf depends/sdk-sources/${{ env.sdk-filename }}
 
@@ -199,8 +200,7 @@ jobs:
           key: ${{ matrix.name }}-${{ env.cache-name }}-${{ hashFiles('depends/packages/*', '.github/workflows/ci.yml') }}
 
       - name: Build depends
-        run: |
-          make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
+        run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
 
       - name: CCache
         uses: actions/cache@v4
@@ -215,15 +215,16 @@ jobs:
           GIT_COMMIT_ID: ${{ github.sha }}
         run: |
           chmod +x autogen.sh
-          
           chmod -R +x depends || true
           chmod +x share/genbuild.sh
           SHORT_COMMIT=$(echo "$GIT_COMMIT_ID" | cut -c1-7)
           depends/${{ matrix.host }}/native/bin/ccache --max-size=$CCACHE_SIZE
           ./autogen.sh
           chmod +x configure || true
-          ./configure --prefix=`pwd`/depends/${{ matrix.host }} ${{ matrix.config-opts }} --enable-reduce-exports CFLAGS="-DGIT_COMMIT_ID=\\\"$SHORT_COMMIT\\\"" CXXFLAGS="-DGIT_COMMIT_ID=\\\"$SHORT_COMMIT\\\"" || ( cat config.log && false)
-          make $MAKEJOBS ${{ matrix.goal }} || ( echo "Build failure. Verbose build follows." && make ${{ matrix.goal }} V=1 ; false )
+          ./configure --prefix=$(pwd)/depends/${{ matrix.host }} ${{ matrix.config-opts }} --enable-reduce-exports \
+            CFLAGS="-DGIT_COMMIT_ID=\\\"$SHORT_COMMIT\\\"" \
+            CXXFLAGS="-DGIT_COMMIT_ID=\\\"$SHORT_COMMIT\\\"" || (cat config.log && false)
+          make $MAKEJOBS ${{ matrix.goal }} || (echo "Build failure. Verbose build follows." && make ${{ matrix.goal }} V=1 ; false)
 
       - name: Run benchmark
         if: ${{ matrix.run-bench }}
@@ -244,8 +245,7 @@ jobs:
         run: make -C src check-symbols
 
       - name: Cleanup qa artifacts
-        run: |
-          rm -rf qa/cache || true
+        run: rm -rf qa/cache || true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
