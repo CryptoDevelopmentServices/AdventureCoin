@@ -203,16 +203,16 @@ jobs:
         if: matrix.name == 'x86_64-macos'
         run: |
           echo "🧹 Cleaning old cctools/LLVM artifacts..."
-          rm -rf depends/work/download/native_cctools* depends/sources/clang+llvm-* || true
+          rm -rf depends/work/download/native_cctools* depends/sources/clang*llvm-* || true
 
           echo "⚙️ Rewriting native_cctools.mk to LLVM 9.0.1 (Ubuntu 18.04 build)..."
           awk '
-            /clang\+llvm-3.7.1-x86_64-linux-gnu-ubuntu-14.04.tar.xz/ {
-              gsub(/clang\+llvm-3.7.1-x86_64-linux-gnu-ubuntu-14.04.tar.xz/,
+            /clang[-+]llvm-3\.7\.1-x86_64-linux-gnu-ubuntu-14\.04\.tar\.xz/ {
+              gsub(/clang[-+]llvm-3\.7\.1-x86_64-linux-gnu-ubuntu-14\.04\.tar\.xz/,
                    "clang+llvm-9.0.1-x86_64-linux-gnu-ubuntu-18.04.tar.xz")
             }
-            /http:\/\/llvm\.org\/releases\/3\.7\.1/ {
-              gsub(/http:\/\/llvm\.org\/releases\/3\.7\.1/,
+            /(http|https):\/\/llvm\.org\/releases\/3\.7\.1/ {
+              gsub(/(http|https):\/\/llvm\.org\/releases\/3\.7\.1/,
                    "https://releases.llvm.org/9.0.1")
             }
             /sha256=/ {
@@ -282,18 +282,61 @@ jobs:
 
           echo "✅ QFontMetrics compatibility patch applied cleanly."
 
-      # 🧩 Patch Qt splashscreen.cpp QFontMetrics compatibility (for Qt 5.7.x)
-      - name: Patch splashscreen.cpp for Qt 5.7.x compatibility
+      # 🧩 Fix splashscreen.cpp for Qt 5.7.x compatibility (safe multi-line patch)
+      - name: Patch splashscreen.cpp QFontMetrics compatibility (safe)
         if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win'
         run: |
-          echo "🔧 Patching splashscreen.cpp for Qt 5.7.x compatibility..."
-          TARGET_FILE="src/qt/splashscreen.cpp"
-          if grep -q "horizontalAdvance" "$TARGET_FILE"; then
-            sed -i 's/fm.horizontalAdvance(/#if QT_VERSION < QT_VERSION_CHECK(5,11,0)\n    fm.width(/g' "$TARGET_FILE"
-            sed -i 's/);$/);\n#else\n    &\n#endif/g' "$TARGET_FILE"
-          fi
-          echo "✅ splashscreen.cpp patched cleanly."
+          echo "🧹 Reverting splashscreen.cpp to clean state (in case of malformed sed patch)..."
+          git checkout -- src/qt/splashscreen.cpp || true
 
+          echo "🔧 Applying safe #if/#else patch for QFontMetrics::horizontalAdvance..."
+          awk '
+            /fm\.horizontalAdvance/ {
+              print "#if QT_VERSION < QT_VERSION_CHECK(5,11,0)"
+              gsub(/fm\.horizontalAdvance/, "fm.width")
+              print $0
+              print "#else"
+              sub(/fm\.width/, "fm.horizontalAdvance")
+              print $0
+              print "#endif"
+              next
+            }
+            { print }
+          ' src/qt/splashscreen.cpp > tmp && mv tmp src/qt/splashscreen.cpp
+
+          echo "✅ splashscreen.cpp compatibility patch applied safely."
+
+      # 🧩 Force zlib 1.2.12 to GitHub release (Windows builds), update hash, and pre-stage source
+      - name: Patch & stage zlib 1.2.12 from GitHub
+        if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win'
+        shell: bash
+        run: |
+          set -euo pipefail
+          ZVER="1.2.12"
+          ZNAME="zlib-${ZVER}.tar.gz"
+          ZURL="https://github.com/madler/zlib/releases/download/v${ZVER}/${ZNAME}"
+
+          echo "📦 Fetching ${ZNAME} from GitHub releases…"
+          mkdir -p depends/sources
+          curl -L --retry 3 --connect-timeout 15 -o "depends/sources/${ZNAME}" "${ZURL}"
+
+          echo "🔐 Computing SHA256…"
+          ZSHA=$(sha256sum "depends/sources/${ZNAME}" | awk '{print $1}')
+          echo "   -> ${ZSHA}"
+
+          ZMK="depends/packages/zlib.mk"
+          echo "📝 Patching ${ZMK} to use GitHub URL and updated hash…"
+          # Replace any existing primary and fallback URLs with the GitHub asset URL
+          sed -i "s|https://zlib.net/fossils/${ZNAME}|${ZURL}|g" "${ZMK}" || true
+          sed -i "s|https://bitcoincore.org/depends-sources/${ZNAME}|${ZURL}|g" "${ZMK}" || true
+
+          # Normalize any other zlib URLs for this version to the GitHub asset
+          sed -i "s|https://zlib.net/fossils|${ZURL%/${ZNAME}}|g" "${ZMK}" || true
+
+          # Update sha256= line to match the downloaded tarball
+          sed -i "s/^\s*sha256=.*/sha256=${ZSHA}/" "${ZMK}"
+
+          echo "✅ zlib ${ZVER} staged and package file patched."
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
