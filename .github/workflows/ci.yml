@@ -203,8 +203,9 @@ jobs:
         if: matrix.name == 'x86_64-macos'
         run: |
           apt-get update
-          apt-get install -y libtinfo5 libncurses5 libxml2-dev libssl-dev
-
+          DEBIAN_FRONTEND=noninteractive apt-get install -y \
+            clang llvm-dev libxml2-dev libssl-dev libbz2-dev libtinfo5 \
+            libncurses5 zlib1g-dev xz-utils cmake patch make bison flex
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
