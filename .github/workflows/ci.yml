@@ -198,41 +198,28 @@ jobs:
           path: ./depends/built
           key: ${{ matrix.name }}-${{ env.cache-name }}-${{ hashFiles('depends/packages/*', '.github/workflows/ci.yml') }}
 
-      # 🧩 Ensure macOS uses LLVM 9.0.1 from GitHub (full URL fix)
-      - name: Force clean & patch native_cctools.mk before depends fetch
+      # 🧩 Replace LLVM 3.7.1 with LLVM 9.0.1 (GitHub mirror) for macOS cross-builds
+      - name: Patch native_cctools.mk to LLVM 9.0.1 (GitHub)
         if: matrix.name == 'x86_64-macos'
+        shell: bash
         run: |
-          echo "🧹 Cleaning old cctools/LLVM artifacts..."
+          set -euo pipefail
+          CCTOOLS="depends/packages/native_cctools.mk"
+          LLVM_VER="9.0.1"
+          LLVM_URL="https://github.com/llvm/llvm-project/releases/download/llvmorg-${LLVM_VER}/clang+llvm-${LLVM_VER}-x86_64-linux-gnu-ubuntu-18.04.tar.xz"
+          LLVM_SHA="1e12a0d7cfe03a72d5f64acb9e9ff2b014d02db92662d0aa3b4f611dcad0e5c8"
+
+          echo "🧹 Cleaning old LLVM artifacts..."
           rm -rf depends/work/download/native_cctools* depends/sources/clang*llvm-* || true
 
-          echo "⚙️ Updating native_cctools.mk to use LLVM 9.0.1 (Ubuntu 18.04 build, GitHub mirror)..."
-          awk '
-            /clang[-+]llvm-3\.7\.1-x86_64-linux-gnu-ubuntu-14\.04\.tar\.xz/ {
-              gsub(/clang[-+]llvm-3\.7\.1-x86_64-linux-gnu-ubuntu-14\.04\.tar\.xz/,
-                  "clang+llvm-9.0.1-x86_64-linux-gnu-ubuntu-18.04.tar.xz")
-            }
-            /http:\/\/llvm\.org\/releases\/3\.7\.1/ {
-              gsub(/http:\/\/llvm\.org\/releases\/3\.7\.1/,
-                  "https://github.com/llvm/llvm-project/releases/download/llvmorg-9.0.1")
-            }
-            /sha256=/ {
-              gsub(/sha256=.*/,
-                  "sha256=1e12a0d7cfe03a72d5f64acb9e9ff2b014d02db92662d0aa3b4f611dcad0e5c8")
-            }
-            { print }
-          ' depends/packages/native_cctools.mk > tmp && mv tmp depends/packages/native_cctools.mk
+          echo "⚙️ Patching ${CCTOOLS}..."
+          sed -i "s|3\.7\.1|${LLVM_VER}|g" "${CCTOOLS}"
+          sed -i "s|ubuntu-14\.04|ubuntu-18.04|g" "${CCTOOLS}"
+          sed -i "s|http://llvm\.org/releases.*|${LLVM_URL%/clang+llvm-${LLVM_VER}-x86_64-linux-gnu-ubuntu-18.04.tar.xz}|g" "${CCTOOLS}"
+          sed -i "s|clang[-+]llvm-.*tar\.xz|clang+llvm-${LLVM_VER}-x86_64-linux-gnu-ubuntu-18.04.tar.xz|g" "${CCTOOLS}"
+          sed -i "s/sha256=.*/sha256=${LLVM_SHA}/" "${CCTOOLS}"
 
-          echo "📦 Installing LLVM 9.0.1 toolchain..."
-          apt-get update -y
-          DEBIAN_FRONTEND=noninteractive apt-get install -y \
-            clang-9 llvm-9-dev libxml2-dev libedit-dev libncurses5 libtinfo5 \
-            libbz2-dev zlib1g-dev lld make patch autoconf automake libtool cmake gawk
-
-          update-alternatives --install /usr/bin/clang clang /usr/bin/clang-9 100
-          update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-9 100
-
-          echo "✅ native_cctools.mk patched to use LLVM 9.0.1 (GitHub source)."
-
+          echo "✅ native_cctools.mk now points to LLVM ${LLVM_VER} (GitHub mirror)."
 
       - name: Fix macOS cross build dependencies
         if: matrix.name == 'x86_64-macos'
@@ -307,40 +294,27 @@ jobs:
 
           echo "✅ splashscreen.cpp compatibility patch applied safely."
 
-      # 🧩 Force zlib 1.2.12 to GitHub source archive (Windows builds), rename & fix hash
-      - name: Patch & stage zlib 1.2.12 from GitHub (fix checksum & hash stamp)
+      # 🧩 Patch zlib 1.2.12 to use stable KDE mirror (Windows builds)
+      - name: Force zlib 1.2.12 from KDE mirror (fix checksum)
         if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win'
         shell: bash
         run: |
           set -euo pipefail
           ZVER="1.2.12"
-          ZSRC="v${ZVER}.tar.gz"
-          ZDST="zlib-${ZVER}.tar.gz"
-          ZURL="https://github.com/madler/zlib/archive/refs/tags/${ZSRC}"
+          ZURL="https://mirrors.ukfast.co.uk/sites/kde.org/files/krita/build/dependencies/zlib-${ZVER}.tar.gz"
+          ZSHA="91844808532e5ce316b3c010929493c0244f3d37593afd6de04f71821d5136d9"
 
-          echo "📦 Fetching zlib ${ZVER} from GitHub source archive…"
+          echo "📦 Downloading zlib ${ZVER} from KDE mirror..."
           mkdir -p depends/sources
-          curl -L --retry 3 --connect-timeout 15 -o "depends/sources/${ZSRC}" "${ZURL}"
+          curl -L --retry 3 --connect-timeout 15 -o "depends/sources/zlib-${ZVER}.tar.gz" "${ZURL}"
 
-          echo "🌀 Renaming ${ZSRC} → ${ZDST}"
-          mv "depends/sources/${ZSRC}" "depends/sources/${ZDST}"
+          echo "📝 Updating depends/packages/zlib.mk..."
+          sed -i "s|https://zlib.net/fossils|${ZURL%/zlib-${ZVER}.tar.gz}|g" depends/packages/zlib.mk
+          sed -i "s|https://bitcoincore.org/depends-sources|${ZURL%/zlib-${ZVER}.tar.gz}|g" depends/packages/zlib.mk
+          sed -i "s/sha256=.*/sha256=${ZSHA}/" depends/packages/zlib.mk
 
-          echo "🔐 Computing SHA256 for ${ZDST}…"
-          ZSHA=$(sha256sum "depends/sources/${ZDST}" | awk '{print $1}')
-          echo "   -> ${ZSHA}"
-
-          ZMK="depends/packages/zlib.mk"
-          echo "📝 Patching ${ZMK} and hash file…"
-          sed -i "s|https://zlib.net/fossils|https://github.com/madler/zlib/archive/refs/tags|g" "${ZMK}" || true
-          sed -i "s|https://bitcoincore.org/depends-sources|https://github.com/madler/zlib/archive/refs/tags|g" "${ZMK}" || true
-          sed -i "s/sha256=.*/sha256=${ZSHA}/" "${ZMK}"
-
-          echo "🧾 Rewriting .hash file to match new tarball..."
-          mkdir -p depends/work/download/zlib-zlib-${ZVER}
-          echo "${ZSHA}  depends/sources/${ZDST}" > depends/work/download/zlib-zlib-${ZVER}/${ZDST}.hash
-
-          echo "✅ zlib ${ZVER} staged, renamed, and hash fixed."
-
+          echo "${ZSHA}  depends/sources/zlib-${ZVER}.tar.gz" > depends/work/download/zlib-zlib-${ZVER}/zlib-${ZVER}.tar.gz.hash || true
+          echo "✅ zlib ${ZVER} patched to KDE mirror with correct checksum."
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
