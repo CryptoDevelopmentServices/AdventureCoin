@@ -209,7 +209,7 @@ jobs:
           # 🧱 Correct versions and SHA256 hashes
           LLVM_VER="10.0.0"
           LLVM_SHA="b25f592a0c00686f03e3b7db68ca6dc87418f681f4ead4df4745a01d9be63843"
-          CCTOOLS_SHA="eaec56ab711c6ee5a999f7f019e529cf6607e6dc45c01381b9a82cc037a53e36"
+          CCTOOLS_SHA="88c04d50d869c65d64f29b5b91e2da4c249c89db5567a0cc64e4b357d5e55485"
 
           echo "🧹 Cleaning old LLVM/cctools artifacts..."
           rm -rf depends/work/download/native_cctools* depends/sources/clang*llvm-* || true
@@ -223,7 +223,7 @@ jobs:
           sed -i "s|^\$(package)_clang_sha256_hash=.*|\$(package)_clang_sha256_hash=${LLVM_SHA}|" "${CCTOOLS}"
 
           echo "🔍 Confirming patched fields..."
-          grep -E '^\$\(package\)_(clang_version|clang_download_path|clang_download_file|clang_file_name|clang_sha256_hash)=' "${CCTOOLS}" || true
+          grep -E '^\$\(package\)_(sha256_hash|clang_version|clang_download_file|clang_sha256_hash)=' "${CCTOOLS}" || true
 
           echo "📦 Installing LLVM ${LLVM_VER} toolchain..."
           apt-get update -y
@@ -234,7 +234,7 @@ jobs:
           update-alternatives --install /usr/bin/clang clang /usr/bin/clang-10 100
           update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-10 100
 
-          echo "✅ native_cctools.mk fully patched for LLVM ${LLVM_VER} with correct SHA and download path."
+          echo "✅ native_cctools.mk patched with new LLVM ${LLVM_VER} and corrected cctools SHA."
 
       - name: Fix macOS cross build dependencies
         if: matrix.name == 'x86_64-macos'
