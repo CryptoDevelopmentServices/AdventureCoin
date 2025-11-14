@@ -210,29 +210,31 @@ jobs:
           LLVM_VER="10.0.0"
           LLVM_SHA="b25f592a0c00686f03e3b7db68ca6dc87418f681f4ead4df4745a01d9be63843"
 
-          # Option 1 — tpoechtrager modern cctools-port fork
+          # Option 1 — modern maintained fork
+          CCTOOLS_VER_1="master"
           CCTOOLS_URL_1="https://github.com/tpoechtrager/cctools-port/archive"
-          CCTOOLS_VER="master"
-          CCTOOLS_SHA_1="skip"  # skip SHA check since GitHub tarballs change often
+          CCTOOLS_FILE_1="${CCTOOLS_VER_1}.tar.gz"
+          CCTOOLS_SHA_1="skip"  # skip hash check for live master
 
-          # Option 2 — Bitcoin Core verified mirror (fallback)
+          # Option 2 — Bitcoin Core verified mirror
+          CCTOOLS_VER_2="807d6fd1be5d2224872e381870c0a75387fe05e6"
           CCTOOLS_URL_2="https://bitcoincore.org/depends-sources"
-          CCTOOLS_FILE_2="cctools-port-807d6fd1be5d2224872e381870c0a75387fe05e6.tar.gz"
+          CCTOOLS_FILE_2="cctools-port-${CCTOOLS_VER_2}.tar.gz"
           CCTOOLS_SHA_2="7c4a69e979ef8c30d83f734ee8b34a5a39c8d5c13c3fc37a1eb7cf8e69b6e2b2"
 
           echo "🧹 Cleaning old LLVM/cctools artifacts..."
           rm -rf depends/work/download/native_cctools* depends/sources/clang*llvm-* || true
 
-          echo "⚙️ Attempting Option 1: patch to tpoechtrager/cctools-port..."
-          if curl -f -I "${CCTOOLS_URL_1}/${CCTOOLS_VER}.tar.gz" >/dev/null 2>&1; then
+          echo "⚙️ Attempting Option 1: tpoechtrager/cctools-port..."
+          if curl -fsI "${CCTOOLS_URL_1}/${CCTOOLS_FILE_1}" >/dev/null 2>&1; then
             echo "✅ Using tpoechtrager/cctools-port (master)"
-            sed -i "s|^\$(package)_version=.*|\$(package)_version=${CCTOOLS_VER}|" "${CCTOOLS}"
+            sed -i "s|^\$(package)_version=.*|\$(package)_version=${CCTOOLS_VER_1}|" "${CCTOOLS}"
             sed -i "s|^\$(package)_download_path=.*|\$(package)_download_path=${CCTOOLS_URL_1}|" "${CCTOOLS}"
-            sed -i "s|^\$(package)_file_name=.*|\$(package)_file_name=\$($(package)_version).tar.gz|" "${CCTOOLS}"
+            sed -i "s|^\$(package)_file_name=.*|\$(package)_file_name=${CCTOOLS_FILE_1}|" "${CCTOOLS}"
             sed -i "s|^\$(package)_sha256_hash=.*|\$(package)_sha256_hash=${CCTOOLS_SHA_1}|" "${CCTOOLS}"
           else
             echo "⚠️ Option 1 unavailable — switching to Option 2: Bitcoin Core mirror."
-            sed -i "s|^\$(package)_version=.*|\$(package)_version=807d6fd1be5d2224872e381870c0a75387fe05e6|" "${CCTOOLS}"
+            sed -i "s|^\$(package)_version=.*|\$(package)_version=${CCTOOLS_VER_2}|" "${CCTOOLS}"
             sed -i "s|^\$(package)_download_path=.*|\$(package)_download_path=${CCTOOLS_URL_2}|" "${CCTOOLS}"
             sed -i "s|^\$(package)_file_name=.*|\$(package)_file_name=${CCTOOLS_FILE_2}|" "${CCTOOLS}"
             sed -i "s|^\$(package)_sha256_hash=.*|\$(package)_sha256_hash=${CCTOOLS_SHA_2}|" "${CCTOOLS}"
@@ -246,7 +248,7 @@ jobs:
           sed -i "s|^\$(package)_clang_sha256_hash=.*|\$(package)_clang_sha256_hash=${LLVM_SHA}|" "${CCTOOLS}"
 
           echo "🔍 Confirming patched fields..."
-          grep -E '^\$\(package\)_(version|download_path|sha256_hash|clang_version|clang_download_file|clang_sha256_hash)=' "${CCTOOLS}" || true
+          grep -E '^\$\(package\)_(version|download_path|file_name|sha256_hash|clang_version|clang_download_file|clang_sha256_hash)=' "${CCTOOLS}" || true
 
           echo "📦 Installing LLVM ${LLVM_VER} toolchain..."
           apt-get update -y
@@ -257,7 +259,7 @@ jobs:
           update-alternatives --install /usr/bin/clang clang /usr/bin/clang-10 100
           update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-10 100
 
-          echo "✅ native_cctools.mk patched with LLVM ${LLVM_VER} — with modern fork or verified fallback."
+          echo "✅ native_cctools.mk patched with LLVM ${LLVM_VER}, fork/fallback URLs now valid."
 
       - name: Fix macOS cross build dependencies
         if: matrix.name == 'x86_64-macos'
