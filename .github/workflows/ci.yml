@@ -206,13 +206,15 @@ jobs:
           set -euo pipefail
           CCTOOLS="depends/packages/native_cctools.mk"
 
+          # ✅ LLVM 10.0.0 toolchain info
           LLVM_VER="10.0.0"
           LLVM_SHA="b25f592a0c00686f03e3b7db68ca6dc87418f681f4ead4df4745a01d9be63843"
 
-          # Option 1 — modern fork
+          # Option 1 — tpoechtrager maintained fork (current master)
           CCTOOLS_VER_1="master"
           CCTOOLS_URL_1="https://github.com/tpoechtrager/cctools-port/archive"
-          CCTOOLS_FILE_1="${CCTOOLS_VER_1}.tar.gz"
+          CCTOOLS_FILE_1="cctools-port-${CCTOOLS_VER_1}.tar.gz"
+          CCTOOLS_SHA_1="579c46ce16a269f202de4f4118db00bfdef95e3aa251cc79d4726faef9f4dab2"
 
           # Option 2 — Bitcoin Core verified mirror (fallback)
           CCTOOLS_VER_2="807d6fd1be5d2224872e381870c0a75387fe05e6"
@@ -229,12 +231,7 @@ jobs:
             sed -i "s|^\$(package)_version=.*|\$(package)_version=${CCTOOLS_VER_1}|" "${CCTOOLS}"
             sed -i "s|^\$(package)_download_path=.*|\$(package)_download_path=${CCTOOLS_URL_1}|" "${CCTOOLS}"
             sed -i "s|^\$(package)_file_name=.*|\$(package)_file_name=${CCTOOLS_FILE_1}|" "${CCTOOLS}"
-            sed -i "s|^\$(package)_sha256_hash=.*|\$(package)_sha256_hash=skip|" "${CCTOOLS}"
-
-            # ✅ Create a fake hash line so depends doesn’t error
-            HASH_PATH="depends/work/download/native_cctools-${CCTOOLS_VER_1}/.${CCTOOLS_FILE_1}.hash"
-            mkdir -p "$(dirname "${HASH_PATH}")"
-            echo "0000000000000000000000000000000000000000000000000000000000000000  ${CCTOOLS_FILE_1}" > "${HASH_PATH}"
+            sed -i "s|^\$(package)_sha256_hash=.*|\$(package)_sha256_hash=${CCTOOLS_SHA_1}|" "${CCTOOLS}"
           else
             echo "⚠️ Option 1 unavailable — switching to Option 2 (Bitcoin Core mirror)."
             sed -i "s|^\$(package)_version=.*|\$(package)_version=${CCTOOLS_VER_2}|" "${CCTOOLS}"
@@ -262,7 +259,7 @@ jobs:
           update-alternatives --install /usr/bin/clang clang /usr/bin/clang-10 100
           update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-10 100
 
-          echo "✅ native_cctools.mk patched and checksum logic corrected for LLVM ${LLVM_VER}."
+          echo "✅ native_cctools.mk patched with real master checksum and verified fallback."
 
       - name: Fix macOS cross build dependencies
         if: matrix.name == 'x86_64-macos'
