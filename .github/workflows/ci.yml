@@ -209,7 +209,7 @@ jobs:
           # 🧱 Correct versions and SHA256 hashes
           LLVM_VER="10.0.0"
           LLVM_SHA="b25f592a0c00686f03e3b7db68ca6dc87418f681f4ead4df4745a01d9be63843"
-          CCTOOLS_SHA="bd492786c42e45dcd23b7e301a75e1b55c3cc98c32b62d435ce34c7d34a37964"
+          CCTOOLS_SHA="f9d74bb4a7ff68a4731fa303f926a69f4d2f26676b80a5e3d2d21e0c80c2ccff"
 
           echo "🧹 Cleaning old LLVM/cctools artifacts..."
           rm -rf depends/work/download/native_cctools* depends/sources/clang*llvm-* || true
