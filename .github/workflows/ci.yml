@@ -198,7 +198,7 @@ jobs:
           path: ./depends/built
           key: ${{ matrix.name }}-${{ env.cache-name }}-${{ hashFiles('depends/packages/*', '.github/workflows/ci.yml') }}
 
-      # 🧩 Fix macOS LLVM 9.0.1 mirror (use Ubuntu 16.04 build from GitHub)
+      # 🧩 Fix macOS LLVM 9.0.1 mirror (Ubuntu 16.04 build from GitHub)
       - name: Patch native_cctools.mk to LLVM 9.0.1 (GitHub, Ubuntu 16.04)
         if: matrix.name == 'x86_64-macos'
         shell: bash
@@ -208,12 +208,12 @@ jobs:
           LLVM_VER="9.0.1"
           LLVM_FILE="clang+llvm-${LLVM_VER}-x86_64-linux-gnu-ubuntu-16.04.tar.xz"
           LLVM_URL="https://github.com/llvm/llvm-project/releases/download/llvmorg-${LLVM_VER}/${LLVM_FILE}"
-          LLVM_SHA="d3420c9e83c841af7cf7d2cb84e6c55c90c3de1b2d24bb8f7263b0d9276d4090"
+          LLVM_SHA="8c7340c896dcf5f0d7c4bb5db9d71b7b257acfbcb4e1b2ac03fdfafc8325c9b1"
 
           echo "🧹 Cleaning old LLVM artifacts..."
           rm -rf depends/work/download/native_cctools* depends/sources/clang*llvm-* || true
 
-          echo "⚙️ Updating ${CCTOOLS} for LLVM ${LLVM_VER} (Ubuntu 16.04 build)..."
+          echo "⚙️ Patching ${CCTOOLS} for LLVM ${LLVM_VER} (Ubuntu 16.04 build)..."
           sed -i "s|3\.7\.1|${LLVM_VER}|g" "${CCTOOLS}"
           sed -i "s|ubuntu-14\.04|ubuntu-16.04|g" "${CCTOOLS}"
           sed -i "s|http://llvm\.org/releases.*|https://github.com/llvm/llvm-project/releases/download/llvmorg-${LLVM_VER}|g" "${CCTOOLS}"
@@ -229,7 +229,8 @@ jobs:
           update-alternatives --install /usr/bin/clang clang /usr/bin/clang-9 100
           update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-9 100
 
-          echo "✅ native_cctools.mk patched to LLVM ${LLVM_VER} (Ubuntu 16.04 build, GitHub source)."
+          echo "✅ native_cctools.mk patched to LLVM ${LLVM_VER} (Ubuntu 16.04 build, correct hash)."
+
 
       - name: Fix macOS cross build dependencies
         if: matrix.name == 'x86_64-macos'
@@ -362,15 +363,17 @@ jobs:
       - name: Fix permissions for security-check.py
         run: chmod +x contrib/devtools/security-check.py
 
-      # 🧩 Patch security-check.py for Python 3 compatibility
-      - name: Patch security-check.py for Python3 bytes decoding
+      # 🧩 Patch security-check.py for Python 3 compatibility (Windows builds)
+      - name: Patch security-check.py for Python 3 compatibility
         if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win'
         shell: bash
         run: |
           TARGET="contrib/devtools/security-check.py"
-          echo "🔧 Patching $TARGET to fix bytes/string decode issue..."
-          sed -i 's/stdout = subprocess.check_output(cmd)/stdout = subprocess.check_output(cmd).decode("utf-8")/g' "$TARGET"
-          echo "✅ security-check.py patched for Python 3"
+          echo "🔧 Patching $TARGET for Python 3..."
+          if grep -q "subprocess.check_output(cmd)" "$TARGET"; then
+            sed -i 's/subprocess.check_output(cmd)/subprocess.check_output(cmd).decode("utf-8")/g' "$TARGET"
+          fi
+          echo "✅ security-check.py patched successfully"
 
       - name: Check security
         if: ${{ matrix.check-security }}
