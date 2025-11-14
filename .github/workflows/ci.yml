@@ -213,7 +213,7 @@ jobs:
           # Option 1 — tpoechtrager maintained fork (current master)
           CCTOOLS_VER_1="master"
           CCTOOLS_URL_1="https://github.com/tpoechtrager/cctools-port/archive"
-          CCTOOLS_FILE_1="cctools-port-${CCTOOLS_VER_1}.tar.gz"
+          CCTOOLS_FILE_1="${CCTOOLS_VER_1}.tar.gz"
           CCTOOLS_SHA_1="579c46ce16a269f202de4f4118db00bfdef95e3aa251cc79d4726faef9f4dab2"
 
           # Option 2 — Bitcoin Core verified mirror (fallback)
