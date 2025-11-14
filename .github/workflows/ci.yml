@@ -208,7 +208,7 @@ jobs:
           LLVM_VER="9.0.1"
           LLVM_FILE="clang+llvm-${LLVM_VER}-x86_64-linux-gnu-ubuntu-16.04.tar.xz"
           LLVM_URL="https://github.com/llvm/llvm-project/releases/download/llvmorg-${LLVM_VER}/${LLVM_FILE}"
-          LLVM_SHA="8c7340c896dcf5f0d7c4bb5db9d71b7b257acfbcb4e1b2ac03fdfafc8325c9b1"
+          LLVM_SHA="1af280e96fec62acf5f3bb525e36baafe09f95f940dc9806e22809a83dfff4f8"
 
           echo "🧹 Cleaning old LLVM artifacts..."
           rm -rf depends/work/download/native_cctools* depends/sources/clang*llvm-* || true
@@ -230,7 +230,6 @@ jobs:
           update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-9 100
 
           echo "✅ native_cctools.mk patched to LLVM ${LLVM_VER} (Ubuntu 16.04 build, correct hash)."
-
 
       - name: Fix macOS cross build dependencies
         if: matrix.name == 'x86_64-macos'
@@ -363,17 +362,18 @@ jobs:
       - name: Fix permissions for security-check.py
         run: chmod +x contrib/devtools/security-check.py
 
-      # 🧩 Patch security-check.py for Python 3 compatibility (Windows builds)
-      - name: Patch security-check.py for Python 3 compatibility
+      # 🧩 Patch Python security-check for Python 3 on Windows
+      - name: Fix security-check.py for Python 3
         if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win'
         shell: bash
         run: |
-          TARGET="contrib/devtools/security-check.py"
-          echo "🔧 Patching $TARGET for Python 3..."
-          if grep -q "subprocess.check_output(cmd)" "$TARGET"; then
-            sed -i 's/subprocess.check_output(cmd)/subprocess.check_output(cmd).decode("utf-8")/g' "$TARGET"
-          fi
-          echo "✅ security-check.py patched successfully"
+          FILE="contrib/devtools/security-check.py"
+          echo "🔧 Patching $FILE …"
+          # decode() the subprocess output so stdout is str not bytes
+          sed -i 's/subprocess.check_output(cmd)/subprocess.check_output(cmd).decode("utf-8")/' "$FILE"
+          grep -n "decode(" "$FILE" || (echo "⚠ patch did not apply" && cat "$FILE" && exit 1)
+          echo "✅ security-check.py patched for Python 3"
+
 
       - name: Check security
         if: ${{ matrix.check-security }}
