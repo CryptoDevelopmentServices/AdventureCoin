@@ -262,6 +262,22 @@ jobs:
 
           echo "✅ native_cctools.mk patched with correct GitHub refs/heads/master URL and verified LLVM 10.0.0."
 
+      - name: Patch dsymutil missing issue
+        if: matrix.name == 'x86_64-macos'
+        shell: bash
+        run: |
+          set -euo pipefail
+          CCTOOLS_DIR="depends/packages/native_cctools.mk"
+
+          echo "⚙️ Disabling dsymutil check (not included in LLVM 10.0.0 Linux build)..."
+          sed -i '/llvm-dsymutil/d' "$CCTOOLS_DIR"
+
+          # Patch staging rule to tolerate missing dsymutil
+          find depends/work/build/x86_64-apple-darwin11/ -type f -name "Makefile" -print0 | \
+            xargs -0 sed -i '/llvm-dsymutil/d' || true
+
+          echo "✅ dsymutil references removed — build will continue without it."
+
       - name: Fix macOS cross build dependencies
         if: matrix.name == 'x86_64-macos'
         run: |
