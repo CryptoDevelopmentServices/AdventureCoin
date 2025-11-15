@@ -225,10 +225,10 @@ jobs:
           LLVM_URL="https://github.com/llvm/llvm-project/releases/download/llvmorg-${LLVM_VER}"
           LLVM_SHA="b25f592a0c00686f03e3b7db68ca6dc87418f681f4ead4df4745a01d9be63843"
 
-          # ✅ tpoechtrager maintained fork (master)
+          # ✅ Corrected cctools-port source (GitHub changed archive path!)
           CCTOOLS_VER="master"
-          CCTOOLS_URL="https://github.com/tpoechtrager/cctools-port/archive"
-          CCTOOLS_FILE="cctools-port-master.tar.gz"
+          CCTOOLS_URL="https://github.com/tpoechtrager/cctools-port/archive/refs/heads"
+          CCTOOLS_FILE="${CCTOOLS_VER}.tar.gz"
           CCTOOLS_SHA="579c46ce16a269f202de4f4118db00bfdef95e3aa251cc79d4726faef9f4dab2"
 
           echo "🧹 Cleaning old LLVM/cctools artifacts..."
@@ -249,7 +249,7 @@ jobs:
           sed -i "s|^\$(package)_clang_sha256_hash=.*|\$(package)_clang_sha256_hash=${LLVM_SHA}|" "${CCTOOLS}"
 
           echo "🔍 Confirming patched fields..."
-          grep -E '^\$\(package\)_(version|download_path|file_name|sha256_hash|clang_version|clang_download_path|clang_file_name|clang_sha256_hash)=' "${CCTOOLS}" || true
+          grep -E '^\$\(package\)_(version|download_path|file_name|sha256_hash|clang_download_path|clang_file_name|clang_sha256_hash)=' "${CCTOOLS}" || true
 
           echo "📦 Installing LLVM ${LLVM_VER} toolchain..."
           apt-get update -y
@@ -260,7 +260,7 @@ jobs:
           update-alternatives --install /usr/bin/clang clang /usr/bin/clang-10 100
           update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-10 100
 
-          echo "✅ native_cctools.mk patched with correct filenames, URLs, and verified SHA256 values."
+          echo "✅ native_cctools.mk patched with correct GitHub refs/heads/master URL and verified LLVM 10.0.0."
 
       - name: Fix macOS cross build dependencies
         if: matrix.name == 'x86_64-macos'
