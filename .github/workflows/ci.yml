@@ -391,6 +391,34 @@ jobs:
           echo "CC=$CC"
           echo "CXX=$CXX"
 
+      # 🧩 Fix Boost "darwin vs gcc" toolset clash in macOS cross-build
+      - name: Fix Boost toolset clash for macOS cross-build
+        if: matrix.name == 'x86_64-macos'
+        shell: bash
+        run: |
+          set -e
+          echo "🧠 Patching Boost to prevent darwin/gcc toolset conflict..."
+          export CC=x86_64-apple-darwin11-clang
+          export CXX=x86_64-apple-darwin11-clang++
+
+          BOOST_MK="depends/packages/boost.mk"
+          BOOST_SRC_DIR="depends/work/build/x86_64-apple-darwin11/boost"
+
+          # Force Boost toolset to gcc to avoid "darwin" misdetection
+          sed -i 's|b2 |b2 toolset=gcc |g' "$BOOST_MK" || true
+
+          # Delete cached Boost.Build engine (so it regenerates clean)
+          find "$BOOST_SRC_DIR" -name "project-config.jam" -delete || true
+          find "$BOOST_SRC_DIR" -name "bin.v2" -type d -exec rm -rf {} + || true
+
+          # Create a default project-config.jam with forced gcc toolset
+          mkdir -p "$BOOST_SRC_DIR"
+          cat <<'EOF' > "$BOOST_SRC_DIR/project-config.jam"
+          using gcc : : x86_64-apple-darwin11-clang++ ;
+          EOF
+
+          echo "✅ Forced Boost to use gcc toolset (x86_64-apple-darwin11-clang++) and disabled darwin autodetect."
+
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
 
