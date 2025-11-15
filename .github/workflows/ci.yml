@@ -37,7 +37,7 @@ jobs:
           - x86_64-linux
           - x86_64-macos
           - x86_64-win
-          #- arm64-apple-darwin20
+          #- arm64-apple
         include:
           - name: i686-linux
             host: i686-pc-linux-gnu
@@ -127,7 +127,7 @@ jobs:
             goal: deploy
             sdk: 10.11
             sdk-shasum: "bec9d089ebf2e2dd59b1a811a38ec78ebd5da18cbbcd6ab39d1e59f64ac5033f"
-          # - name: arm64-apple-darwin20
+          # - name: arm64-apple
           #   host: arm64-apple-darwin20
           #   container: ubuntu:20.04
           #   packages: cmake imagemagick libcap-dev librsvg2-bin libz-dev libbz2-dev libtiff-tools libtinfo5 xorriso
@@ -137,8 +137,8 @@ jobs:
           #   dep-opts: ""
           #   config-opts: "--with-gui=qt5 --disable-tests"
           #   goal: deploy
-          #   sdk: 10.11
-          #   sdk-shasum: "bec9d089ebf2e2dd59b1a811a38ec78ebd5da18cbbcd6ab39d1e59f64ac5033f"
+          #   sdk: 11.00
+          #   sdk-shasum: "1fa4b5a78b2f9fbbcbfda642d3a0b7dcd46b3f5d95f94dfda59b3d07071d1614"
 
     runs-on: ubuntu-22.04
     container:
@@ -372,6 +372,24 @@ jobs:
 
           echo "${ZSHA}  depends/sources/zlib-${ZVER}.tar.gz" > depends/work/download/zlib-zlib-${ZVER}/zlib-${ZVER}.tar.gz.hash || true
           echo "✅ zlib ${ZVER} patched to KDE mirror with correct checksum."
+
+      # 🧩 Fix Boost darwin cross-build toolchain issue (-arch flag error)
+      - name: Fix Boost toolset and compilers for macOS cross-build
+        if: matrix.name == 'x86_64-macos'
+        shell: bash
+        run: |
+          set -e
+          echo "⚙️ Forcing Boost to use cross clang wrappers and correct toolset..."
+          export CC=x86_64-apple-darwin11-clang
+          export CXX=x86_64-apple-darwin11-clang++
+          # Make sure b2 doesn't misdetect darwin toolset
+          BOOST_MK="depends/packages/boost.mk"
+          if grep -q "b2 " "$BOOST_MK"; then
+            sed -i 's|b2 |b2 toolset=gcc |g' "$BOOST_MK"
+            echo "✅ Boost toolset forced to gcc (cross-compatible)."
+          fi
+          echo "CC=$CC"
+          echo "CXX=$CXX"
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
