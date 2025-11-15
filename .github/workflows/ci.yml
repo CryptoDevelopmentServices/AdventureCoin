@@ -424,8 +424,9 @@ jobs:
           EOF
 
           # Inject patch command *with a TAB* to avoid "missing separator"
+          # Use correct path relative to $(BASEDIR) (no doubled depends/)
           if ! grep -q "force-gcc-toolset.patch" "$BOOST_MK"; then
-            sed -i "/bootstrap.sh/a\\\tpatch -p1 < \$(BASEDIR)\/depends\/patches\/boost\/force-gcc-toolset.patch || true" "$BOOST_MK"
+            sed -i "/bootstrap.sh/a\\\tpatch -p1 < \$(BASEDIR)\/patches\/boost\/force-gcc-toolset.patch || true" "$BOOST_MK"
           fi
 
           echo "✅ Patched Boost to use GCC toolset only — Darwin autodetect disabled."
