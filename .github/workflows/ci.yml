@@ -398,38 +398,33 @@ jobs:
         run: |
           set -e
           echo "🧠 Forcing Boost to ignore darwin toolset and use GCC consistently..."
+
           export CC=x86_64-apple-darwin11-clang
           export CXX=x86_64-apple-darwin11-clang++
 
           BOOST_MK="depends/packages/boost.mk"
-          BOOST_BUILD_DIR="depends/work/build/x86_64-apple-darwin11/boost"
           PATCH_DIR="depends/patches/boost"
 
-          # Ensure consistent toolset
-          sed -i 's|b2 |b2 toolset=gcc |g' "$BOOST_MK" || true
+          mkdir -p "$PATCH_DIR"
 
-          # Clean and prep directories
-          rm -rf "$BOOST_BUILD_DIR" || true
-          mkdir -p "$BOOST_BUILD_DIR" "$PATCH_DIR"
-
-          # Disable any hardcoded --with-toolset flags
-          find depends/packages -type f -name "boost.mk" -exec sed -i 's|--with-toolset=.*||g' {} \;
-
-          # Write our patch file safely
+          # Create the patch
           cat <<'EOF' > "$PATCH_DIR/force-gcc-toolset.patch"
-          --- a/project-config.jam
-          +++ b/project-config.jam
+          --- project-config.jam.orig
+          +++ project-config.jam
           @@ -1,3 +1,4 @@
           +using gcc : : x86_64-apple-darwin11-clang++ ;
           EOF
 
-          # Inject patch command *with a TAB* to avoid "missing separator"
-          # Use correct path relative to $(BASEDIR) (no doubled depends/)
+          # Inject a command into boost.mk to apply the patch in the correct directory
+          # IMPORTANT: patch must run INSIDE the boost build dir AFTER bootstrap
           if ! grep -q "force-gcc-toolset.patch" "$BOOST_MK"; then
-            sed -i "/bootstrap.sh/a\\\tpatch -p1 < \$(BASEDIR)\/patches\/boost\/force-gcc-toolset.patch || true" "$BOOST_MK"
+            sed -i "/bootstrap.sh/a\\\tcd \$\(builddir\) \&\& patch -p0 < \$\(BASEDIR\)\/patches\/boost\/force-gcc-toolset.patch || true" "$BOOST_MK"
           fi
 
-          echo "✅ Patched Boost to use GCC toolset only — Darwin autodetect disabled."
+          # Force Boost to use GCC toolset from the start
+          sed -i 's|b2 |b2 toolset=gcc |g' "$BOOST_MK" || true
+
+          echo "✅ Boost patch installed correctly — will execute AFTER bootstrap where project-config.jam exists."
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
