@@ -397,27 +397,35 @@ jobs:
         shell: bash
         run: |
           set -e
-          echo "🧠 Patching Boost to prevent darwin/gcc toolset conflict..."
+          echo "🧠 Forcing Boost to ignore darwin toolset and use GCC consistently..."
           export CC=x86_64-apple-darwin11-clang
           export CXX=x86_64-apple-darwin11-clang++
 
           BOOST_MK="depends/packages/boost.mk"
-          BOOST_SRC_DIR="depends/work/build/x86_64-apple-darwin11/boost"
+          BOOST_BUILD_DIR="depends/work/build/x86_64-apple-darwin11/boost"
 
-          # Force Boost toolset to gcc to avoid "darwin" misdetection
+          # Ensure make uses consistent toolset
           sed -i 's|b2 |b2 toolset=gcc |g' "$BOOST_MK" || true
 
-          # Delete cached Boost.Build engine (so it regenerates clean)
-          find "$BOOST_SRC_DIR" -name "project-config.jam" -delete || true
-          find "$BOOST_SRC_DIR" -name "bin.v2" -type d -exec rm -rf {} + || true
+          # Force rebuild of Boost.Build engine
+          rm -rf "$BOOST_BUILD_DIR" || true
+          mkdir -p "$BOOST_BUILD_DIR"
 
-          # Create a default project-config.jam with forced gcc toolset
-          mkdir -p "$BOOST_SRC_DIR"
-          cat <<'EOF' > "$BOOST_SRC_DIR/project-config.jam"
-          using gcc : : x86_64-apple-darwin11-clang++ ;
+          # Monkey-patch bootstrap to skip Darwin detection entirely
+          find depends/packages -type f -name "boost.mk" -exec sed -i 's|--with-toolset=.*||g' {} \;
+
+          # Replace the auto-generated project-config.jam right after bootstrap
+          cat <<'EOF' > ./depends/patches/boost/force-gcc-toolset.patch
+          --- a/project-config.jam
+          +++ b/project-config.jam
+          @@ -1,3 +1,4 @@
+          +using gcc : : x86_64-apple-darwin11-clang++ ;
           EOF
 
-          echo "✅ Forced Boost to use gcc toolset (x86_64-apple-darwin11-clang++) and disabled darwin autodetect."
+          # Add our patch command to apply immediately after bootstrap
+          sed -i '/bootstrap.sh/i patch -p1 < \$\(BASEDIR\)\/depends\/patches\/boost\/force-gcc-toolset.patch || true' "$BOOST_MK"
+
+          echo "✅ Patched Boost to use GCC toolset only — Darwin autodetect disabled."
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
