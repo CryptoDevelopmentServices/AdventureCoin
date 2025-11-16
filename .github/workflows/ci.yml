@@ -516,6 +516,21 @@ jobs:
           echo "NM=$NM" >> $GITHUB_ENV
           echo "AS=$AS" >> $GITHUB_ENV
 
+      - name: Force Boost compiler after native toolchain reset
+        if: matrix.name == 'x86_64-macos'
+        shell: bash
+        run: |
+          echo "🔨 Re-forcing Boost CXX after native_* reset…"
+          BOOST_MK="depends/packages/boost.mk"
+
+          # Inject correct compiler for Boost (fixes CXX becoming empty)
+          sed -i 's|b2 |b2 cxx=$(host)-clang++ |g' "$BOOST_MK"
+
+          # Extra safety: ensure project-config.jam always declares a compiler
+          sed -i "/project-config.jam/a echo \"using gcc : : $(host)-clang++ ;\" >> project-config.jam" "$BOOST_MK"
+
+          echo "✅ Boost will now ALWAYS have a real compiler and will never emit empty CXX."
+
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
 
