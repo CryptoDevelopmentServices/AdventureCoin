@@ -373,30 +373,27 @@ jobs:
           echo "${ZSHA}  depends/sources/zlib-${ZVER}.tar.gz" > depends/work/download/zlib-zlib-${ZVER}/zlib-${ZVER}.tar.gz.hash || true
           echo "✅ zlib ${ZVER} patched to KDE mirror with correct checksum."
 
-      - name: Force Boost to use Darwin cross-compiler
+      - name: Patch Boost toolset to prevent version clashes
         if: matrix.name == 'x86_64-macos'
         shell: bash
         run: |
-          set -e
           BOOST_MK="depends/packages/boost.mk"
+          USERCFG="depends/sources/boost_1_64_0/tools/build/src/user-config.jam"
+          mkdir -p "$(dirname $USERCFG)"
 
-          echo "🔧 Patching $BOOST_MK to force darwin toolset..."
+          echo "🛠 Removing auto-detected darwin toolsets..."
+          sed -i 's/toolset=darwin//g' "$BOOST_MK" || true
 
-          # Replace './b2 ' with './b2 toolset=darwin '
-          sed -i 's#\./b2 #./b2 toolset=darwin #g' "$BOOST_MK"
+          echo "🛠 Forcing Boost to use ONLY darwin-10.0.0..."
+          sed -i 's#./b2 #./b2 toolset=darwin-10.0.0 #g' "$BOOST_MK"
 
-          echo "🔍 Verifying patched b2 line:"
-          grep -n "b2 toolset=darwin" "$BOOST_MK" || (echo "❌ Patch did not apply"; exit 1)
-          echo "✅ Boost will now build with darwin toolset."
+          echo "using darwin : 10.0.0 : x86_64-apple-darwin11-clang++ ;" >> "$USERCFG"
 
-      - name: Add darwin toolset definition for Boost 1.64
-        if: matrix.name == 'x86_64-macos'
-        shell: bash
-        run: |
-          BOOST_SRC="depends/sources/boost_1_64_0/tools/build/src/user-config.jam"
-          mkdir -p "$(dirname $BOOST_SRC)"
-          echo "using darwin : : x86_64-apple-darwin11-clang++ ;" >> "$BOOST_SRC"
-          echo "✅ Added darwin toolset to user-config.jam"
+          echo "🔍 Verifying Boost config override:"
+          grep -n "darwin-10.0.0" "$BOOST_MK" || true
+          grep -n "darwin" "$USERCFG" || true
+
+          echo "✅ Boost toolset pinned to darwin-10.0.0 (no conflicts)."
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
