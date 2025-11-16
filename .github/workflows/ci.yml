@@ -195,12 +195,22 @@ jobs:
       - name: Install SDK
         if: ${{ matrix.sdk }}
         env:
+          SDK_URL: https://bitcoincore.org/depends-sources/sdks
           sdk-filename: MacOSX${{ matrix.sdk }}.sdk.tar.gz
         run: |
           mkdir -p ./depends/sdk-sources ./depends/SDKs
+
+          # Try primary (Bitcoin Core mirror)
           echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c || \
-          curl --location --fail $SDK_URL/${{ env.sdk-filename }} -o depends/sdk-sources/${{ env.sdk-filename }}
+          curl --location --fail "$SDK_URL/${{ env.sdk-filename }}" \
+            -o "depends/sdk-sources/${{ env.sdk-filename }}" || \
+          curl --location --fail "https://raw.githubusercontent.com/theuni/osxcross/master/tarballs/${{ env.sdk-filename }}" \
+            -o "depends/sdk-sources/${{ env.sdk-filename }}"
+
+          # Verify checksum again
           echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c
+
+          # Extract SDK
           tar -C depends/SDKs -xf depends/sdk-sources/${{ env.sdk-filename }}
 
       - name: Dependency cache
