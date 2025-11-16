@@ -400,16 +400,21 @@ jobs:
 
           export CC=x86_64-apple-darwin11-clang
           export CXX=x86_64-apple-darwin11-clang++
-
           BOOST_MK="depends/packages/boost.mk"
           PATCH_DIR="depends/patches/boost"
           mkdir -p "$PATCH_DIR"
 
           echo "📁 Patch directory: $PATCH_DIR"
+          echo "📄 Boost mk file:  $BOOST_MK"
 
-          # ---------------------------------------------------------------------
-          # 1) CREATE PATCH FILE
-          # ---------------------------------------------------------------------
+          # -------------------------------------------------------------------
+          # 0) CLEAN ANY OLD BROKEN HOOKS (from previous attempts)
+          # -------------------------------------------------------------------
+          sed -i '/force-gcc-toolset.patch/d' "$BOOST_MK" || true
+
+          # -------------------------------------------------------------------
+          # 1) CREATE PATCH FILE (simple: force using gcc toolset -> cross-clang)
+          # -------------------------------------------------------------------
           cat <<'EOF' > "$PATCH_DIR/force-gcc-toolset.patch"
           --- project-config.jam
           +++ project-config.jam
@@ -419,61 +424,60 @@ jobs:
 
           echo "📝 Patch created: $PATCH_DIR/force-gcc-toolset.patch"
 
-          # ---------------------------------------------------------------------
-          # 2) MODIFY boost.mk TO EXECUTE PATCH AFTER bootstrap.sh
-          # ---------------------------------------------------------------------
+          # -------------------------------------------------------------------
+          # 2) INJECT PATCH HOOK INTO boost.mk AFTER bootstrap.sh
+          #    NOTE: we run patch from INSIDE the boost source dir, so -p0.
+          # -------------------------------------------------------------------
           if ! grep -q "force-gcc-toolset.patch" "$BOOST_MK"; then
             echo "🧩 Injecting patch hook into boost.mk…"
-
-            sed -i "/bootstrap.sh/a\\\t# Auto-detect Boost build directory and apply GCC override patch\n\tBOOST_DIR=\$(find \$(BASEDIR)\/work\/build\/\$(host)\/boost -maxdepth 1 -type d -name \"\$(boost_version)-*\" | head -n 1)\n\tif [ -d \"\$BOOST_DIR\" ]; then echo \"📌 Found Boost directory: \$BOOST_DIR\"; cd \$BOOST_DIR && patch -p1 < \$(BASEDIR)\/patches\/boost\/force-gcc-toolset.patch || true; else echo \"❌ Boost directory NOT found during patch stage\"; fi" "$BOOST_MK"
+            sed -i "/bootstrap.sh/a\\\t# Apply GCC toolset override for macOS cross-build\n\tpatch -p0 < \$(BASEDIR)\/patches\/boost\/force-gcc-toolset.patch || true" "$BOOST_MK"
           else
             echo "ℹ️ Patch hook already exists in boost.mk — skipping insertion."
           fi
 
-          # ---------------------------------------------------------------------
-          # 3) FORCE GCC TOOLSET IN ALL BOOST BUILDS
-          # ---------------------------------------------------------------------
-          echo "🔧 Enforcing toolset=gcc in boost.mk…"
-          sed -i 's|b2 |b2 toolset=gcc |g' "$BOOST_MK" || true
+          # -------------------------------------------------------------------
+          # 3) ENFORCE toolset=gcc IN BOOST BUILDS (instead of darwin)
+          # -------------------------------------------------------------------
+          if grep -q 'b2 ' "$BOOST_MK"; then
+            sed -i 's|b2 |b2 toolset=gcc |g' "$BOOST_MK" || true
+            echo "✅ Boost b2 invocation patched to use toolset=gcc."
+          fi
 
-          # ---------------------------------------------------------------------
-          # 4) STRIP DARWIN AUTODETECT FLAGS (safe!)
-          # ---------------------------------------------------------------------
-          echo "🧹 Removing any leftover darwin autodetect flags (safe for cross-build)…"
+          # -------------------------------------------------------------------
+          # 4) STRIP EXPLICIT darwin TOOLSET FLAGS (SAFE)
+          # -------------------------------------------------------------------
+          echo "🧹 Removing any explicit darwin toolset hints from boost.mk…"
           sed -i 's/toolset=darwin//g' "$BOOST_MK" || true
-          sed -i 's/darwin//g' "$BOOST_MK" || true
 
-          # ---------------------------------------------------------------------
+          # -------------------------------------------------------------------
           # 5) VALIDATION LOGS
-          # ---------------------------------------------------------------------
-          echo "🔍 VALIDATION:"
+          # -------------------------------------------------------------------
+          echo "🔍 VALIDATION: lines mentioning toolset or our patch hook"
           echo "--------------------------------------"
-          echo "Contents of boost.mk after patch:"
           grep -n "toolset" "$BOOST_MK" || true
           grep -n "force-gcc-toolset.patch" "$BOOST_MK" || true
           echo "--------------------------------------"
 
           echo "✅ Hardened Boost GCC override successfully installed."
 
-      - name: Fix libevent cross-compile for macOS
-        if: matrix.name == 'x86_64-macos'
-        shell: bash
-        run: |
-          set -e
-          FILE="depends/packages/libevent.mk"
-          echo "🔧 Patching libevent cross flags…"
+      # - name: Fix libevent cross-compile for macOS
+      #   if: matrix.name == 'x86_64-macos'
+      #   shell: bash
+      #   run: |
+      #     set -e
+      #     FILE="depends/packages/libevent.mk"
+      #     echo "🔧 Patching libevent cross flags…"
 
-          sed -i '/configure_opts/ a \
-          $(package)_config_opts += --disable-samples\n\
-          $(package)_config_opts += --disable-libevent-regress\n\
-          $(package)_config_opts += ac_cv_func_malloc_0_nonnull=yes\n\
-          $(package)_config_opts += ac_cv_func_realloc_0_nonnull=yes\n\
-          $(package)_config_opts += CC="$(host)-clang"\n\
-          $(package)_config_opts += CFLAGS="-target $(host) -mmacosx-version-min=10.8 --sysroot=$(SDK_PATH)"\n\
-          $(package)_config_opts += LDFLAGS="-target $(host) -mmacosx-version-min=10.8 --sysroot=$(SDK_PATH)"' "$FILE"
+      #     sed -i '/configure_opts/ a \
+      #     $(package)_config_opts += --disable-samples\n\
+      #     $(package)_config_opts += --disable-libevent-regress\n\
+      #     $(package)_config_opts += ac_cv_func_malloc_0_nonnull=yes\n\
+      #     $(package)_config_opts += ac_cv_func_realloc_0_nonnull=yes\n\
+      #     $(package)_config_opts += CC="$(host)-clang"\n\
+      #     $(package)_config_opts += CFLAGS="-target $(host) -mmacosx-version-min=10.8 --sysroot=$(SDK_PATH)"\n\
+      #     $(package)_config_opts += LDFLAGS="-target $(host) -mmacosx-version-min=10.8 --sysroot=$(SDK_PATH)"' "$FILE"
 
-          echo "✅ libevent cross-compile patch applied."
-
+      #     echo "✅ libevent cross-compile patch applied."
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
