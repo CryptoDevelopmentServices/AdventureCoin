@@ -380,13 +380,14 @@ jobs:
           set -e
           BOOST_MK="depends/packages/boost.mk"
 
-          echo "🔧 Patching $BOOST_MK to force darwin toolset + cross-clang++..."
-          # Replace plain `./b2` invocation with one that explicitly sets toolset + C++ compiler
-          sed -i 's#\./b2 #./b2 toolset=darwin cxx=$(host)-clang++ #g' "$BOOST_MK"
+          echo "🔧 Patching $BOOST_MK to force darwin toolset..."
+
+          # Replace './b2 ' with './b2 toolset=darwin '
+          sed -i 's#\./b2 #./b2 toolset=darwin #g' "$BOOST_MK"
 
           echo "🔍 Verifying patched b2 line:"
-          grep -n "b2 toolset=darwin cxx=\$(host)-clang++" "$BOOST_MK" || (echo "❌ Patch did not apply"; exit 1)
-          echo "✅ Boost will now build with darwin toolset using x86_64-apple-darwin11-clang++."
+          grep -n "b2 toolset=darwin" "$BOOST_MK" || (echo "❌ Patch did not apply"; exit 1)
+          echo "✅ Boost will now build with darwin toolset."
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
