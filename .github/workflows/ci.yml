@@ -395,25 +395,29 @@ jobs:
 
           echo "✅ Boost toolset pinned to darwin-10.0.0 (no conflicts)."
 
+      - name: Build depends
+        run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
+
       - name: Remove unsupported -fcoalesce-templates from Boost
         if: matrix.name == 'x86_64-macos'
         shell: bash
         run: |
           echo "🔧 Stripping invalid -fcoalesce-templates flag from Boost build scripts..."
 
-          # Patch main Boost build rules
-          find depends/work/build/x86_64-apple-darwin11/boost \
-            -name "*.jam" -o -name "*.v2" -o -name "gcc.jam" -o -name "darwin.jam" | \
-            xargs sed -i 's/-fcoalesce-templates//g'
+          # Find the actual Boost build directory (hash is random)
+          BOOST_DIR=$(find depends/work/build -type d -path "*x86_64-apple-darwin11/boost*" | head -n 1)
 
-          # Patch any remaining flags in generated Boost b2 command lines
-          find depends/work/build/x86_64-apple-darwin11/boost \
-            -type f | xargs sed -i 's/-fcoalesce-templates//g'
+          if [ -z "$BOOST_DIR" ]; then
+            echo "❌ Boost build directory not found!"
+            exit 1
+          fi
 
-          echo "✅ Removed -fcoalesce-templates from Boost."
+          echo "📁 Boost directory: $BOOST_DIR"
 
-      - name: Build depends
-        run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
+          # Remove the invalid compiler flag everywhere
+          find "$BOOST_DIR" -type f -print0 | xargs -0 sed -i 's/-fcoalesce-templates//g'
+
+          echo "✅ Removed -fcoalesce-templates from all Boost build sources."
 
       - name: CCache
         uses: actions/cache@v4
