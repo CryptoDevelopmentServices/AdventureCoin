@@ -389,6 +389,15 @@ jobs:
           grep -n "b2 toolset=darwin" "$BOOST_MK" || (echo "❌ Patch did not apply"; exit 1)
           echo "✅ Boost will now build with darwin toolset."
 
+      - name: Add darwin toolset definition for Boost 1.64
+        if: matrix.name == 'x86_64-macos'
+        shell: bash
+        run: |
+          BOOST_SRC="depends/sources/boost_1_64_0/tools/build/src/user-config.jam"
+          mkdir -p "$(dirname $BOOST_SRC)"
+          echo "using darwin : : x86_64-apple-darwin11-clang++ ;" >> "$BOOST_SRC"
+          echo "✅ Added darwin toolset to user-config.jam"
+
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
 
