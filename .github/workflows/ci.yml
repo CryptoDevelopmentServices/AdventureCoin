@@ -472,44 +472,49 @@ jobs:
           echo "AS=$AS" >> $GITHUB_ENV
           echo "STRIP=$STRIP" >> $GITHUB_ENV
 
-      - name: Reset CC/CXX for native tools (cdrkit fix)
+      - name: Reset toolchain for ALL native_* packages
         if: matrix.name == 'x86_64-macos'
         shell: bash
         run: |
-          echo "🩹 Resetting CC/CXX for native tools (cdrkit needs Linux GCC)..."
+          echo "🩹 Resetting toolchain for native_* (protobuf, cdrkit, etc)…"
+
+          # Clear Darwin cross tools
           unset CC
           unset CXX
+          unset LD
+          unset AR
+          unset RANLIB
+          unset STRIP
+          unset NM
+          unset AS
 
-          # Also ensure default system compilers are present
+          # Switch to native Linux compilers
           export CC=/usr/bin/gcc
           export CXX=/usr/bin/g++
+          export LD=/usr/bin/ld
+          export AR=/usr/bin/ar
+          export RANLIB=/usr/bin/ranlib
+          export STRIP=/usr/bin/strip
+          export NM=/usr/bin/nm
+          export AS=/usr/bin/as
 
-          echo "Using native Linux compiler for native tools:"
-          echo "CC=$(which $CC)"
-          echo "CXX=$(which $CXX)"
+          echo "Native toolchain restored:"
+          echo "CC=$CC"
+          echo "CXX=$CXX"
+          echo "LD=$LD"
+          echo "AR=$AR"
+          echo "RANLIB=$RANLIB"
+          echo "STRIP=$STRIP"
 
-          # Make available to next steps
+          # Persist globally
           echo "CC=$CC" >> $GITHUB_ENV
           echo "CXX=$CXX" >> $GITHUB_ENV
-
-      # - name: Fix libevent cross-compile for macOS
-      #   if: matrix.name == 'x86_64-macos'
-      #   shell: bash
-      #   run: |
-      #     set -e
-      #     FILE="depends/packages/libevent.mk"
-      #     echo "🔧 Patching libevent cross flags…"
-
-      #     sed -i '/configure_opts/ a \
-      #     $(package)_config_opts += --disable-samples\n\
-      #     $(package)_config_opts += --disable-libevent-regress\n\
-      #     $(package)_config_opts += ac_cv_func_malloc_0_nonnull=yes\n\
-      #     $(package)_config_opts += ac_cv_func_realloc_0_nonnull=yes\n\
-      #     $(package)_config_opts += CC="$(host)-clang"\n\
-      #     $(package)_config_opts += CFLAGS="-target $(host) -mmacosx-version-min=10.8 --sysroot=$(SDK_PATH)"\n\
-      #     $(package)_config_opts += LDFLAGS="-target $(host) -mmacosx-version-min=10.8 --sysroot=$(SDK_PATH)"' "$FILE"
-
-      #     echo "✅ libevent cross-compile patch applied."
+          echo "LD=$LD" >> $GITHUB_ENV
+          echo "AR=$AR" >> $GITHUB_ENV
+          echo "RANLIB=$RANLIB" >> $GITHUB_ENV
+          echo "STRIP=$STRIP" >> $GITHUB_ENV
+          echo "NM=$NM" >> $GITHUB_ENV
+          echo "AS=$AS" >> $GITHUB_ENV
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
