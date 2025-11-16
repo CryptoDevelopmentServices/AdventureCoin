@@ -379,17 +379,39 @@ jobs:
         shell: bash
         run: |
           set -e
-          echo "⚙️ Forcing Boost to use cross clang wrappers and correct toolset..."
+          echo "⚙️ Hard-forcing Boost to use gcc toolset (mapped to cross clang)..."
+
           export CC=x86_64-apple-darwin11-clang
           export CXX=x86_64-apple-darwin11-clang++
-          # Make sure b2 doesn't misdetect darwin toolset
           BOOST_MK="depends/packages/boost.mk"
-          if grep -q "b2 " "$BOOST_MK"; then
-            sed -i 's|b2 |b2 toolset=gcc |g' "$BOOST_MK"
-            echo "✅ Boost toolset forced to gcc (cross-compatible)."
-          fi
-          echo "CC=$CC"
-          echo "CXX=$CXX"
+
+          echo "🔍 Editing $BOOST_MK ..."
+
+          # 1️⃣ FORCE BOOSTRAP TO USE GCC TOOLSET
+          echo "🔨 Forcing bootstrap.sh to select gcc toolset..."
+          sed -i 's|./bootstrap.sh|./bootstrap.sh --with-toolset=gcc|g' "$BOOST_MK"
+
+          # 2️⃣ FORCE ALL B2 INVOCATIONS TO USE GCC TOOLSET
+          echo "🔨 Enforcing b2 toolset override..."
+          sed -i 's|./b2|./b2 toolset=gcc|g' "$BOOST_MK"
+          sed -i 's|b2 |b2 toolset=gcc |g' "$BOOST_MK"
+          sed -i 's|bjam |bjam toolset=gcc |g' "$BOOST_MK"
+
+          # 3️⃣ NUKE ANY DARWIN AUTODETECT PATHS (THEY BREAK CROSS-BUILD)
+          echo "🧹 Removing darwin autodetect from boost.mk..."
+          sed -i 's/toolset=darwin//g' "$BOOST_MK"
+          sed -i 's/darwin//g' "$BOOST_MK"
+
+          # 4️⃣ VALIDATION LOGGING
+          echo "--------------------------------------"
+          echo "📄 VALIDATION — toolset lines in boost.mk:"
+          grep -n "toolset" "$BOOST_MK" || true
+          echo "📄 VALIDATION — patched bootstrap/b2 references:"
+          grep -n "bootstrap.sh" "$BOOST_MK" || true
+          grep -n "b2 " "$BOOST_MK" || true
+          echo "--------------------------------------"
+
+          echo "🟢 Boost toolset override block completed successfully!"
 
       - name: Fix Boost toolset clash for macOS cross-build
         if: matrix.name == 'x86_64-macos'
