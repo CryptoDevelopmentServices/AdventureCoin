@@ -373,163 +373,163 @@ jobs:
           echo "${ZSHA}  depends/sources/zlib-${ZVER}.tar.gz" > depends/work/download/zlib-zlib-${ZVER}/zlib-${ZVER}.tar.gz.hash || true
           echo "✅ zlib ${ZVER} patched to KDE mirror with correct checksum."
 
-      - name: Fix Boost toolset clash for macOS cross-build
-        if: matrix.name == 'x86_64-macos'
-        shell: bash
-        run: |
-          set -e
-          echo "🧠 Starting hardened Boost GCC toolset override for macOS…"
+      # - name: Fix Boost toolset clash for macOS cross-build
+      #   if: matrix.name == 'x86_64-macos'
+      #   shell: bash
+      #   run: |
+      #     set -e
+      #     echo "🧠 Starting hardened Boost GCC toolset override for macOS…"
 
-          export CC=x86_64-apple-darwin11-clang
-          export CXX=x86_64-apple-darwin11-clang++
-          BOOST_MK="depends/packages/boost.mk"
-          PATCH_DIR="depends/patches/boost"
-          mkdir -p "$PATCH_DIR"
+      #     export CC=x86_64-apple-darwin11-clang
+      #     export CXX=x86_64-apple-darwin11-clang++
+      #     BOOST_MK="depends/packages/boost.mk"
+      #     PATCH_DIR="depends/patches/boost"
+      #     mkdir -p "$PATCH_DIR"
 
-          echo "📁 Patch directory: $PATCH_DIR"
-          echo "📄 Boost mk file:  $BOOST_MK"
+      #     echo "📁 Patch directory: $PATCH_DIR"
+      #     echo "📄 Boost mk file:  $BOOST_MK"
 
-          # -------------------------------------------------------------------
-          # 0) CLEAN ANY OLD BROKEN HOOKS (from previous attempts)
-          # -------------------------------------------------------------------
-          sed -i '/force-gcc-toolset.patch/d' "$BOOST_MK" || true
+      #     # -------------------------------------------------------------------
+      #     # 0) CLEAN ANY OLD BROKEN HOOKS (from previous attempts)
+      #     # -------------------------------------------------------------------
+      #     sed -i '/force-gcc-toolset.patch/d' "$BOOST_MK" || true
 
-          # -------------------------------------------------------------------
-          # 1) CREATE PATCH FILE (simple: force using gcc toolset -> cross-clang)
-          # -------------------------------------------------------------------
-          cat <<'EOF' > "$PATCH_DIR/force-gcc-toolset.patch"
-          --- project-config.jam
-          +++ project-config.jam
-          @@ -1,3 +1,4 @@
-          +using gcc : : x86_64-apple-darwin11-clang++ ;
-          EOF
+      #     # -------------------------------------------------------------------
+      #     # 1) CREATE PATCH FILE (simple: force using gcc toolset -> cross-clang)
+      #     # -------------------------------------------------------------------
+      #     cat <<'EOF' > "$PATCH_DIR/force-gcc-toolset.patch"
+      #     --- project-config.jam
+      #     +++ project-config.jam
+      #     @@ -1,3 +1,4 @@
+      #     +using gcc : : x86_64-apple-darwin11-clang++ ;
+      #     EOF
 
-          echo "📝 Patch created: $PATCH_DIR/force-gcc-toolset.patch"
+      #     echo "📝 Patch created: $PATCH_DIR/force-gcc-toolset.patch"
 
-          # -------------------------------------------------------------------
-          # 2) INJECT PATCH HOOK INTO boost.mk AFTER bootstrap.sh
-          #    NOTE: we run patch from INSIDE the boost source dir, so -p0.
-          # -------------------------------------------------------------------
-          if ! grep -q "force-gcc-toolset.patch" "$BOOST_MK"; then
-            echo "🧩 Injecting patch hook into boost.mk…"
-            sed -i "/bootstrap.sh/a\\\t# Apply GCC toolset override for macOS cross-build\n\tpatch -p0 < \$(BASEDIR)\/patches\/boost\/force-gcc-toolset.patch || true" "$BOOST_MK"
-          else
-            echo "ℹ️ Patch hook already exists in boost.mk — skipping insertion."
-          fi
+      #     # -------------------------------------------------------------------
+      #     # 2) INJECT PATCH HOOK INTO boost.mk AFTER bootstrap.sh
+      #     #    NOTE: we run patch from INSIDE the boost source dir, so -p0.
+      #     # -------------------------------------------------------------------
+      #     if ! grep -q "force-gcc-toolset.patch" "$BOOST_MK"; then
+      #       echo "🧩 Injecting patch hook into boost.mk…"
+      #       sed -i "/bootstrap.sh/a\\\t# Apply GCC toolset override for macOS cross-build\n\tpatch -p0 < \$(BASEDIR)\/patches\/boost\/force-gcc-toolset.patch || true" "$BOOST_MK"
+      #     else
+      #       echo "ℹ️ Patch hook already exists in boost.mk — skipping insertion."
+      #     fi
 
-          # -------------------------------------------------------------------
-          # 3) ENFORCE toolset=gcc IN BOOST BUILDS (instead of darwin)
-          # -------------------------------------------------------------------
-          if grep -q 'b2 ' "$BOOST_MK"; then
-            sed -i 's|b2 |b2 toolset=gcc |g' "$BOOST_MK" || true
-            echo "✅ Boost b2 invocation patched to use toolset=gcc."
-          fi
+      #     # -------------------------------------------------------------------
+      #     # 3) ENFORCE toolset=gcc IN BOOST BUILDS (instead of darwin)
+      #     # -------------------------------------------------------------------
+      #     if grep -q 'b2 ' "$BOOST_MK"; then
+      #       sed -i 's|b2 |b2 toolset=gcc |g' "$BOOST_MK" || true
+      #       echo "✅ Boost b2 invocation patched to use toolset=gcc."
+      #     fi
 
-          # -------------------------------------------------------------------
-          # 4) STRIP EXPLICIT darwin TOOLSET FLAGS (SAFE)
-          # -------------------------------------------------------------------
-          echo "🧹 Removing any explicit darwin toolset hints from boost.mk…"
-          sed -i 's/toolset=darwin//g' "$BOOST_MK" || true
+      #     # -------------------------------------------------------------------
+      #     # 4) STRIP EXPLICIT darwin TOOLSET FLAGS (SAFE)
+      #     # -------------------------------------------------------------------
+      #     echo "🧹 Removing any explicit darwin toolset hints from boost.mk…"
+      #     sed -i 's/toolset=darwin//g' "$BOOST_MK" || true
 
-          # -------------------------------------------------------------------
-          # 5) VALIDATION LOGS
-          # -------------------------------------------------------------------
-          echo "🔍 VALIDATION: lines mentioning toolset or our patch hook"
-          echo "--------------------------------------"
-          grep -n "toolset" "$BOOST_MK" || true
-          grep -n "force-gcc-toolset.patch" "$BOOST_MK" || true
-          echo "--------------------------------------"
+      #     # -------------------------------------------------------------------
+      #     # 5) VALIDATION LOGS
+      #     # -------------------------------------------------------------------
+      #     echo "🔍 VALIDATION: lines mentioning toolset or our patch hook"
+      #     echo "--------------------------------------"
+      #     grep -n "toolset" "$BOOST_MK" || true
+      #     grep -n "force-gcc-toolset.patch" "$BOOST_MK" || true
+      #     echo "--------------------------------------"
 
-          echo "✅ Hardened Boost GCC override successfully installed."
+      #     echo "✅ Hardened Boost GCC override successfully installed."
 
-      - name: Force Darwin linker + binutils for cross-build
-        if: matrix.name == 'x86_64-macos'
-        shell: bash
-        run: |
-          echo "🔧 Forcing Darwin cross toolchain binutils..."
-          export CC=x86_64-apple-darwin11-clang
-          export CXX=x86_64-apple-darwin11-clang++
-          export LD=x86_64-apple-darwin11-ld
-          export AR=x86_64-apple-darwin11-ar
-          export RANLIB=x86_64-apple-darwin11-ranlib
-          export STRIP=x86_64-apple-darwin11-strip
-          export NM=x86_64-apple-darwin11-nm
-          export AS=x86_64-apple-darwin11-as
+      # - name: Force Darwin linker + binutils for cross-build
+      #   if: matrix.name == 'x86_64-macos'
+      #   shell: bash
+      #   run: |
+      #     echo "🔧 Forcing Darwin cross toolchain binutils..."
+      #     export CC=x86_64-apple-darwin11-clang
+      #     export CXX=x86_64-apple-darwin11-clang++
+      #     export LD=x86_64-apple-darwin11-ld
+      #     export AR=x86_64-apple-darwin11-ar
+      #     export RANLIB=x86_64-apple-darwin11-ranlib
+      #     export STRIP=x86_64-apple-darwin11-strip
+      #     export NM=x86_64-apple-darwin11-nm
+      #     export AS=x86_64-apple-darwin11-as
 
-          echo "CC=$CC"
-          echo "CXX=$CXX"
-          echo "LD=$LD"
-          echo "AR=$AR"
-          echo "RANLIB=$RANLIB"
+      #     echo "CC=$CC"
+      #     echo "CXX=$CXX"
+      #     echo "LD=$LD"
+      #     echo "AR=$AR"
+      #     echo "RANLIB=$RANLIB"
 
-          # Make available to all substeps
-          echo "CC=$CC" >> $GITHUB_ENV
-          echo "CXX=$CXX" >> $GITHUB_ENV
-          echo "LD=$LD" >> $GITHUB_ENV
-          echo "AR=$AR" >> $GITHUB_ENV
-          echo "RANLIB=$RANLIB" >> $GITHUB_ENV
-          echo "NM=$NM" >> $GITHUB_ENV
-          echo "AS=$AS" >> $GITHUB_ENV
-          echo "STRIP=$STRIP" >> $GITHUB_ENV
+      #     # Make available to all substeps
+      #     echo "CC=$CC" >> $GITHUB_ENV
+      #     echo "CXX=$CXX" >> $GITHUB_ENV
+      #     echo "LD=$LD" >> $GITHUB_ENV
+      #     echo "AR=$AR" >> $GITHUB_ENV
+      #     echo "RANLIB=$RANLIB" >> $GITHUB_ENV
+      #     echo "NM=$NM" >> $GITHUB_ENV
+      #     echo "AS=$AS" >> $GITHUB_ENV
+      #     echo "STRIP=$STRIP" >> $GITHUB_ENV
 
-      - name: Reset toolchain for ALL native_* packages
-        if: matrix.name == 'x86_64-macos'
-        shell: bash
-        run: |
-          echo "🩹 Resetting toolchain for native_* (protobuf, cdrkit, etc)…"
+      # - name: Reset toolchain for ALL native_* packages
+      #   if: matrix.name == 'x86_64-macos'
+      #   shell: bash
+      #   run: |
+      #     echo "🩹 Resetting toolchain for native_* (protobuf, cdrkit, etc)…"
 
-          # Clear Darwin cross tools
-          unset CC
-          unset CXX
-          unset LD
-          unset AR
-          unset RANLIB
-          unset STRIP
-          unset NM
-          unset AS
+      #     # Clear Darwin cross tools
+      #     unset CC
+      #     unset CXX
+      #     unset LD
+      #     unset AR
+      #     unset RANLIB
+      #     unset STRIP
+      #     unset NM
+      #     unset AS
 
-          # Switch to native Linux compilers
-          export CC=/usr/bin/gcc
-          export CXX=/usr/bin/g++
-          export LD=/usr/bin/ld
-          export AR=/usr/bin/ar
-          export RANLIB=/usr/bin/ranlib
-          export STRIP=/usr/bin/strip
-          export NM=/usr/bin/nm
-          export AS=/usr/bin/as
+      #     # Switch to native Linux compilers
+      #     export CC=/usr/bin/gcc
+      #     export CXX=/usr/bin/g++
+      #     export LD=/usr/bin/ld
+      #     export AR=/usr/bin/ar
+      #     export RANLIB=/usr/bin/ranlib
+      #     export STRIP=/usr/bin/strip
+      #     export NM=/usr/bin/nm
+      #     export AS=/usr/bin/as
 
-          echo "Native toolchain restored:"
-          echo "CC=$CC"
-          echo "CXX=$CXX"
-          echo "LD=$LD"
-          echo "AR=$AR"
-          echo "RANLIB=$RANLIB"
-          echo "STRIP=$STRIP"
+      #     echo "Native toolchain restored:"
+      #     echo "CC=$CC"
+      #     echo "CXX=$CXX"
+      #     echo "LD=$LD"
+      #     echo "AR=$AR"
+      #     echo "RANLIB=$RANLIB"
+      #     echo "STRIP=$STRIP"
 
-          # Persist globally
-          echo "CC=$CC" >> $GITHUB_ENV
-          echo "CXX=$CXX" >> $GITHUB_ENV
-          echo "LD=$LD" >> $GITHUB_ENV
-          echo "AR=$AR" >> $GITHUB_ENV
-          echo "RANLIB=$RANLIB" >> $GITHUB_ENV
-          echo "STRIP=$STRIP" >> $GITHUB_ENV
-          echo "NM=$NM" >> $GITHUB_ENV
-          echo "AS=$AS" >> $GITHUB_ENV
+      #     # Persist globally
+      #     echo "CC=$CC" >> $GITHUB_ENV
+      #     echo "CXX=$CXX" >> $GITHUB_ENV
+      #     echo "LD=$LD" >> $GITHUB_ENV
+      #     echo "AR=$AR" >> $GITHUB_ENV
+      #     echo "RANLIB=$RANLIB" >> $GITHUB_ENV
+      #     echo "STRIP=$STRIP" >> $GITHUB_ENV
+      #     echo "NM=$NM" >> $GITHUB_ENV
+      #     echo "AS=$AS" >> $GITHUB_ENV
 
-      - name: Force Boost compiler after native toolchain reset
-        if: matrix.name == 'x86_64-macos'
-        shell: bash
-        run: |
-          echo "🔨 Re-forcing Boost CXX after native_* reset…"
-          BOOST_MK="depends/packages/boost.mk"
+      # - name: Force Boost compiler after native toolchain reset
+      #   if: matrix.name == 'x86_64-macos'
+      #   shell: bash
+      #   run: |
+      #     echo "🔨 Re-forcing Boost CXX after native_* reset…"
+      #     BOOST_MK="depends/packages/boost.mk"
 
-          # Inject correct compiler for Boost (fixes CXX becoming empty)
-          sed -i 's|b2 |b2 cxx=$(host)-clang++ |g' "$BOOST_MK"
+      #     # Inject correct compiler for Boost (fixes CXX becoming empty)
+      #     sed -i 's|b2 |b2 cxx=$(host)-clang++ |g' "$BOOST_MK"
 
-          # Extra safety: ensure project-config.jam always declares a compiler
-          sed -i "/project-config.jam/a echo \"using gcc : : $(host)-clang++ ;\" >> project-config.jam" "$BOOST_MK"
+      #     # Extra safety: ensure project-config.jam always declares a compiler
+      #     sed -i "/project-config.jam/a echo \"using gcc : : $(host)-clang++ ;\" >> project-config.jam" "$BOOST_MK"
 
-          echo "✅ Boost will now ALWAYS have a real compiler and will never emit empty CXX."
+      #     echo "✅ Boost will now ALWAYS have a real compiler and will never emit empty CXX."
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
