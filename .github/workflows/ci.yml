@@ -395,6 +395,23 @@ jobs:
 
           echo "✅ Boost toolset pinned to darwin-10.0.0 (no conflicts)."
 
+      - name: Remove unsupported -fcoalesce-templates from Boost
+        if: matrix.name == 'x86_64-macos'
+        shell: bash
+        run: |
+          echo "🔧 Stripping invalid -fcoalesce-templates flag from Boost build scripts..."
+
+          # Patch main Boost build rules
+          find depends/work/build/x86_64-apple-darwin11/boost \
+            -name "*.jam" -o -name "*.v2" -o -name "gcc.jam" -o -name "darwin.jam" | \
+            xargs sed -i 's/-fcoalesce-templates//g'
+
+          # Patch any remaining flags in generated Boost b2 command lines
+          find depends/work/build/x86_64-apple-darwin11/boost \
+            -type f | xargs sed -i 's/-fcoalesce-templates//g'
+
+          echo "✅ Removed -fcoalesce-templates from Boost."
+
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
 
