@@ -405,29 +405,35 @@ jobs:
 
           echo "✅ Boost toolset pinned to darwin-10.0.0 (no conflicts)."
 
-      - name: Build depends
-        run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
-
-      - name: Remove unsupported -fcoalesce-templates from Boost
+      - name: Patch Boost darwin toolset at source-level (before depends)
         if: matrix.name == 'x86_64-macos'
         shell: bash
         run: |
-          echo "🔧 Stripping invalid -fcoalesce-templates flag from Boost build scripts..."
+          BOOST_MK="depends/packages/boost.mk"
+          PATCH_DIR="depends/patches/boost"
+          mkdir -p "$PATCH_DIR"
 
-          # Find the actual Boost build directory (hash is random)
-          BOOST_DIR=$(find depends/work/build -type d -path "*x86_64-apple-darwin11/boost*" | head -n 1)
+          echo "🔧 Creating darwin.jam flag removal patch..."
+          cat << 'EOF' > "$PATCH_DIR/remove-coalesce.patch"
+          --- tools/build/src/tools/darwin.jam
+          +++ tools/build/src/tools/darwin.jam
+          @@ -50,7 +50,7 @@
+              # flags for Darwin toolset
+          -    flags darwin.compile.c++ OPTIONS <cxxflags>"-fcoalesce-templates";
+          +    # -fcoalesce-templates removed for cross-compiler compatibility
+          EOF
 
-          if [ -z "$BOOST_DIR" ]; then
-            echo "❌ Boost build directory not found!"
-            exit 1
+          echo "📌 Injecting the patch hook into boost.mk..."
+          # Insert AFTER extract step
+          if ! grep -q "remove-coalesce.patch" "$BOOST_MK"; then
+            sed -i '/extract/s|$| \&\& patch -p1 < $(BASEDIR)\/patches\/boost\/remove-coalesce.patch|' "$BOOST_MK"
           fi
 
-          echo "📁 Boost directory: $BOOST_DIR"
+          echo "✅ Boost patch installed into depends system."
 
-          # Remove the invalid compiler flag everywhere
-          find "$BOOST_DIR" -type f -print0 | xargs -0 sed -i 's/-fcoalesce-templates//g'
 
-          echo "✅ Removed -fcoalesce-templates from all Boost build sources."
+      - name: Build depends
+        run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
 
       - name: CCache
         uses: actions/cache@v4
