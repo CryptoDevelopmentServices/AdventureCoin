@@ -373,46 +373,6 @@ jobs:
           echo "${ZSHA}  depends/sources/zlib-${ZVER}.tar.gz" > depends/work/download/zlib-zlib-${ZVER}/zlib-${ZVER}.tar.gz.hash || true
           echo "✅ zlib ${ZVER} patched to KDE mirror with correct checksum."
 
-      # 🧩 Fix Boost darwin cross-build toolchain issue (-arch flag error)
-      - name: Fix Boost toolset and compilers for macOS cross-build
-        if: matrix.name == 'x86_64-macos'
-        shell: bash
-        run: |
-          set -e
-          echo "⚙️ Hard-forcing Boost to use gcc toolset (mapped to cross clang)..."
-
-          export CC=x86_64-apple-darwin11-clang
-          export CXX=x86_64-apple-darwin11-clang++
-          BOOST_MK="depends/packages/boost.mk"
-
-          echo "🔍 Editing $BOOST_MK ..."
-
-          # 1️⃣ FORCE BOOSTRAP TO USE GCC TOOLSET
-          echo "🔨 Forcing bootstrap.sh to select gcc toolset..."
-          sed -i 's|./bootstrap.sh|./bootstrap.sh --with-toolset=gcc|g' "$BOOST_MK"
-
-          # 2️⃣ FORCE ALL B2 INVOCATIONS TO USE GCC TOOLSET
-          echo "🔨 Enforcing b2 toolset override..."
-          sed -i 's|./b2|./b2 toolset=gcc|g' "$BOOST_MK"
-          sed -i 's|b2 |b2 toolset=gcc |g' "$BOOST_MK"
-          sed -i 's|bjam |bjam toolset=gcc |g' "$BOOST_MK"
-
-          # 3️⃣ NUKE ANY DARWIN AUTODETECT PATHS (THEY BREAK CROSS-BUILD)
-          echo "🧹 Removing darwin autodetect from boost.mk..."
-          sed -i 's/toolset=darwin//g' "$BOOST_MK"
-          sed -i 's/darwin//g' "$BOOST_MK"
-
-          # 4️⃣ VALIDATION LOGGING
-          echo "--------------------------------------"
-          echo "📄 VALIDATION — toolset lines in boost.mk:"
-          grep -n "toolset" "$BOOST_MK" || true
-          echo "📄 VALIDATION — patched bootstrap/b2 references:"
-          grep -n "bootstrap.sh" "$BOOST_MK" || true
-          grep -n "b2 " "$BOOST_MK" || true
-          echo "--------------------------------------"
-
-          echo "🟢 Boost toolset override block completed successfully!"
-
       - name: Fix Boost toolset clash for macOS cross-build
         if: matrix.name == 'x86_64-macos'
         shell: bash
@@ -481,6 +441,37 @@ jobs:
           echo "--------------------------------------"
 
           echo "✅ Hardened Boost GCC override successfully installed."
+
+      - name: Force Darwin linker + binutils for cross-build
+        if: matrix.name == 'x86_64-macos'
+        shell: bash
+        run: |
+          echo "🔧 Forcing Darwin cross toolchain binutils..."
+          export CC=x86_64-apple-darwin11-clang
+          export CXX=x86_64-apple-darwin11-clang++
+          export LD=x86_64-apple-darwin11-ld
+          export AR=x86_64-apple-darwin11-ar
+          export RANLIB=x86_64-apple-darwin11-ranlib
+          export STRIP=x86_64-apple-darwin11-strip
+          export NM=x86_64-apple-darwin11-nm
+          export AS=x86_64-apple-darwin11-as
+
+          echo "CC=$CC"
+          echo "CXX=$CXX"
+          echo "LD=$LD"
+          echo "AR=$AR"
+          echo "RANLIB=$RANLIB"
+
+          # Make available to all substeps
+          echo "CC=$CC" >> $GITHUB_ENV
+          echo "CXX=$CXX" >> $GITHUB_ENV
+          echo "LD=$LD" >> $GITHUB_ENV
+          echo "AR=$AR" >> $GITHUB_ENV
+          echo "RANLIB=$RANLIB" >> $GITHUB_ENV
+          echo "NM=$NM" >> $GITHUB_ENV
+          echo "AS=$AS" >> $GITHUB_ENV
+          echo "STRIP=$STRIP" >> $GITHUB_ENV
+
 
       # - name: Fix libevent cross-compile for macOS
       #   if: matrix.name == 'x86_64-macos'
