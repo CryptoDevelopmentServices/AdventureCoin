@@ -15,24 +15,23 @@ $(package)_config_opts_mingw32=binary-format=pe target-os=windows threadapi=win3
 $(package)_config_opts_x86_64_mingw32=address-model=64
 $(package)_config_opts_i686_mingw32=address-model=32
 $(package)_config_opts_i686_linux=address-model=32 architecture=x86
-
 $(package)_toolset_$(host_os)=gcc
 $(package)_archiver_$(host_os)=$($(package)_ar)
 $(package)_toolset_darwin=darwin
 $(package)_archiver_darwin=$($(package)_libtool)
-
-$(package)_config_libraries=chrono,filesystem,program_options,system,thread,test
+$(package)_config_libraries=chrono,filesystem,program_options,system,thread
+$(package)_config_opts += --without-test --without-wave --without-signals --without-type_erasure
 $(package)_cxxflags=-std=c++11 -fvisibility=hidden
 $(package)_cxxflags_linux=-fPIC
 endef
 
 define $(package)_preprocess_cmds
-  # Strip unsupported -fcoalesce-templates flag from all Boost build scripts
-  if grep -R "fcoalesce-templates" . >/dev/null 2>&1; then \
-    echo "Stripping -fcoalesce-templates from Boost sources..."; \
-    grep -rl "fcoalesce-templates" . | xargs sed -i.bak 's/-fcoalesce-templates//g'; \
-  fi
-  echo "using $($(package)_toolset_$(host_os)) : : $($(package)_cxx) : <cxxflags>\"$($(package)_cxxflags) $($(package)_cppflags)\" <linkflags>\"$($(package)_ldflags)\" <archiver>\"$($(package)_archiver_$(host_os))\" <striper>\"$(host_STRIP)\"  <ranlib>\"$(host_RANLIB)\" <rc>\"$(host_WINDRES)\" : ;" > user-config.jam
+	# Strip unsupported -fcoalesce-templates flag from Boost sources
+	@if grep -R "fcoalesce-templates" . >/dev/null 2>&1; then \
+		echo "Stripping -fcoalesce-templates from Boost sources..."; \
+		grep -rl "fcoalesce-templates" . | xargs sed -i.bak 's/-fcoalesce-templates//g'; \
+	fi
+	echo "using $($(package)_toolset_$(host_os)) : : $($(package)_cxx) : <cxxflags>\"$($(package)_cxxflags) $($(package)_cppflags)\" <linkflags>\"$($(package)_ldflags)\" <archiver>\"$($(package)_archiver_$(host_os))\" <striper>\"$(host_STRIP)\" <ranlib>\"$(host_RANLIB)\" <rc>\"$(host_WINDRES)\" : ;" > user-config.jam
 endef
 
 define $(package)_config_cmds
