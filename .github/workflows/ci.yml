@@ -405,32 +405,40 @@ jobs:
 
           echo "✅ Boost toolset pinned to darwin-10.0.0 (no conflicts)."
 
-      - name: Patch Boost darwin toolset at source-level (before depends)
+      - name: Patch Boost to remove ALL fcoalesce-templates injections
         if: matrix.name == 'x86_64-macos'
         shell: bash
         run: |
-          BOOST_MK="depends/packages/boost.mk"
+          echo "🔥 Creating full Boost patch to remove fcoalesce-templates..."
+
           PATCH_DIR="depends/patches/boost"
           mkdir -p "$PATCH_DIR"
 
-          echo "🔧 Creating darwin.jam flag removal patch..."
           cat << 'EOF' > "$PATCH_DIR/remove-coalesce.patch"
-          --- tools/build/src/tools/darwin.jam
-          +++ tools/build/src/tools/darwin.jam
-          @@ -50,7 +50,7 @@
-              # flags for Darwin toolset
-          -    flags darwin.compile.c++ OPTIONS <cxxflags>"-fcoalesce-templates";
-          +    # -fcoalesce-templates removed for cross-compiler compatibility
+          --- tools/build/src/tools/clang.jam
+          +++ tools/build/src/tools/clang.jam
+          @@ -140,7 +140,7 @@
+              # Darwin specific options
+          -    flags clang.compile OPTIONS <cxxflags>"-fcoalesce-templates" : <target-os>darwin ;
+          +    # removed -fcoalesce-templates for cross-compiler
+
+          --- tools/build/src/tools/gcc.jam
+          +++ tools/build/src/tools/gcc.jam
+          @@ -210,7 +210,7 @@
+              # Darwin specific options
+          -    flags gcc.compile OPTIONS <cxxflags>"-fcoalesce-templates" : <target-os>darwin ;
+          +    # removed -fcoalesce-templates for cross-compiler
           EOF
 
-          echo "📌 Injecting the patch hook into boost.mk..."
-          # Insert AFTER extract step
+          BOOST_MK="depends/packages/boost.mk"
+
+          echo "📌 Injecting global Boost patch into boost.mk..."
+
           if ! grep -q "remove-coalesce.patch" "$BOOST_MK"; then
-            sed -i '/extract/s|$| \&\& patch -p1 < $(BASEDIR)\/patches\/boost\/remove-coalesce.patch|' "$BOOST_MK"
+            sed -i '/extract/s|$| \&\& patch -p1 < $(BASEDIR)/patches/boost/remove-coalesce.patch|' "$BOOST_MK"
           fi
 
-          echo "✅ Boost patch installed into depends system."
-
+          echo "✅ Boost global patch installed."
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
