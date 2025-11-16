@@ -472,6 +472,25 @@ jobs:
           echo "AS=$AS" >> $GITHUB_ENV
           echo "STRIP=$STRIP" >> $GITHUB_ENV
 
+      - name: Reset CC/CXX for native tools (cdrkit fix)
+        if: matrix.name == 'x86_64-macos'
+        shell: bash
+        run: |
+          echo "🩹 Resetting CC/CXX for native tools (cdrkit needs Linux GCC)..."
+          unset CC
+          unset CXX
+
+          # Also ensure default system compilers are present
+          export CC=/usr/bin/gcc
+          export CXX=/usr/bin/g++
+
+          echo "Using native Linux compiler for native tools:"
+          echo "CC=$(which $CC)"
+          echo "CXX=$(which $CXX)"
+
+          # Make available to next steps
+          echo "CC=$CC" >> $GITHUB_ENV
+          echo "CXX=$CXX" >> $GITHUB_ENV
 
       # - name: Fix libevent cross-compile for macOS
       #   if: matrix.name == 'x86_64-macos'
