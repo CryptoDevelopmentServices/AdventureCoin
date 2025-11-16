@@ -122,7 +122,7 @@ jobs:
             run-bench: false
             check-security: true
             check-symbols: false
-            dep-opts: ""
+            dep-opts: "--without-test"
             config-opts: "--with-gui=qt5 --disable-tests"
             goal: deploy
             sdk: 10.11
