@@ -405,40 +405,22 @@ jobs:
 
           echo "✅ Boost toolset pinned to darwin-10.0.0 (no conflicts)."
 
-      # 🧩 macOS: Wrap clang++ to strip unsupported -fcoalesce-templates
-      - name: Install clang++ wrapper to strip -fcoalesce-templates
+      - name: Disable Boost.test to avoid -fcoalesce-templates
         if: matrix.name == 'x86_64-macos'
         shell: bash
         run: |
-          set -euo pipefail
+          BOOST_MK="depends/packages/boost.mk"
 
-          echo "🔧 Creating clang++ wrapper to strip -fcoalesce-templates..."
+          echo "🛠 Removing Boost 'test' library for macOS (avoids -fcoalesce-templates)..."
 
-          mkdir -p "$HOME/cc-wrap"
+          sed -i 's/,test//g' "$BOOST_MK"
+          sed -i 's/test,//g' "$BOOST_MK"
+          sed -i 's/test//g' "$BOOST_MK"
 
-          cat > "$HOME/cc-wrap/clang++" << 'EOF'
-          #!/usr/bin/env bash
-          # Wrapper for clang++ that drops -fcoalesce-templates, which Boost 1.64 tries to use.
-          args=()
-          for arg in "$@"; do
-            if [ "$arg" = "-fcoalesce-templates" ]; then
-              # skip this unsupported flag
-              continue
-            fi
-            args+=("$arg")
-          done
-
-          # Call the real system clang++ (Ubuntu's)
-          exec /usr/bin/clang++ "${args[@]}"
-          EOF
-
-          chmod +x "$HOME/cc-wrap/clang++"
-
-          # Put our wrapper BEFORE everything else in PATH
-          echo "$HOME/cc-wrap" >> "$GITHUB_PATH"
-
-          echo "✅ clang++ wrapper installed and added to PATH."
-
+          echo "📌 Resulting libraries:"
+          grep "_config_libraries" "$BOOST_MK"
+          
+          echo "✅ Boost test library disabled for macOS."
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
