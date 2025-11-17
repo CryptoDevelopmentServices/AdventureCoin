@@ -35,9 +35,8 @@ jobs:
           - i686-linux
           - i686-win
           - x86_64-linux
-          - x86_64-macos
+          # - x86_64-macos
           - x86_64-win
-          - arm64-apple
         include:
           - name: i686-linux
             host: i686-pc-linux-gnu
@@ -115,30 +114,18 @@ jobs:
             dep-opts: ""
             config-opts: "--with-gui=qt5 --disable-tests"
             goal: install
-          - name: x86_64-macos
-            host: x86_64-apple-darwin11
-            container: ubuntu:20.04
-            packages: cmake imagemagick libcap-dev librsvg2-bin libz-dev libbz2-dev libtiff-tools libtinfo5 xorriso
-            run-bench: false
-            check-security: true
-            check-symbols: false
-            dep-opts: ""
-            config-opts: "--with-gui=qt5 --disable-tests"
-            goal: deploy
-            sdk: 10.11
-            sdk-shasum: "bec9d089ebf2e2dd59b1a811a38ec78ebd5da18cbbcd6ab39d1e59f64ac5033f"
-          - name: arm64-apple
-            host: arm64-apple-darwin20
-            container: ubuntu:20.04
-            packages: cmake imagemagick libcap-dev librsvg2-bin libz-dev libbz2-dev libtiff-tools libtinfo5 xorriso
-            run-bench: false
-            check-security: true
-            check-symbols: false
-            dep-opts: ""
-            config-opts: "--with-gui=qt5 --disable-tests"
-            goal: deploy
-            sdk: 11.00
-            sdk-shasum: "1fa4b5a78b2f9fbbcbfda642d3a0b7dcd46b3f5d95f94dfda59b3d07071d1614"
+          # - name: x86_64-macos
+          #   host: x86_64-apple-darwin11
+          #   container: ubuntu:20.04
+          #   packages: cmake imagemagick libcap-dev librsvg2-bin libz-dev libbz2-dev libtiff-tools libtinfo5 xorriso
+          #   run-bench: false
+          #   check-security: true
+          #   check-symbols: false
+          #   dep-opts: ""
+          #   config-opts: "--with-gui=qt5 --disable-tests"
+          #   goal: deploy
+          #   sdk: 10.11
+          #   sdk-shasum: "bec9d089ebf2e2dd59b1a811a38ec78ebd5da18cbbcd6ab39d1e59f64ac5033f"
 
     runs-on: ubuntu-22.04
     container:
@@ -193,7 +180,6 @@ jobs:
           key: ${{ matrix.name }}-${{ env.cache-name }}-${{ hashFiles('.github/workflows/ci.yml') }}
 
       - name: Install SDK
-        if: matrix.name == 'x86_64-macos'
         env:
           SDK_URL: https://bitcoincore.org/depends-sources/sdks
           sdk-filename: MacOSX${{ matrix.sdk }}.sdk.tar.gz
@@ -212,25 +198,6 @@ jobs:
 
           # Extract SDK
           tar -C depends/SDKs -xf depends/sdk-sources/${{ env.sdk-filename }}
-
-      - name: Install macOS 11 SDK for ARM64
-        if: matrix.name == 'arm64-apple'
-        shell: bash
-        run: |
-          set -e
-
-          mkdir -p depends/sdk-sources depends/SDKs
-
-          SDK_URL="https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX11.3.sdk.tar.xz"
-
-          echo "🌐 Downloading macOS 11.3 SDK..."
-          curl -L --fail "$SDK_URL" -o depends/sdk-sources/MacOSX11.3.sdk.tar.xz
-
-          echo "📦 Extracting SDK..."
-          tar -xJf depends/sdk-sources/MacOSX11.3.sdk.tar.xz -C depends/SDKs
-
-          echo "🔥 macOS SDK ready:"
-          ls -lha depends/SDKs
 
       - name: Dependency cache
         uses: actions/cache@v4
