@@ -114,18 +114,18 @@ jobs:
             dep-opts: ""
             config-opts: "--with-gui=qt5 --disable-tests"
             goal: install
-          - name: x86_64-macos
-            host: x86_64-apple-darwin11
-            container: ubuntu:20.04
-            packages: cmake imagemagick libcap-dev librsvg2-bin libz-dev libbz2-dev libtiff-tools libtinfo5 xorriso
-            run-bench: false
-            check-security: true
-            check-symbols: false
-            dep-opts: ""
-            config-opts: "--with-gui=qt5 --disable-tests"
-            goal: deploy
-            sdk: 10.11
-            sdk-shasum: "bec9d089ebf2e2dd59b1a811a38ec78ebd5da18cbbcd6ab39d1e59f64ac5033f"
+          # - name: x86_64-macos
+          #   host: x86_64-apple-darwin11
+          #   container: ubuntu:20.04
+          #   packages: cmake imagemagick libcap-dev librsvg2-bin libz-dev libbz2-dev libtiff-tools libtinfo5 xorriso
+          #   run-bench: false
+          #   check-security: true
+          #   check-symbols: false
+          #   dep-opts: ""
+          #   config-opts: "--with-gui=qt5 --disable-tests"
+          #   goal: deploy
+          #   sdk: 10.11
+          #   sdk-shasum: "bec9d089ebf2e2dd59b1a811a38ec78ebd5da18cbbcd6ab39d1e59f64ac5033f"
 
     runs-on: ubuntu-22.04
     container:
@@ -170,34 +170,34 @@ jobs:
           git submodule update --init --recursive
           chmod +x depends/config.guess depends/config.sub || true
 
-      - name: SDK cache
-        if: ${{ matrix.sdk }}
-        uses: actions/cache@v4
-        env:
-          cache-name: sdk
-        with:
-          path: ./depends/sdk-sources
-          key: ${{ matrix.name }}-${{ env.cache-name }}-${{ hashFiles('.github/workflows/ci.yml') }}
+      # - name: SDK cache
+      #   if: ${{ matrix.sdk }}
+      #   uses: actions/cache@v4
+      #   env:
+      #     cache-name: sdk
+      #   with:
+      #     path: ./depends/sdk-sources
+      #     key: ${{ matrix.name }}-${{ env.cache-name }}-${{ hashFiles('.github/workflows/ci.yml') }}
 
-      - name: Install SDK
-        env:
-          SDK_URL: https://bitcoincore.org/depends-sources/sdks
-          sdk-filename: MacOSX${{ matrix.sdk }}.sdk.tar.gz
-        run: |
-          mkdir -p ./depends/sdk-sources ./depends/SDKs
+      # - name: Install SDK
+      #   env:
+      #     SDK_URL: https://bitcoincore.org/depends-sources/sdks
+      #     sdk-filename: MacOSX${{ matrix.sdk }}.sdk.tar.gz
+      #   run: |
+      #     mkdir -p ./depends/sdk-sources ./depends/SDKs
 
-          # Try primary (Bitcoin Core mirror)
-          echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c || \
-          curl --location --fail "$SDK_URL/${{ env.sdk-filename }}" \
-            -o "depends/sdk-sources/${{ env.sdk-filename }}" || \
-          curl --location --fail "https://raw.githubusercontent.com/theuni/osxcross/master/tarballs/${{ env.sdk-filename }}" \
-            -o "depends/sdk-sources/${{ env.sdk-filename }}"
+      #     # Try primary (Bitcoin Core mirror)
+      #     echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c || \
+      #     curl --location --fail "$SDK_URL/${{ env.sdk-filename }}" \
+      #       -o "depends/sdk-sources/${{ env.sdk-filename }}" || \
+      #     curl --location --fail "https://raw.githubusercontent.com/theuni/osxcross/master/tarballs/${{ env.sdk-filename }}" \
+      #       -o "depends/sdk-sources/${{ env.sdk-filename }}"
 
-          # Verify checksum again
-          echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c
+      #     # Verify checksum again
+      #     echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c
 
-          # Extract SDK
-          tar -C depends/SDKs -xf depends/sdk-sources/${{ env.sdk-filename }}
+      #     # Extract SDK
+      #     tar -C depends/SDKs -xf depends/sdk-sources/${{ env.sdk-filename }}
 
       - name: Dependency cache
         uses: actions/cache@v4
