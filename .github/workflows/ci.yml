@@ -383,15 +383,27 @@ jobs:
           echo "${ZSHA}  depends/sources/zlib-${ZVER}.tar.gz" > depends/work/download/zlib-zlib-${ZVER}/zlib-${ZVER}.tar.gz.hash || true
           echo "✅ zlib ${ZVER} patched to KDE mirror with correct checksum."
 
-      - name: Force Boost to use the macOS cross-compiler
+      - name: Patch Boost toolset to prevent version clashes
         if: matrix.name == 'x86_64-macos'
         shell: bash
         run: |
-          mkdir -p depends/sources
-          echo "using darwin : : x86_64-apple-darwin11-clang++ ;" > depends/sources/user-config.jam
+          BOOST_MK="depends/packages/boost.mk"
+          USERCFG="depends/sources/boost_1_64_0/tools/build/src/user-config.jam"
+          mkdir -p "$(dirname $USERCFG)"
 
-          echo "🔧 Injected user-config.jam:"
-          cat depends/sources/user-config.jam
+          echo "🛠 Removing auto-detected darwin toolsets..."
+          sed -i 's/toolset=darwin//g' "$BOOST_MK" || true
+
+          echo "🛠 Forcing Boost to use ONLY darwin-10.0.0..."
+          sed -i 's#./b2 #./b2 toolset=darwin-10.0.0 #g' "$BOOST_MK"
+
+          echo "using darwin : 10.0.0 : x86_64-apple-darwin11-clang++ ;" >> "$USERCFG"
+
+          echo "🔍 Verifying Boost config override:"
+          grep -n "darwin-10.0.0" "$BOOST_MK" || true
+          grep -n "darwin" "$USERCFG" || true
+
+          echo "✅ Boost toolset pinned to darwin-10.0.0 (no conflicts)."
 
       # 🧩 macOS: Wrap clang++ to strip unsupported -fcoalesce-templates
       - name: Install clang++ wrapper to strip -fcoalesce-templates
