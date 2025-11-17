@@ -37,7 +37,7 @@ jobs:
           - x86_64-linux
           - x86_64-macos
           - x86_64-win
-          #- arm64-apple
+          - arm64-apple
         include:
           - name: i686-linux
             host: i686-pc-linux-gnu
@@ -127,18 +127,18 @@ jobs:
             goal: deploy
             sdk: 10.11
             sdk-shasum: "bec9d089ebf2e2dd59b1a811a38ec78ebd5da18cbbcd6ab39d1e59f64ac5033f"
-          # - name: arm64-apple
-          #   host: arm64-apple-darwin20
-          #   container: ubuntu:20.04
-          #   packages: cmake imagemagick libcap-dev librsvg2-bin libz-dev libbz2-dev libtiff-tools libtinfo5 xorriso
-          #   run-bench: false
-          #   check-security: true
-          #   check-symbols: false
-          #   dep-opts: ""
-          #   config-opts: "--with-gui=qt5 --disable-tests"
-          #   goal: deploy
-          #   sdk: 11.00
-          #   sdk-shasum: "1fa4b5a78b2f9fbbcbfda642d3a0b7dcd46b3f5d95f94dfda59b3d07071d1614"
+          - name: arm64-apple
+            host: arm64-apple-darwin20
+            container: ubuntu:20.04
+            packages: cmake imagemagick libcap-dev librsvg2-bin libz-dev libbz2-dev libtiff-tools libtinfo5 xorriso
+            run-bench: false
+            check-security: true
+            check-symbols: false
+            dep-opts: ""
+            config-opts: "--with-gui=qt5 --disable-tests"
+            goal: deploy
+            sdk: 11.00
+            sdk-shasum: "1fa4b5a78b2f9fbbcbfda642d3a0b7dcd46b3f5d95f94dfda59b3d07071d1614"
 
     runs-on: ubuntu-22.04
     container:
@@ -409,17 +409,44 @@ jobs:
         if: matrix.name == 'x86_64-macos'
         shell: bash
         run: |
+          set -e
+
           FILE="depends/packages/boost.mk"
 
           echo "🔍 Before change:"
           grep "_config_libraries" "$FILE" || true
 
-          # Do the exact substitution you described
-          sed -i 's/\$(package)_config_libraries=chrono,filesystem,program_options,system,thread,test/\$(package)_config_libraries=chrono,filesystem,program_options,system,thread/' "$FILE"
+          # Exact substitution
+          sed -i 's#$(package)_config_libraries=chrono,filesystem,program_options,system,thread,test#$(package)_config_libraries=chrono,filesystem,program_options,system,thread#' "$FILE"
 
           echo "✅ After change:"
           grep "_config_libraries" "$FILE" || true
 
+      - name: Patch Boost darwin.jam to remove -fcoalesce-templates
+        if: matrix.name == 'x86_64-macos'
+        shell: bash
+        run: |
+          set -e
+
+          echo "🔍 Locating darwin.jam..."
+          JAM_FILE=$(find depends/sources -type f -path "*boost_1_64_0*/tools/build/src/tools/darwin.jam" | head -n 1)
+
+          if [ -z "$JAM_FILE" ]; then
+            echo "❌ ERROR: darwin.jam not found. Boost may not be extracted yet."
+            exit 1
+          fi
+
+          echo "📄 Found darwin.jam: $JAM_FILE"
+          echo "🔍 Checking for fcoalesce before patch:"
+          grep -R "coalesce" "$JAM_FILE" || echo "✔ Already clean"
+
+          # Remove the offending flag
+          sed -i 's/-fcoalesce-templates//g' "$JAM_FILE"
+
+          echo "🔍 After patch:"
+          grep -R "coalesce" "$JAM_FILE" || echo "✔ No fcoalesce-templates found"
+
+          echo "✅ darwin.jam successfully patched."
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
