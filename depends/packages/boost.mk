@@ -68,8 +68,3 @@ define $(package)_stage_cmds
     --prefix=$($(package)_staging_prefix_dir) \
     $($(package)_config_opts) install
 endef
-
-# Only one download URL — no fallback
-define $(package)_fetch_cmds
-  $(call fetch_file,$(package),$(package)_download_path,$($(package)_file_name),$($(package)_sha256_hash))
-endef
