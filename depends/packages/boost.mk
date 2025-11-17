@@ -1,8 +1,15 @@
 package=boost
 $(package)_version=1_74_0
-$(package)_download_path=https://boostorg.jfrog.io/artifactory/main/release/1.74.0/source/
-$(package)_file_name=$(package)_$($(package)_version).tar.bz2
+
+# Primary CDN mirror (stable + recommended)
+$(package)_download_path=https://archives.boost.io/release/1.74.0/source/
+
+# Fallback (JFrog)
+$(package)_download_path_2=https://boostorg.jfrog.io/artifactory/main/release/1.74.0/source/
+
+$(package)_file_name=boost_1_74_0.tar.bz2
 $(package)_sha256_hash=83bfc1507731a0906e387fc28b7ef5417d591429e51e788417fe9ff025e116b1
+
 
 define $(package)_set_vars
 $(package)_config_opts_release=variant=release
@@ -35,7 +42,7 @@ $(package)_archiver_mingw32=$($(package)_ar)
 boost_archiver_mingw32=$($(package)_archiver_mingw32)
 
 # Same libs as before (you *can* drop "test" if you want)
-$(package)_config_libraries=chrono,filesystem,program_options,system,thread,test
+$(package)_config_libraries=chrono,filesystem,program_options,system,thread
 
 $(package)_cxxflags=-std=c++11 -fvisibility=hidden
 $(package)_cxxflags_linux=-fPIC
@@ -55,4 +62,9 @@ endef
 
 define $(package)_stage_cmds
   ./b2 -d0 -j4 --prefix=$($(package)_staging_prefix_dir) $($(package)_config_opts) install
+endef
+
+define $(package)_fetch_cmds
+  $(call fetch_file,$(package),$(package)_download_path,$($(package)_file_name),$($(package)_sha256_hash)) || \
+  $(call fetch_file,$(package),$(package)_download_path_2,$($(package)_file_name),$($(package)_sha256_hash))
 endef

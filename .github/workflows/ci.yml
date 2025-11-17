@@ -180,6 +180,7 @@ jobs:
           key: ${{ matrix.name }}-${{ env.cache-name }}-${{ hashFiles('.github/workflows/ci.yml') }}
 
       - name: Install SDK
+        if: ${{ matrix.sdk }}
         env:
           SDK_URL: https://bitcoincore.org/depends-sources/sdks
           sdk-filename: MacOSX${{ matrix.sdk }}.sdk.tar.gz
