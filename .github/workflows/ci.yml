@@ -193,7 +193,7 @@ jobs:
           key: ${{ matrix.name }}-${{ env.cache-name }}-${{ hashFiles('.github/workflows/ci.yml') }}
 
       - name: Install SDK
-        if: ${{ matrix.sdk }}
+        if: matrix.name == 'x86_64-macos'
         env:
           SDK_URL: https://bitcoincore.org/depends-sources/sdks
           sdk-filename: MacOSX${{ matrix.sdk }}.sdk.tar.gz
@@ -212,6 +212,25 @@ jobs:
 
           # Extract SDK
           tar -C depends/SDKs -xf depends/sdk-sources/${{ env.sdk-filename }}
+
+      - name: Install macOS 11 SDK for ARM64
+        if: matrix.name == 'arm64-macos'
+        shell: bash
+        run: |
+          set -e
+
+          mkdir -p depends/sdk-sources depends/SDKs
+
+          SDK_URL="https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX11.3.sdk.tar.xz"
+
+          echo "🌐 Downloading macOS 11.3 SDK..."
+          curl -L --fail "$SDK_URL" -o depends/sdk-sources/MacOSX11.3.sdk.tar.xz
+
+          echo "📦 Extracting SDK..."
+          tar -xJf depends/sdk-sources/MacOSX11.3.sdk.tar.xz -C depends/SDKs
+
+          echo "🔥 macOS SDK ready:"
+          ls -lha depends/SDKs
 
       - name: Dependency cache
         uses: actions/cache@v4
@@ -421,6 +440,14 @@ jobs:
 
           echo "✅ After change:"
           grep "_config_libraries" "$FILE" || true
+
+      - name: Pre-extract Boost for macOS patching
+        if: matrix.name == 'x86_64-macos'
+        shell: bash
+        run: |
+          set -e
+          echo "📦 Pre-extracting Boost so darwin.jam exists..."
+          make -C depends HOST=x86_64-apple-darwin11 boost-extract || true
 
       - name: Patch Boost darwin.jam to remove -fcoalesce-templates
         if: matrix.name == 'x86_64-macos'
