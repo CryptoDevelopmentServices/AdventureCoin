@@ -383,43 +383,62 @@ jobs:
           echo "${ZSHA}  depends/sources/zlib-${ZVER}.tar.gz" > depends/work/download/zlib-zlib-${ZVER}/zlib-${ZVER}.tar.gz.hash || true
           echo "✅ zlib ${ZVER} patched to KDE mirror with correct checksum."
 
-      - name: Patch Boost toolset to prevent version clashes
+      # - name: Patch Boost toolset to prevent version clashes
+      #   if: matrix.name == 'x86_64-macos'
+      #   shell: bash
+      #   run: |
+      #     BOOST_MK="depends/packages/boost.mk"
+      #     USERCFG="depends/sources/boost_1_64_0/tools/build/src/user-config.jam"
+      #     mkdir -p "$(dirname $USERCFG)"
+
+      #     echo "🛠 Removing auto-detected darwin toolsets..."
+      #     sed -i 's/toolset=darwin//g' "$BOOST_MK" || true
+
+      #     echo "🛠 Forcing Boost to use ONLY darwin-10.0.0..."
+      #     sed -i 's#./b2 #./b2 toolset=darwin-10.0.0 #g' "$BOOST_MK"
+
+      #     echo "using darwin : 10.0.0 : x86_64-apple-darwin11-clang++ ;" >> "$USERCFG"
+
+      #     echo "🔍 Verifying Boost config override:"
+      #     grep -n "darwin-10.0.0" "$BOOST_MK" || true
+      #     grep -n "darwin" "$USERCFG" || true
+
+      #     echo "✅ Boost toolset pinned to darwin-10.0.0 (no conflicts)."
+
+      # 🧩 macOS: Wrap clang++ to strip unsupported -fcoalesce-templates
+      - name: Install clang++ wrapper to strip -fcoalesce-templates
         if: matrix.name == 'x86_64-macos'
         shell: bash
         run: |
-          BOOST_MK="depends/packages/boost.mk"
-          USERCFG="depends/sources/boost_1_64_0/tools/build/src/user-config.jam"
-          mkdir -p "$(dirname $USERCFG)"
+          set -euo pipefail
 
-          echo "🛠 Removing auto-detected darwin toolsets..."
-          sed -i 's/toolset=darwin//g' "$BOOST_MK" || true
+          echo "🔧 Creating clang++ wrapper to strip -fcoalesce-templates..."
 
-          echo "🛠 Forcing Boost to use ONLY darwin-10.0.0..."
-          sed -i 's#./b2 #./b2 toolset=darwin-10.0.0 #g' "$BOOST_MK"
+          mkdir -p "$HOME/cc-wrap"
 
-          echo "using darwin : 10.0.0 : x86_64-apple-darwin11-clang++ ;" >> "$USERCFG"
+          cat > "$HOME/cc-wrap/clang++" << 'EOF'
+          #!/usr/bin/env bash
+          # Wrapper for clang++ that drops -fcoalesce-templates, which Boost 1.64 tries to use.
+          args=()
+          for arg in "$@"; do
+            if [ "$arg" = "-fcoalesce-templates" ]; then
+              # skip this unsupported flag
+              continue
+            fi
+            args+=("$arg")
+          done
 
-          echo "🔍 Verifying Boost config override:"
-          grep -n "darwin-10.0.0" "$BOOST_MK" || true
-          grep -n "darwin" "$USERCFG" || true
+          # Call the real system clang++ (Ubuntu's)
+          exec /usr/bin/clang++ "${args[@]}"
+          EOF
 
-          echo "✅ Boost toolset pinned to darwin-10.0.0 (no conflicts)."
+          chmod +x "$HOME/cc-wrap/clang++"
 
-      - name: Pre-patch Boost after extraction (macOS only)
-        if: matrix.name == 'x86_64-macos'
-        run: |
-          BOOST_DIR=$(find depends/work/build -type d -path "*boost/*" | head -n 1 || true)
+          # Put our wrapper BEFORE everything else in PATH
+          echo "$HOME/cc-wrap" >> "$GITHUB_PATH"
 
-          if [ -z "$BOOST_DIR" ]; then
-            echo "Boost not extracted yet. Running one extraction pass..."
-            make -C depends HOST=${{ matrix.host }} boost-fetch
-            make -C depends HOST=${{ matrix.host }} boost-extract
-            BOOST_DIR=$(find depends/work/build -type d -path "*boost/*" | head -n 1)
-          fi
+          echo "✅ clang++ wrapper installed and added to PATH."
 
-          echo "📁 Boost dir: $BOOST_DIR"
-          echo "🧹 Removing -fcoalesce-templates..."
-          grep -rl "fcoalesce-templates" "$BOOST_DIR" | xargs sed -i 's/-fcoalesce-templates//g' || true
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
