@@ -405,22 +405,21 @@ jobs:
 
           echo "✅ Boost toolset pinned to darwin-10.0.0 (no conflicts)."
 
-      - name: Disable Boost.test to avoid -fcoalesce-templates
+      - name: Remove Boost.test from depends (exact line edit)
         if: matrix.name == 'x86_64-macos'
         shell: bash
         run: |
-          BOOST_MK="depends/packages/boost.mk"
+          FILE="depends/packages/boost.mk"
 
-          echo "🛠 Removing Boost 'test' library for macOS (avoids -fcoalesce-templates)..."
+          echo "🔍 Before change:"
+          grep "_config_libraries" "$FILE" || true
 
-          sed -i 's/,test//g' "$BOOST_MK"
-          sed -i 's/test,//g' "$BOOST_MK"
-          sed -i 's/test//g' "$BOOST_MK"
+          # Do the exact substitution you described
+          sed -i 's/\$(package)_config_libraries=chrono,filesystem,program_options,system,thread,test/\$(package)_config_libraries=chrono,filesystem,program_options,system,thread/' "$FILE"
 
-          echo "📌 Resulting libraries:"
-          grep "_config_libraries" "$BOOST_MK"
-          
-          echo "✅ Boost test library disabled for macOS."
+          echo "✅ After change:"
+          grep "_config_libraries" "$FILE" || true
+
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
