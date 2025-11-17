@@ -214,7 +214,7 @@ jobs:
           tar -C depends/SDKs -xf depends/sdk-sources/${{ env.sdk-filename }}
 
       - name: Install macOS 11 SDK for ARM64
-        if: matrix.name == 'arm64-macos'
+        if: matrix.name == 'arm64-apple'
         shell: bash
         run: |
           set -e
@@ -447,7 +447,7 @@ jobs:
         run: |
           set -e
           echo "📦 Pre-extracting Boost so darwin.jam exists..."
-          make -C depends HOST=x86_64-apple-darwin11 boost-extract || true
+          make -C depends HOST=x86_64-apple-darwin11 boost || true
 
       - name: Patch Boost darwin.jam to remove -fcoalesce-templates
         if: matrix.name == 'x86_64-macos'
@@ -459,21 +459,13 @@ jobs:
           JAM_FILE=$(find depends/sources -type f -path "*boost_1_64_0*/tools/build/src/tools/darwin.jam" | head -n 1)
 
           if [ -z "$JAM_FILE" ]; then
-            echo "❌ ERROR: darwin.jam not found. Boost may not be extracted yet."
+            echo "❌ ERROR: darwin.jam not found even after extraction!"
             exit 1
           fi
 
-          echo "📄 Found darwin.jam: $JAM_FILE"
-          echo "🔍 Checking for fcoalesce before patch:"
-          grep -R "coalesce" "$JAM_FILE" || echo "✔ Already clean"
-
-          # Remove the offending flag
+          echo "📄 Found darwin.jam at: $JAM_FILE"
           sed -i 's/-fcoalesce-templates//g' "$JAM_FILE"
-
-          echo "🔍 After patch:"
-          grep -R "coalesce" "$JAM_FILE" || echo "✔ No fcoalesce-templates found"
-
-          echo "✅ darwin.jam successfully patched."
+          echo "🔥 Removed -fcoalesce-templates"
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
