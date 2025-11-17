@@ -114,18 +114,18 @@ jobs:
             dep-opts: ""
             config-opts: "--with-gui=qt5 --disable-tests"
             goal: install
-          # - name: x86_64-macos
-          #   host: x86_64-apple-darwin11
-          #   container: ubuntu:20.04
-          #   packages: cmake imagemagick libcap-dev librsvg2-bin libz-dev libbz2-dev libtiff-tools libtinfo5 xorriso
-          #   run-bench: false
-          #   check-security: true
-          #   check-symbols: false
-          #   dep-opts: ""
-          #   config-opts: "--with-gui=qt5 --disable-tests"
-          #   goal: deploy
-          #   sdk: 10.11
-          #   sdk-shasum: "bec9d089ebf2e2dd59b1a811a38ec78ebd5da18cbbcd6ab39d1e59f64ac5033f"
+          - name: x86_64-macos
+            host: x86_64-apple-darwin11
+            container: ubuntu:20.04
+            packages: cmake imagemagick libcap-dev librsvg2-bin libz-dev libbz2-dev libtiff-tools libtinfo5 xorriso
+            run-bench: false
+            check-security: true
+            check-symbols: false
+            dep-opts: ""
+            config-opts: "--with-gui=qt5 --disable-tests"
+            goal: deploy
+            sdk: 10.11
+            sdk-shasum: "bec9d089ebf2e2dd59b1a811a38ec78ebd5da18cbbcd6ab39d1e59f64ac5033f"
 
     runs-on: ubuntu-22.04
     container:
