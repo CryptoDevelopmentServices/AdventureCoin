@@ -33,8 +33,11 @@ $(package)_cxxflags=-std=c++11 -fvisibility=hidden
 $(package)_cxxflags_linux=-fPIC
 endef
 
+# -----------------------------------------------------
+# FIXED: BOOST BUILDS STATIC LIBS USING AR INSTEAD OF LIBTOOL
+# -----------------------------------------------------
 define $(package)_preprocess_cmds
-  echo "using darwin : : $($(package)_cxx) : <cxxflags>\"$($(package)_cxxflags) $($(package)_cppflags)\" <linkflags>\"$($(package)_ldflags)\" ;" > user-config.jam
+  echo "using darwin : : $($(package)_cxx) : <archiver>\"$($(package)_ar)\" <cxxflags>\"$($(package)_cxxflags) $($(package)_cppflags)\" <linkflags>\"$($(package)_ldflags)\" ;" > user-config.jam
 endef
 
 define $(package)_config_cmds
