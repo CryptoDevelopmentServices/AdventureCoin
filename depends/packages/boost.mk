@@ -31,27 +31,32 @@ $(package)_config_libraries=chrono,filesystem,program_options,system,thread
 
 $(package)_cxxflags=-std=c++11 -fvisibility=hidden
 $(package)_cxxflags_linux=-fPIC
-
-# ---------------------------------------------------
-# FIX: Ensure -j always has a valid number
-# If JOBS is empty → use 2
-# ---------------------------------------------------
-$(package)_jobs=$(if $(JOBS),$(JOBS),2)
-
 endef
 
+# ----------------------------------------------------
+# mac-only fix:
+# - If host_os is darwin, create a local ./libtool that
+#   just calls $(package)_ar (cross ar).
+# - Keep existing "using gcc" user-config for others.
+# ----------------------------------------------------
 define $(package)_preprocess_cmds
-  echo "using darwin : : $($(package)_cxx) : <cxxflags>\"$($(package)_cxxflags) $($(package)_cppflags)\" <linkflags>\"$($(package)_ldflags)\" ;" > user-config.jam
+  if [ "$(host_os)" = "darwin" ]; then \
+    echo '#!/bin/sh' > libtool; \
+    echo 'exec $($(package)_ar) "$$@"' >> libtool; \
+    chmod +x libtool; \
+  fi; \
+  echo "using gcc : : $($(package)_cxx) : <archiver>\"$($(package)_ar)\" <ranlib>\"$(host_RANLIB)\" <cxxflags>\"$($(package)_cxxflags) $($(package)_cppflags)\" <linkflags>\"$($(package)_ldflags)\" ;" > user-config.jam
 endef
 
 define $(package)_config_cmds
   ./bootstrap.sh --without-icu --with-libraries=$(boost_config_libraries)
 endef
 
+# Ensure Boost sees ./libtool by putting "." at the front of PATH
 define $(package)_build_cmds
-  ./b2 -d2 -j$($(package)_jobs) --prefix=$($(package)_staging_prefix_dir) $($(package)_config_opts) stage
+  PATH=.:$$PATH ./b2 -d2 -j2 -d1 --prefix=$($(package)_staging_prefix_dir) $($(package)_config_opts) stage
 endef
 
 define $(package)_stage_cmds
-  ./b2 -d0 -j$($(package)_jobs) --prefix=$($(package)_staging_prefix_dir) $($(package)_config_opts) install
+  PATH=.:$$PATH ./b2 -d0 -j4 --prefix=$($(package)_staging_prefix_dir) $($(package)_config_opts) install
 endef
