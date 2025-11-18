@@ -27,6 +27,14 @@ $(package)_archiver_darwin=$($(package)_libtool)
 boost_toolset_darwin=$($(package)_toolset_darwin)
 boost_archiver_darwin=$($(package)_archiver_darwin)
 
+# -----------------------------------------------------
+# macOS host aliases — GitHub CI reports host_os as:
+#   x86_64-apple-darwin11
+# So we map that to "darwin" (same as your working build)
+# -----------------------------------------------------
+boost_toolset_x86_64-apple-darwin11 = $($(package)_toolset_darwin)
+boost_archiver_x86_64-apple-darwin11 = $($(package)_archiver_darwin)
+
 $(package)_config_libraries=chrono,filesystem,program_options,system,thread
 
 $(package)_cxxflags=-std=c++11 -fvisibility=hidden
@@ -34,7 +42,17 @@ $(package)_cxxflags_linux=-fPIC
 endef
 
 define $(package)_preprocess_cmds
-  echo "using $(boost_toolset_$(host_os)) : : $($(package)_cxx) : <cxxflags>\"$($(package)_cxxflags) $($(package)_cppflags)\" <linkflags>\"$($(package)_ldflags)\" <archiver>\"$(boost_archiver_$(host_os))\" <striper>\"$(host_STRIP)\"  <ranlib>\"$(host_RANLIB)\" <rc>\"$(host_WINDRES)\" : ;" > user-config.jam
+  echo "using \
+$(boost_toolset_$(host_os)) \
+: \
+: $($(package)_cxx) \
+: <cxxflags>\"$($(package)_cxxflags) $($(package)_cppflags)\" \
+  <linkflags>\"$($(package)_ldflags)\" \
+  <archiver>\"$(boost_archiver_$(host_os))\" \
+  <striper>\"$(host_STRIP)\" \
+  <ranlib>\"$(host_RANLIB)\" \
+  <rc>\"$(host_WINDRES)\" \
+;" > user-config.jam
 endef
 
 define $(package)_config_cmds
