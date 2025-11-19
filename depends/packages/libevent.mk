@@ -1,9 +1,8 @@
 package=libevent
-$(package)_version=2.1.12-stable
-$(package)_download_path=https://github.com/libevent/libevent/releases/download/release-$($(package)_version)/
-$(package)_file_name=$(package)-$($(package)_version).tar.gz
-$(package)_sha256_hash=92e6de1be9ec176428fd2367677e61ceffc2ee1cb119035037a27d346b0403bb
-$(package)_patches = glibc_compatibility.patch
+$(package)_version=2.1.8-stable
+$(package)_download_path=https://github.com/libevent/libevent/archive/
+$(package)_file_name=release-$($(package)_version).tar.gz
+$(package)_sha256_hash=316ddb401745ac5d222d7c529ef1eada12f58f6376a66c1118eee803cb70f83d
 
 define $(package)_preprocess_cmds
   ./autogen.sh
@@ -15,12 +14,14 @@ define $(package)_set_vars
   $(package)_config_opts_linux=--with-pic
 endef
 
-define $(package)_preprocess_cmds
-  patch -p1 -i $($(package)_patch_dir)/glibc_compatibility.patch
-endef
-
 define $(package)_config_cmds
-  $($(package)_autoconf)
+  ./configure $($(package)_config_opts) $($(package)_config_opts_$(host_os)) \
+    CC="$(host_CC)" \
+    CXX="$(host_CXX)" \
+    AR="$(host_AR)" \
+    RANLIB="$(host_RANLIB)" \
+    STRIP="$(host_STRIP)" \
+    --prefix=$($(package)_staging_prefix_dir)
 endef
 
 define $(package)_build_cmds
@@ -29,7 +30,4 @@ endef
 
 define $(package)_stage_cmds
   $(MAKE) DESTDIR=$($(package)_staging_dir) install
-endef
-
-define $(package)_postprocess_cmds
 endef
