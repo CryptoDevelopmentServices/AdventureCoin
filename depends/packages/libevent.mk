@@ -12,10 +12,19 @@ define $(package)_set_vars
   $(package)_config_opts=--disable-shared --disable-openssl --disable-libevent-regress --disable-samples
   $(package)_config_opts_release=--disable-debug-mode
   $(package)_config_opts_linux=--with-pic
+
+  # *** CRITICAL FIX FOR macOS ***
+  $(package)_config_opts_darwin= \
+     CC="$(host_CC)" \
+     CXX="$(host_CXX)" \
+     AR="$(host_AR)" \
+     RANLIB="$(host_RANLIB)" \
+     STRIP="$(host_STRIP)" \
+     LIBTOOL="$(host)-libtool"
 endef
 
 define $(package)_config_cmds
-  $($(package)_autoconf)
+  ./configure $($(package)_config_opts) $($(package)_config_opts_$(host_os)) --prefix=$($(package)_staging_prefix_dir)
 endef
 
 define $(package)_build_cmds
