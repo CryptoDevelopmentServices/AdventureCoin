@@ -1,0 +1,13 @@
+--- a/Configure
++++ b/Configure
+@@ -20,6 +20,13 @@
+     $config{cross_compile_prefix} = "$ENV{'CROSS_COMPILE'}";
+ }
+
++# On macOS cross-compile: prevent Linux include path leaks
++if ($ENV{'TARGET_OS'} eq 'darwin') {
++    delete $ENV{'CPATH'};
++    delete $ENV{'C_INCLUDE_PATH'};
++    delete $ENV{'CPLUS_INCLUDE_PATH'};
++}
++
