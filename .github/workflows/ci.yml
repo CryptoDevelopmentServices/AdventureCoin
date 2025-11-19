@@ -35,7 +35,7 @@ jobs:
           - i686-linux
           - i686-win
           - x86_64-linux
-          # - x86_64-macos
+          - x86_64-macos
           - x86_64-win
         include:
           - name: i686-linux
@@ -114,18 +114,18 @@ jobs:
             dep-opts: ""
             config-opts: "--with-gui=qt5 --disable-tests"
             goal: install
-          # - name: x86_64-macos
-          #   host: x86_64-apple-darwin11
-          #   container: ubuntu:20.04
-          #   packages: cmake imagemagick libcap-dev librsvg2-bin libz-dev libbz2-dev libtiff-tools libtinfo5 xorriso
-          #   run-bench: false
-          #   check-security: true
-          #   check-symbols: false
-          #   dep-opts: ""
-          #   config-opts: "--with-gui=qt5 --disable-tests"
-          #   goal: deploy
-          #   sdk: 10.11
-          #   sdk-shasum: "bec9d089ebf2e2dd59b1a811a38ec78ebd5da18cbbcd6ab39d1e59f64ac5033f"
+          - name: x86_64-macos
+            host: x86_64-apple-darwin11
+            container: ubuntu:20.04
+            packages: cmake imagemagick libcap-dev librsvg2-bin libz-dev libbz2-dev libtiff-tools libtinfo5 xorriso
+            run-bench: false
+            check-security: true
+            check-symbols: false
+            dep-opts: ""
+            config-opts: "--with-gui=qt5 --disable-tests"
+            goal: deploy
+            sdk: 10.11
+            sdk-shasum: "bec9d089ebf2e2dd59b1a811a38ec78ebd5da18cbbcd6ab39d1e59f64ac5033f"
 
     runs-on: ubuntu-22.04
     container:
@@ -170,34 +170,35 @@ jobs:
           git submodule update --init --recursive
           chmod +x depends/config.guess depends/config.sub || true
 
-      # - name: SDK cache
-      #   if: ${{ matrix.sdk }}
-      #   uses: actions/cache@v4
-      #   env:
-      #     cache-name: sdk
-      #   with:
-      #     path: ./depends/sdk-sources
-      #     key: ${{ matrix.name }}-${{ env.cache-name }}-${{ hashFiles('.github/workflows/ci.yml') }}
+      - name: SDK cache
+        if: ${{ matrix.sdk }}
+        uses: actions/cache@v4
+        env:
+          cache-name: sdk
+        with:
+          path: ./depends/sdk-sources
+          key: ${{ matrix.name }}-${{ env.cache-name }}-${{ hashFiles('.github/workflows/ci.yml') }}
 
-      # - name: Install SDK
-      #   env:
-      #     SDK_URL: https://bitcoincore.org/depends-sources/sdks
-      #     sdk-filename: MacOSX${{ matrix.sdk }}.sdk.tar.gz
-      #   run: |
-      #     mkdir -p ./depends/sdk-sources ./depends/SDKs
+      - name: Install SDK
+        if: ${{ matrix.sdk }}
+        env:
+          SDK_URL: https://bitcoincore.org/depends-sources/sdks
+          sdk-filename: MacOSX${{ matrix.sdk }}.sdk.tar.gz
+        run: |
+          mkdir -p ./depends/sdk-sources ./depends/SDKs
 
-      #     # Try primary (Bitcoin Core mirror)
-      #     echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c || \
-      #     curl --location --fail "$SDK_URL/${{ env.sdk-filename }}" \
-      #       -o "depends/sdk-sources/${{ env.sdk-filename }}" || \
-      #     curl --location --fail "https://raw.githubusercontent.com/theuni/osxcross/master/tarballs/${{ env.sdk-filename }}" \
-      #       -o "depends/sdk-sources/${{ env.sdk-filename }}"
+          # Try primary (Bitcoin Core mirror)
+          echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c || \
+          curl --location --fail "$SDK_URL/${{ env.sdk-filename }}" \
+            -o "depends/sdk-sources/${{ env.sdk-filename }}" || \
+          curl --location --fail "https://raw.githubusercontent.com/theuni/osxcross/master/tarballs/${{ env.sdk-filename }}" \
+            -o "depends/sdk-sources/${{ env.sdk-filename }}"
 
-      #     # Verify checksum again
-      #     echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c
+          # Verify checksum again
+          echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c
 
-      #     # Extract SDK
-      #     tar -C depends/SDKs -xf depends/sdk-sources/${{ env.sdk-filename }}
+          # Extract SDK
+          tar -C depends/SDKs -xf depends/sdk-sources/${{ env.sdk-filename }}
 
       - name: Dependency cache
         uses: actions/cache@v4
@@ -369,70 +370,27 @@ jobs:
           echo "${ZSHA}  depends/sources/zlib-${ZVER}.tar.gz" > depends/work/download/zlib-zlib-${ZVER}/zlib-${ZVER}.tar.gz.hash || true
           echo "✅ zlib ${ZVER} patched to KDE mirror with correct checksum."
 
-      - name: Patch Boost toolset to prevent version clashes
-        if: matrix.name == 'x86_64-macos'
-        shell: bash
-        run: |
-          BOOST_MK="depends/packages/boost.mk"
-          USERCFG="depends/sources/boost_1_64_0/tools/build/src/user-config.jam"
-          mkdir -p "$(dirname $USERCFG)"
+      # - name: Patch Boost toolset to prevent version clashes
+      #   if: matrix.name == 'x86_64-macos'
+      #   shell: bash
+      #   run: |
+      #     BOOST_MK="depends/packages/boost.mk"
+      #     USERCFG="depends/sources/boost_1_64_0/tools/build/src/user-config.jam"
+      #     mkdir -p "$(dirname $USERCFG)"
 
-          echo "🛠 Removing auto-detected darwin toolsets..."
-          sed -i 's/toolset=darwin//g' "$BOOST_MK" || true
+      #     echo "🛠 Removing auto-detected darwin toolsets..."
+      #     sed -i 's/toolset=darwin//g' "$BOOST_MK" || true
 
-          echo "🛠 Forcing Boost to use ONLY darwin-10.0.0..."
-          sed -i 's#./b2 #./b2 toolset=darwin-10.0.0 #g' "$BOOST_MK"
+      #     echo "🛠 Forcing Boost to use ONLY darwin-10.0.0..."
+      #     sed -i 's#./b2 #./b2 toolset=darwin-10.0.0 #g' "$BOOST_MK"
 
-          echo "using darwin : 10.0.0 : x86_64-apple-darwin11-clang++ ;" >> "$USERCFG"
+      #     echo "using darwin : 10.0.0 : x86_64-apple-darwin11-clang++ ;" >> "$USERCFG"
 
-          echo "🔍 Verifying Boost config override:"
-          grep -n "darwin-10.0.0" "$BOOST_MK" || true
-          grep -n "darwin" "$USERCFG" || true
+      #     echo "🔍 Verifying Boost config override:"
+      #     grep -n "darwin-10.0.0" "$BOOST_MK" || true
+      #     grep -n "darwin" "$USERCFG" || true
 
-          echo "✅ Boost toolset pinned to darwin-10.0.0 (no conflicts)."
-
-      - name: Remove Boost.test from depends (exact line edit)
-        if: matrix.name == 'x86_64-macos'
-        shell: bash
-        run: |
-          set -e
-
-          FILE="depends/packages/boost.mk"
-
-          echo "🔍 Before change:"
-          grep "_config_libraries" "$FILE" || true
-
-          # Exact substitution
-          sed -i 's#$(package)_config_libraries=chrono,filesystem,program_options,system,thread,test#$(package)_config_libraries=chrono,filesystem,program_options,system,thread#' "$FILE"
-
-          echo "✅ After change:"
-          grep "_config_libraries" "$FILE" || true
-
-      - name: Pre-extract Boost for macOS patching
-        if: matrix.name == 'x86_64-macos'
-        shell: bash
-        run: |
-          set -e
-          echo "📦 Pre-extracting Boost so darwin.jam exists..."
-          make -C depends HOST=x86_64-apple-darwin11 boost || true
-
-      - name: Patch Boost darwin.jam to remove -fcoalesce-templates
-        if: matrix.name == 'x86_64-macos'
-        shell: bash
-        run: |
-          set -e
-
-          echo "🔍 Locating darwin.jam..."
-          JAM_FILE=$(find depends/sources -type f -path "*boost_1_64_0*/tools/build/src/tools/darwin.jam" | head -n 1)
-
-          if [ -z "$JAM_FILE" ]; then
-            echo "❌ ERROR: darwin.jam not found even after extraction!"
-            exit 1
-          fi
-
-          echo "📄 Found darwin.jam at: $JAM_FILE"
-          sed -i 's/-fcoalesce-templates//g' "$JAM_FILE"
-          echo "🔥 Removed -fcoalesce-templates"
+      #     echo "✅ Boost toolset pinned to darwin-10.0.0 (no conflicts)."
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
