@@ -182,23 +182,32 @@ jobs:
       - name: Install SDK
         if: ${{ matrix.sdk }}
         env:
-          SDK_URL: https://bitcoincore.org/depends-sources/sdks
           sdk-filename: MacOSX${{ matrix.sdk }}.sdk.tar.xz
         run: |
+          set -e
+
           mkdir -p ./depends/sdk-sources ./depends/SDKs
 
-          # Try primary (Bitcoin Core mirror)
-          echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c || \
-          curl --location --fail "$SDK_URL/${{ env.sdk-filename }}" \
-            -o "depends/sdk-sources/${{ env.sdk-filename }}" || \
-          curl --location --fail "https://raw.githubusercontent.com/theuni/osxcross/master/tarballs/${{ env.sdk-filename }}" \
-            -o "depends/sdk-sources/${{ env.sdk-filename }}"
+          echo "🔍 Checking cached SDK..."
+          if [ -f depends/sdk-sources/${{ env.sdk-filename }} ]; then
+            echo "🟢 Cached SDK found"
+          else
+            echo "📥 Downloading macOS SDK from osxcross..."
+            curl --location --fail \
+              "https://raw.githubusercontent.com/tpoechtrager/osxcross/master/tarballs/${{ env.sdk-filename }}" \
+              -o "depends/sdk-sources/${{ env.sdk-filename }}" || \
+            curl --location --fail \
+              "https://raw.githubusercontent.com/theuni/osxcross/master/tarballs/${{ env.sdk-filename }}" \
+              -o "depends/sdk-sources/${{ env.sdk-filename }}"
+          fi
 
-          # Verify checksum again
+          echo "🔐 Verifying checksum..."
           echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c
 
-          # Extract SDK
+          echo "📦 Extracting SDK..."
           tar -C depends/SDKs -xf depends/sdk-sources/${{ env.sdk-filename }}
+
+          echo "✅ macOS 10.11 SDK installed (with libc++)"
 
       - name: Dependency cache
         uses: actions/cache@v4
