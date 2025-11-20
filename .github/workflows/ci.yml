@@ -370,27 +370,40 @@ jobs:
           echo "${ZSHA}  depends/sources/zlib-${ZVER}.tar.gz" > depends/work/download/zlib-zlib-${ZVER}/zlib-${ZVER}.tar.gz.hash || true
           echo "✅ zlib ${ZVER} patched to KDE mirror with correct checksum."
 
-      # - name: Patch Boost toolset to prevent version clashes
-      #   if: matrix.name == 'x86_64-macos'
-      #   shell: bash
-      #   run: |
-      #     BOOST_MK="depends/packages/boost.mk"
-      #     USERCFG="depends/sources/boost_1_64_0/tools/build/src/user-config.jam"
-      #     mkdir -p "$(dirname $USERCFG)"
+      - name: Install osxcross (Darwin15 toolchain)
+        if: matrix.name == 'x86_64-macos'
+        shell: bash
+        run: |
+          set -euo pipefail
 
-      #     echo "🛠 Removing auto-detected darwin toolsets..."
-      #     sed -i 's/toolset=darwin//g' "$BOOST_MK" || true
+          echo "🔧 Installing osxcross + Darwin15 cross compiler..."
 
-      #     echo "🛠 Forcing Boost to use ONLY darwin-10.0.0..."
-      #     sed -i 's#./b2 #./b2 toolset=darwin-10.0.0 #g' "$BOOST_MK"
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y \
+            clang llvm cmake bison flex libxml2-dev libssl-dev \
+            libbz2-dev zlib1g-dev libtinfo5 libncurses5 xz-utils make patch
 
-      #     echo "using darwin : 10.0.0 : x86_64-apple-darwin15-clang++ ;" >> "$USERCFG"
+          # Clone osxcross
+          git clone https://github.com/tpoechtrager/osxcross.git
+          cd osxcross
 
-      #     echo "🔍 Verifying Boost config override:"
-      #     grep -n "darwin-10.0.0" "$BOOST_MK" || true
-      #     grep -n "darwin" "$USERCFG" || true
+          # Move the matching SDK into place for osxcross
+          cp ../depends/sdk-sources/MacOSX10.11.sdk.tar.gz tarballs/
 
-      #     echo "✅ Boost toolset pinned to darwin-10.0.0 (no conflicts)."
+          # Build osxcross (unattended)
+          UNATTENDED=1 OSX_VERSION_MIN=10.11 ./build.sh
+
+          # Install the toolchain systemwide
+          sudo cp -R target/* /usr/local/
+
+          echo "🧪 Checking installed toolchain..."
+          which x86_64-apple-darwin15-clang || { echo '❌ clang missing'; exit 1; }
+          which x86_64-apple-darwin15-ld || { echo '❌ ld64 missing'; exit 1; }
+          which x86_64-apple-darwin15-ranlib || true
+          which x86_64-apple-darwin15-ar || true
+          which x86_64-apple-darwin15-strip || true
+
+          echo "✅ macOS cross toolchain installed."
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
