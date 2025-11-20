@@ -115,7 +115,7 @@ jobs:
             config-opts: "--with-gui=qt5 --disable-tests"
             goal: install
           - name: x86_64-macos
-            host: x86_64-apple-darwin11
+            host: x86_64-apple-darwin15
             container: ubuntu:20.04
             packages: cmake imagemagick libcap-dev librsvg2-bin libz-dev libbz2-dev libtiff-tools libtinfo5 xorriso
             run-bench: false
@@ -270,7 +270,7 @@ jobs:
           sed -i '/llvm-dsymutil/d' "$CCTOOLS_DIR"
 
           # Patch staging rule to tolerate missing dsymutil
-          find depends/work/build/x86_64-apple-darwin11/ -type f -name "Makefile" -print0 | \
+          find depends/work/build/x86_64-apple-darwin15/ -type f -name "Makefile" -print0 | \
             xargs -0 sed -i '/llvm-dsymutil/d' || true
 
           echo "✅ dsymutil references removed — build will continue without it."
@@ -384,7 +384,7 @@ jobs:
       #     echo "🛠 Forcing Boost to use ONLY darwin-10.0.0..."
       #     sed -i 's#./b2 #./b2 toolset=darwin-10.0.0 #g' "$BOOST_MK"
 
-      #     echo "using darwin : 10.0.0 : x86_64-apple-darwin11-clang++ ;" >> "$USERCFG"
+      #     echo "using darwin : 10.0.0 : x86_64-apple-darwin15-clang++ ;" >> "$USERCFG"
 
       #     echo "🔍 Verifying Boost config override:"
       #     grep -n "darwin-10.0.0" "$BOOST_MK" || true
