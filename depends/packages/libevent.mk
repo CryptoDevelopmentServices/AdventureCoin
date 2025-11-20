@@ -19,17 +19,10 @@ define $(package)_set_vars
   $(package)_config_opts_release=--disable-debug-mode
   $(package)_config_opts_linux=--with-pic
 
-  # macOS cross-compile requires manual override of configure tests
+  # macOS: DO NOT override CC/CXX — let depends toolchain control it
   $(package)_config_opts_darwin= \
-    ac_cv_prog_cc_c_works=yes \
-    ac_cv_c_compiler_gnu=yes \
-    ac_cv_func_malloc_0_nonnull=yes \
     ac_cv_func_realloc_0_nonnull=yes \
-    CC="$(host_CC)" \
-    CXX="$(host_CXX)" \
-    AR="$(host_AR)" \
-    RANLIB="$(host_RANLIB)" \
-    STRIP="$(host_STRIP)"
+    ac_cv_func_malloc_0_nonnull=yes
 endef
 
 define $(package)_config_cmds
