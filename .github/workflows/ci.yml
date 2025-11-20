@@ -182,7 +182,7 @@ jobs:
       - name: Install SDK
         if: ${{ matrix.sdk }}
         env:
-          sdk-filename: MacOSX${{ matrix.sdk }}.sdk.tar.xz
+          sdk-filename: MacOSX${{ matrix.sdk }}.sdk.tar.gz
         run: |
           set -e
 
@@ -192,12 +192,15 @@ jobs:
           if [ -f depends/sdk-sources/${{ env.sdk-filename }} ]; then
             echo "🟢 Cached SDK found"
           else
-            echo "📥 Downloading macOS SDK from osxcross..."
+            echo "📥 Downloading macOS 10.11 SDK..."
             curl --location --fail \
               "https://raw.githubusercontent.com/tpoechtrager/osxcross/master/tarballs/${{ env.sdk-filename }}" \
               -o "depends/sdk-sources/${{ env.sdk-filename }}" || \
             curl --location --fail \
               "https://raw.githubusercontent.com/theuni/osxcross/master/tarballs/${{ env.sdk-filename }}" \
+              -o "depends/sdk-sources/${{ env.sdk-filename }}" || \
+            curl --location --fail \
+              "https://bitcoincore.org/depends-sources/sdks/${{ env.sdk-filename }}" \
               -o "depends/sdk-sources/${{ env.sdk-filename }}"
           fi
 
@@ -207,7 +210,7 @@ jobs:
           echo "📦 Extracting SDK..."
           tar -C depends/SDKs -xf depends/sdk-sources/${{ env.sdk-filename }}
 
-          echo "✅ macOS 10.11 SDK installed (with libc++)"
+          echo "✅ macOS 10.11 SDK installed"
 
       - name: Dependency cache
         uses: actions/cache@v4
