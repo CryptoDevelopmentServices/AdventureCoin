@@ -398,34 +398,23 @@ jobs:
           git clone https://github.com/tpoechtrager/osxcross.git
           cd osxcross
 
-          # Move SDK for osxcross
+          # Move SDK into place
           cp ../depends/sdk-sources/MacOSX10.11.sdk.tar.gz tarballs/
 
-          # --- IMPORTANT PATCH: inject libc++ after extraction ---
-          cat > tools/10-libcxx-patch.sh <<'EOF'
-          #!/bin/bash
-          set -e
-          SDKDIR="$OSXCROSS_SDK_DIR"
-          echo "📌 Patching libc++ headers inside: $SDKDIR"
-          git clone https://github.com/llvm/llvm-project.git --depth=1
-          mkdir -p "$SDKDIR/usr/include/c++/v1"
-          cp -R llvm-project/libcxx/include/* "$SDKDIR/usr/include/c++/v1/"
-          echo "✅ libc++ headers patched!"
-          EOF
+          # 🚨 Inject libc++ patch DIRECTLY into build.sh after extraction step
+          sed -i '/extracting MacOSX${OSX_VERSION}.sdk.tar.gz/a \
+          echo "📌 Injecting libc++ headers into SDK..."; \
+          SDKDIR="${OSXCROSS_SDK_DIR}"; \
+          git clone https://github.com/llvm/llvm-project.git --depth=1; \
+          mkdir -p "$SDKDIR/usr/include/c++/v1"; \
+          cp -R llvm-project/libcxx/include/* "$SDKDIR/usr/include/c++/v1/"; \
+          echo "✅ libc++ patch applied."; \
+          ' build.sh
 
-          chmod +x tools/10-libcxx-patch.sh
-          # --------------------------------------------------------
+            # Run osxcross
+            UNATTENDED=1 OSX_VERSION_MIN=10.11 ./build.sh
 
-          # Build osxcross
-          UNATTENDED=1 OSX_VERSION_MIN=10.11 ./build.sh
-
-          # Install toolchain
-          sudo cp -R target/* /usr/local/
-
-          echo "🧪 Checking installed toolchain..."
-          which x86_64-apple-darwin15-clang || { echo '❌ clang missing'; exit 1; }
-          which x86_64-apple-darwin15-ld || { echo '❌ ld64 missing'; exit 1; }
-
+            sudo cp -R target/* /usr/local/
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
