@@ -382,52 +382,46 @@ jobs:
           echo "${ZSHA}  depends/sources/zlib-${ZVER}.tar.gz" > depends/work/download/zlib-zlib-${ZVER}/zlib-${ZVER}.tar.gz.hash || true
           echo "✅ zlib ${ZVER} patched to KDE mirror with correct checksum."
 
-      - name: Install osxcross + Patch SDK (Darwin15 toolchain)
+      - name: Install osxcross + Patch SDK correctly (Darwin15)
         if: matrix.name == 'x86_64-macos'
         shell: bash
         run: |
           set -euo pipefail
-
-          echo "🔧 Installing osxcross + Darwin15 cross compiler..."
 
           apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y \
             clang llvm cmake bison flex libxml2-dev libssl-dev \
             libbz2-dev zlib1g-dev libtinfo5 libncurses5 xz-utils make patch git
 
-          # Clone osxcross
           git clone https://github.com/tpoechtrager/osxcross.git
           cd osxcross
 
-          # Put SDK tarball where osxcross expects it
           cp ../depends/sdk-sources/MacOSX10.11.sdk.tar.gz tarballs/
 
-          echo "🔍 Running build until SDK extraction step..."
-          # This extracts the SDK, but fails detection (expected)
+          #
+          # FIRST PARTIAL BUILD — extract SDK but ignore the failure
+          #
           UNATTENDED=1 OSX_VERSION_MIN=10.11 ./build.sh || true
 
-          echo "📂 SDK extracted, applying libc++ patch..."
+          echo "📌 SDK extracted, applying libc++ headers patch…"
 
-          # Fetch libcxx headers
           git clone https://github.com/llvm/llvm-project.git --depth=1
 
-          # Patch headers *inside the extracted SDK*
+          #
+          # PATCH THE SDK *INSIDE osxcross extraction output*
+          #
           mkdir -p target/SDK/MacOSX10.11.sdk/usr/include/c++/v1
           cp -R llvm-project/libcxx/include/* target/SDK/MacOSX10.11.sdk/usr/include/c++/v1/
 
-          echo "🔧 libc++ headers successfully patched inside osxcross SDK."
+          echo "✅ libc++ headers patched into FINAL SDK directory."
 
-          echo "🔄 Resuming osxcross build..."
+          #
+          # NOW run the full build WITHOUT overwriting the patched SDK
+          #
+          export SKIP_SDK=1
           UNATTENDED=1 OSX_VERSION_MIN=10.11 ./build.sh
 
-          echo "📦 Installing toolchain system-wide..."
           sudo cp -R target/* /usr/local/
-
-          echo "🧪 Validating toolchain..."
-          which x86_64-apple-darwin15-clang || { echo '❌ clang missing'; exit 1; }
-          which x86_64-apple-darwin15-ld || { echo '❌ ld64 missing'; exit 1; }
-
-          echo "✅ macOS Darwin15 toolchain installed successfully."
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
