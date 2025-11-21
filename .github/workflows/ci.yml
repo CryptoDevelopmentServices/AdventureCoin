@@ -382,6 +382,20 @@ jobs:
           echo "${ZSHA}  depends/sources/zlib-${ZVER}.tar.gz" > depends/work/download/zlib-zlib-${ZVER}/zlib-${ZVER}.tar.gz.hash || true
           echo "✅ zlib ${ZVER} patched to KDE mirror with correct checksum."
 
+      - name: Patch SDK with libc++ headers (fix Darwin15 detection)
+        if: matrix.name == 'x86_64-macos'
+        run: |
+          set -e
+
+          echo "📦 Fetching libc++ headers..."
+          git clone https://github.com/llvm/llvm-project.git --depth=1
+
+          echo "🛠 Installing libc++ headers into SDK..."
+          mkdir -p depends/SDKs/MacOSX10.11.sdk/usr/include/c++/v1
+          cp -R llvm-project/libcxx/include/* depends/SDKs/MacOSX10.11.sdk/usr/include/c++/v1/
+
+          echo "🔧 libc++ headers patched into macOS 10.11 SDK."
+
       - name: Install osxcross (Darwin15 toolchain)
         if: matrix.name == 'x86_64-macos'
         shell: bash
