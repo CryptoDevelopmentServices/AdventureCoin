@@ -376,18 +376,26 @@ jobs:
           echo "${ZSHA}  depends/sources/zlib-${ZVER}.tar.gz" > depends/work/download/zlib-zlib-${ZVER}/zlib-${ZVER}.tar.gz.hash || true
           echo "✅ zlib ${ZVER} patched to KDE mirror with correct checksum."
 
-      - name: Patch SDK with libc++ headers (required for darwin16)
+      - name: Patch SDK with libc++ headers (correct location for osxcross)
         if: matrix.name == 'x86_64-macos'
         run: |
           set -e
           echo "📦 Fetching libc++ headers..."
           git clone https://github.com/llvm/llvm-project.git --depth=1
 
-          echo "📁 Adding libc++ headers to macOS 10.12 SDK..."
-          mkdir -p depends/SDKs/MacOSX10.12.sdk/usr/include/c++/v1
-          cp -R llvm-project/libcxx/include/* depends/SDKs/MacOSX10.12.sdk/usr/include/c++/v1/
+          echo "📁 Unpacking SDK for patch..."
+          mkdir -p osxcross/target/SDK
+          tar xf depends/sdk-sources/MacOSX10.12.sdk.tar.xz -C osxcross/target/SDK/
 
-          echo "✅ libc++ headers added"
+          echo "📁 Adding libc++ headers to the REAL SDK used by osxcross..."
+          mkdir -p osxcross/target/SDK/MacOSX10.12.sdk/usr/include/c++/v1
+          cp -R llvm-project/libcxx/include/* osxcross/target/SDK/MacOSX10.12.sdk/usr/include/c++/v1/
+
+          echo "📦 Repacking patched SDK..."
+          cd osxcross/target/SDK
+          tar cJf ../../tarballs/MacOSX10.12.sdk.tar.xz MacOSX10.12.sdk
+          cd ../../../..
+          echo "✅ Patched SDK ready"
 
       - name: Install osxcross (Darwin16 toolchain)
         if: matrix.name == 'x86_64-macos'
