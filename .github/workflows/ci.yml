@@ -398,6 +398,7 @@ jobs:
 
       - name: Install osxcross (Darwin16 toolchain)
         if: matrix.name == 'x86_64-macos'
+        shell: bash --noprofile --norc
         run: |
           set -euo pipefail
 
