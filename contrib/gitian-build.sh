@@ -181,7 +181,7 @@ then
 fi
 
 # Check for OSX SDK
-if [[ ! -e "gitian-builder/inputs/MacOSX10.11.sdk.tar.gz" && $osx == true ]]
+if [[ ! -e "gitian-builder/inputs/MacOSX10.12.sdk.tar.gz" && $osx == true ]]
 then
     echo "Cannot build for OSX, SDK does not exist. Will build for other OSes"
     osx=false

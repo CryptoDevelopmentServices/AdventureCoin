@@ -124,8 +124,8 @@ jobs:
             dep-opts: ""
             config-opts: "--with-gui=qt5 --disable-tests"
             goal: deploy
-            sdk: 10.11
-            sdk-shasum: "bec9d089ebf2e2dd59b1a811a38ec78ebd5da18cbbcd6ab39d1e59f64ac5033f"
+            sdk: 10.12
+            sdk-shasum: "b314704d85934481c9927a0450db1768baf9af9efe649562fcb1a503bb44512f"
 
     runs-on: ubuntu-22.04
     container:
@@ -182,7 +182,7 @@ jobs:
       - name: Install SDK
         if: ${{ matrix.sdk }}
         env:
-          sdk-filename: MacOSX${{ matrix.sdk }}.sdk.tar.gz
+          sdk-filename: MacOSX${{ matrix.sdk }}.sdk.tar.xz
         run: |
           set -e
 
@@ -192,15 +192,9 @@ jobs:
           if [ -f depends/sdk-sources/${{ env.sdk-filename }} ]; then
             echo "🟢 Cached SDK found"
           else
-            echo "📥 Downloading macOS 10.11 SDK..."
+            echo "📥 Downloading macOS 10.12 SDK..."
             curl --location --fail \
-              "https://raw.githubusercontent.com/tpoechtrager/osxcross/master/tarballs/${{ env.sdk-filename }}" \
-              -o "depends/sdk-sources/${{ env.sdk-filename }}" || \
-            curl --location --fail \
-              "https://raw.githubusercontent.com/theuni/osxcross/master/tarballs/${{ env.sdk-filename }}" \
-              -o "depends/sdk-sources/${{ env.sdk-filename }}" || \
-            curl --location --fail \
-              "https://bitcoincore.org/depends-sources/sdks/${{ env.sdk-filename }}" \
+              "https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/${{ env.sdk-filename }}" \
               -o "depends/sdk-sources/${{ env.sdk-filename }}"
           fi
 
@@ -210,7 +204,7 @@ jobs:
           echo "📦 Extracting SDK..."
           tar -C depends/SDKs -xf depends/sdk-sources/${{ env.sdk-filename }}
 
-          echo "✅ macOS 10.11 SDK installed"
+          echo "💯 macOS 10.12 SDK installed"
 
       - name: Dependency cache
         uses: actions/cache@v4
@@ -388,33 +382,30 @@ jobs:
         run: |
           set -euo pipefail
 
-          echo "🔧 Installing osxcross + Darwin15 cross compiler..."
+          echo "🔧 Installing osxcross + Darwin15 cross compiler"
 
           apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y \
             clang llvm cmake bison flex libxml2-dev libssl-dev \
-            libbz2-dev zlib1g-dev libtinfo5 libncurses5 xz-utils make patch git
+            libbz2-dev zlib1g-dev libtinfo5 libncurses5 xz-utils make patch
 
+          # Clone osxcross
           git clone https://github.com/tpoechtrager/osxcross.git
           cd osxcross
 
-          # Move SDK into place
-          cp ../depends/sdk-sources/MacOSX10.11.sdk.tar.gz tarballs/
+          echo "📦 Copying SDK to osxcross/tarballs/"
+          cp ../depends/sdk-sources/MacOSX10.12.sdk.tar.xz tarballs/
 
-          # 🚨 Inject libc++ patch DIRECTLY into build.sh after extraction step
-          sed -i '/extracting MacOSX${OSX_VERSION}.sdk.tar.gz/a \
-          echo "📌 Injecting libc++ headers into SDK..."; \
-          SDKDIR="${OSXCROSS_SDK_DIR}"; \
-          git clone https://github.com/llvm/llvm-project.git --depth=1; \
-          mkdir -p "$SDKDIR/usr/include/c++/v1"; \
-          cp -R llvm-project/libcxx/include/* "$SDKDIR/usr/include/c++/v1/"; \
-          echo "✅ libc++ patch applied."; \
-          ' build.sh
+          echo "🏗 Building osxcross toolchain..."
+          UNATTENDED=1 OSX_VERSION_MIN=10.11 ./build.sh
 
-            # Run osxcross
-            UNATTENDED=1 OSX_VERSION_MIN=10.11 ./build.sh
+          echo "📥 Installing toolchain..."
+          sudo cp -R target/* /usr/local/
 
-            sudo cp -R target/* /usr/local/
+          echo "🧪 Testing compiler..."
+          which x86_64-apple-darwin15-clang
+          which x86_64-apple-darwin15-clang++
+          x86_64-apple-darwin15-clang --version
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}

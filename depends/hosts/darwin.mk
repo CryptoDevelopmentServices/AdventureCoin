@@ -1,10 +1,10 @@
 # --------------------------------------------------------------------
-# darwin.mk — patched for macOS 10.11 / Darwin15
-# Works with osxcross + ld64 253.3 + SDK 10.11
+# darwin.mk — patched for macOS 10.12 / Darwin15
+# Works with osxcross + ld64 253.3 + SDK 10.12
 # --------------------------------------------------------------------
 
-OSX_MIN_VERSION=10.11
-OSX_SDK_VERSION=10.11
+OSX_MIN_VERSION=10.12
+OSX_SDK_VERSION=10.12
 OSX_SDK=$(SDK_PATH)/MacOSX$(OSX_SDK_VERSION).sdk
 
 # must match ld64 bundled in osxcross + Xcode 7.3.1
