@@ -115,7 +115,7 @@ jobs:
             config-opts: "--with-gui=qt5 --disable-tests"
             goal: install
           - name: x86_64-macos
-            host: x86_64-apple-darwin15
+            host: x86_64-apple-darwin16
             container: ubuntu:20.04
             packages: cmake imagemagick libcap-dev librsvg2-bin libz-dev libbz2-dev libtiff-tools libtinfo5 xorriso
             run-bench: false
@@ -276,7 +276,7 @@ jobs:
           sed -i '/llvm-dsymutil/d' "$CCTOOLS_DIR"
 
           # Patch staging rule to tolerate missing dsymutil
-          find depends/work/build/x86_64-apple-darwin15/ -type f -name "Makefile" -print0 | \
+          find depends/work/build/x86_64-apple-darwin16/ -type f -name "Makefile" -print0 | \
             xargs -0 sed -i '/llvm-dsymutil/d' || true
 
           echo "✅ dsymutil references removed — build will continue without it."
@@ -376,13 +376,26 @@ jobs:
           echo "${ZSHA}  depends/sources/zlib-${ZVER}.tar.gz" > depends/work/download/zlib-zlib-${ZVER}/zlib-${ZVER}.tar.gz.hash || true
           echo "✅ zlib ${ZVER} patched to KDE mirror with correct checksum."
 
-      - name: Install osxcross (Darwin15 toolchain)
+      - name: Patch SDK with libc++ headers (required for darwin16)
+        if: matrix.name == 'x86_64-macos'
+        run: |
+          set -e
+          echo "📦 Fetching libc++ headers..."
+          git clone https://github.com/llvm/llvm-project.git --depth=1
+
+          echo "📁 Adding libc++ headers to macOS 10.12 SDK..."
+          mkdir -p depends/SDKs/MacOSX10.12.sdk/usr/include/c++/v1
+          cp -R llvm-project/libcxx/include/* depends/SDKs/MacOSX10.12.sdk/usr/include/c++/v1/
+
+          echo "✅ libc++ headers added"
+
+      - name: Install osxcross (Darwin16 toolchain)
         if: matrix.name == 'x86_64-macos'
         shell: bash
         run: |
           set -euo pipefail
 
-          echo "🔧 Installing osxcross + Darwin15 cross compiler"
+          echo "🔧 Installing osxcross + Darwin16 cross compiler"
 
           apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -397,15 +410,15 @@ jobs:
           cp ../depends/sdk-sources/MacOSX10.12.sdk.tar.xz tarballs/
 
           echo "🏗 Building osxcross toolchain..."
-          UNATTENDED=1 OSX_VERSION_MIN=10.11 ./build.sh
+          UNATTENDED=1 OSX_VERSION_MIN=10.12 ./build.sh
 
           echo "📥 Installing toolchain..."
           sudo cp -R target/* /usr/local/
 
           echo "🧪 Testing compiler..."
-          which x86_64-apple-darwin15-clang
-          which x86_64-apple-darwin15-clang++
-          x86_64-apple-darwin15-clang --version
+          which x86_64-apple-darwin16-clang
+          which x86_64-apple-darwin16-clang++
+          x86_64-apple-darwin16-clang --version
 
       - name: Build depends
         run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
