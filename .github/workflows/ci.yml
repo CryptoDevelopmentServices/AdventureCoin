@@ -409,15 +409,17 @@ jobs:
             clang llvm cmake bison flex libxml2-dev libssl-dev \
             libbz2-dev zlib1g-dev libtinfo5 libncurses5 xz-utils make patch
 
-          echo "🧹 Cleaning any previous tree..."
           rm -rf osxcross
-
-          echo "📦 Cloning osxcross..."
           git clone https://github.com/tpoechtrager/osxcross.git
           cd osxcross
 
-          echo "📦 Injecting patched SDK..."
+          echo "📦 Copying SDK"
           cp ../depends/sdk-sources/MacOSX10.12.sdk.tar.xz tarballs/
+
+          # ✨ Fix: remove incompatible libc++ patches
+          echo "🧹 Removing incompatible osxcross libc++ patches"
+          rm -f patches/libcxx_fix_hash_table.patch || true
+          rm -f tarballs/patches/*libcxx*.patch || true
 
           echo "🏗 Building osxcross..."
           UNATTENDED=1 OSX_VERSION_MIN=10.12 ./build.sh
@@ -425,9 +427,8 @@ jobs:
           echo "📥 Installing toolchain..."
           sudo cp -R target/* /usr/local/
 
-          echo "🧪 Testing compiler..."
+          echo "🧪 Testing..."
           which x86_64-apple-darwin16-clang
-          which x86_64-apple-darwin16-clang++
           x86_64-apple-darwin16-clang --version
 
       - name: Build depends
