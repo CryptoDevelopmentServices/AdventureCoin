@@ -392,6 +392,7 @@ jobs:
           cp -R llvm-project/libcxx/include/* osxcross/target/SDK/MacOSX10.12.sdk/usr/include/c++/v1/
 
           echo "📦 Repacking patched SDK..."
+          mkdir -p osxcross/tarballs        # ← THIS was missing!
           cd osxcross/target/SDK
           tar cJf ../../tarballs/MacOSX10.12.sdk.tar.xz MacOSX10.12.sdk
           cd ../../../..
