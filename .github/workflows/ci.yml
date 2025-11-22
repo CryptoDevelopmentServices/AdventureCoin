@@ -409,7 +409,6 @@ jobs:
 
       - name: Install osxcross (Darwin16 toolchain)
         if: matrix.name == 'x86_64-macos'
-        shell: bash
         run: |
           set -euo pipefail
 
@@ -424,20 +423,23 @@ jobs:
           git clone https://github.com/tpoechtrager/osxcross.git
           cd osxcross
 
-          echo "📦 Copying patched SDK"
+          echo "📦 Copying SDK"
           cp ../depends/sdk-sources/MacOSX10.12.sdk.tar.xz tarballs/
 
           echo "🧹 Removing incompatible osxcross libc++ patches"
           rm -f patches/libcxx_fix_hash_table.patch || true
           rm -f tarballs/patches/*libcxx*.patch || true
 
-          echo "🏗 Building osxcross (skip tests)..."
-          UNATTENDED=1 OSX_VERSION_MIN=10.12 SKIP_TESTS=1 ./build.sh
+          echo "🏗 Building osxcross..."
+          UNATTENDED=1 OSX_VERSION_MIN=10.12 ./build.sh
 
           echo "📥 Installing toolchain..."
-          sudo cp -R target/* /usr/local/
+          cp -R target/* /usr/local/
 
-          echo "🧪 Testing compiler..."
+          echo "🔧 Adding osxcross toolchain to PATH"
+          echo "/__w/AdventureCoin/AdventureCoin/osxcross/target/bin" >> $GITHUB_PATH
+
+          echo "🧪 Testing toolchain..."
           which x86_64-apple-darwin16-clang
           x86_64-apple-darwin16-clang --version
 
