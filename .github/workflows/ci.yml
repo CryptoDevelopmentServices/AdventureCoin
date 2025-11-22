@@ -376,28 +376,29 @@ jobs:
           echo "${ZSHA}  depends/sources/zlib-${ZVER}.tar.gz" > depends/work/download/zlib-zlib-${ZVER}/zlib-${ZVER}.tar.gz.hash || true
           echo "✅ zlib ${ZVER} patched to KDE mirror with correct checksum."
 
-      - name: Patch SDK with libc++ headers (safe, no osxcross conflict)
+      - name: Patch SDK with correct libc++ (LLVM 7.1)
         if: matrix.name == 'x86_64-macos'
         run: |
           set -e
-          echo "📦 Fetching libc++ headers..."
-          git clone https://github.com/llvm/llvm-project.git --depth=1
+          echo "📦 Fetching libc++ (LLVM 7.1, compatible)"
+          git clone --branch llvmorg-7.1.0 https://github.com/llvm/llvm-project.git --depth=1
 
           echo "📁 Preparing temporary SDK workspace..."
           mkdir -p patched-sdk
           tar xf depends/sdk-sources/MacOSX10.12.sdk.tar.xz -C patched-sdk/
 
-          echo "📁 Adding libc++ headers to SDK..."
+          echo "📁 Adding LLVM 7.1 libc++ headers..."
           mkdir -p patched-sdk/MacOSX10.12.sdk/usr/include/c++/v1
           cp -R llvm-project/libcxx/include/* patched-sdk/MacOSX10.12.sdk/usr/include/c++/v1/
 
-          echo "🛠 Creating missing __config_site..."
+          echo "🛠 Creating old-style __config_site..."
           cat > patched-sdk/MacOSX10.12.sdk/usr/include/c++/v1/__config_site << 'EOF'
           #ifndef __CONFIG_SITE
           #define __CONFIG_SITE
           #define _LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER
           #define _LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS
           #define _LIBCPP_HAS_NO_THREADS
+          #define _LIBCPP_ABI_UNSTABLE
           #endif
           EOF
 
