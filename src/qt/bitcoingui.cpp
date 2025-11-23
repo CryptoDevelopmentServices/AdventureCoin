@@ -1213,14 +1213,21 @@ UnitDisplayStatusBarControl::UnitDisplayStatusBarControl(const PlatformStyle *pl
     QList<BitcoinUnits::Unit> units = BitcoinUnits::availableUnits();
     int max_width = 0;
     const QFontMetrics fm(font());
+
     for (const BitcoinUnits::Unit unit : units)
     {
+#if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
+        max_width = qMax(max_width, fm.width(BitcoinUnits::longName(unit)));
+#else
         max_width = qMax(max_width, fm.horizontalAdvance(BitcoinUnits::longName(unit)));
+#endif
     }
+
     setMinimumSize(max_width, 0);
     setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     setStyleSheet(QString("QLabel { color : %1 }").arg(platformStyle->SingleColor().name()));
 }
+
 
 /** So that it responds to button clicks */
 void UnitDisplayStatusBarControl::mousePressEvent(QMouseEvent *event)
