@@ -428,16 +428,16 @@ jobs:
       - name: Fix permissions for security-check.py
         run: chmod +x contrib/devtools/security-check.py
 
-      # 🧩 Fix Python 3 bytes bug in security-check.py for Windows PE builds
-      - name: Patch security-check.py for Python 3
-        if: matrix.name == 'x86_64-win' || matrix.name == 'i686-win'
-        shell: bash
-        run: |
-          FILE="contrib/devtools/security-check.py"
-          echo "🔧 Patching $FILE for Python 3 compatibility..."
-          sed -i 's/for line in stdout.split(/for line in stdout.decode().split(/' "$FILE"
-          grep -n "stdout.decode()" "$FILE" || (echo "⚠ patch did not apply!" && exit 1)
-          echo "✅ security-check.py patched successfully."
+      # # 🧩 Fix Python 3 bytes bug in security-check.py for Windows PE builds
+      # - name: Patch security-check.py for Python 3
+      #   if: matrix.name == 'x86_64-win' || matrix.name == 'i686-win'
+      #   shell: bash
+      #   run: |
+      #     FILE="contrib/devtools/security-check.py"
+      #     echo "🔧 Patching $FILE for Python 3 compatibility..."
+      #     sed -i 's/for line in stdout.split(/for line in stdout.decode().split(/' "$FILE"
+      #     grep -n "stdout.decode()" "$FILE" || (echo "⚠ patch did not apply!" && exit 1)
+      #     echo "✅ security-check.py patched successfully."
 
       - name: Check security
         if: ${{ matrix.check-security }}
