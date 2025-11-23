@@ -27,7 +27,7 @@ def check_ELF_PIE(executable):
         raise IOError('Error opening file')
 
     ok = False
-    for line in stdout.split(b'\n'):
+    for line in stdout.decode().split(b'\n'):
         line = line.split()
         if len(line)>=2 and line[0] == b'Type:' and line[1] == b'DYN':
             ok = True
@@ -42,7 +42,7 @@ def get_ELF_program_headers(executable):
     in_headers = False
     count = 0
     headers = []
-    for line in stdout.split(b'\n'):
+    for line in stdout.decode().split(b'\n'):
         if line.startswith(b'Program Headers:'):
             in_headers = True
         if line == b'':
@@ -96,7 +96,7 @@ def check_ELF_RELRO(executable):
     (stdout, stderr) = p.communicate()
     if p.returncode:
         raise IOError('Error opening file')
-    for line in stdout.split(b'\n'):
+    for line in stdout.decode().split(b'\n'):
         tokens = line.split()
         if len(tokens)>1 and tokens[1] == b'(BIND_NOW)' or (len(tokens)>2 and tokens[1] == b'(FLAGS)' and b'BIND_NOW' in tokens[2]):
             have_bindnow = True
@@ -111,7 +111,7 @@ def check_ELF_Canary(executable):
     if p.returncode:
         raise IOError('Error opening file')
     ok = False
-    for line in stdout.split(b'\n'):
+    for line in stdout.decode().split(b'\n'):
         if b'__stack_chk_fail' in line:
             ok = True
     return ok
@@ -128,7 +128,7 @@ def get_PE_dll_characteristics(executable):
         raise IOError('Error opening file')
     arch = ''
     bits = 0
-    for line in stdout.split('\n'):
+    for line in stdout.decode().split('\n'):
         tokens = line.split()
         if len(tokens)>=2 and tokens[0] == 'architecture:':
             arch = tokens[1].rstrip(',')
