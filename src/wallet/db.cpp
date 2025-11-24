@@ -715,7 +715,14 @@ bool CWalletDBWrapper::Backup(const std::string& strDest)
                         return false;
                     }
 
+                    #if defined(__cpp_lib_filesystem) && __cpp_lib_filesystem >= 201703L
+                    // C++17 std::filesystem
                     fs::copy_file(pathSrc, pathDest, fs::copy_options::overwrite_existing);
+                #else
+                    // Older libstdc++ / MinGW fallback
+                    fs::copy_file(pathSrc, pathDest);
+                #endif
+
                     LogPrintf("copied %s to %s\n", strFile, pathDest.string());
                     return true;
                 } catch (const fs::filesystem_error& e) {

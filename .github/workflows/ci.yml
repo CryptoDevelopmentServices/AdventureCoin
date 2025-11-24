@@ -283,14 +283,6 @@ jobs:
             clang llvm-dev libxml2-dev libssl-dev libbz2-dev libtinfo5 \
             libncurses5 zlib1g-dev xz-utils cmake patch make bison flex
 
-      # 💥 Patch the filesystem copy_options issue inline
-      - name: Patch wallet/db.cpp for filesystem compatibility
-        run: |
-          if grep -q "fs::copy_file" src/wallet/db.cpp; then
-            echo "🔧 Patching wallet/db.cpp for C++17 filesystem..."
-            sed -i '/fs::copy_file/s/fs::copy_file([^)]*);/#if defined(__cpp_lib_filesystem) \&\& __cpp_lib_filesystem >= 201703L\n    &\n#else\n    fs::copy_file(pathSrc, pathDest);\n#endif/' src/wallet/db.cpp
-          fi
-
       # 🧩 Patch zlib 1.2.12 to use stable KDE mirror (Windows builds)
       - name: Force zlib 1.2.12 from KDE mirror (fix checksum)
         if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win'
