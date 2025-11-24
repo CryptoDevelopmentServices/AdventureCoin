@@ -96,21 +96,40 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
     // check font size and drawing with
     pixPaint.setFont(QFont(font, 33*fontFactor));
     QFontMetrics fm = pixPaint.fontMetrics();
+    #if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
+    int titleTextWidth = fm.width(titleText);
+#else
     int titleTextWidth = fm.horizontalAdvance(titleText);
+#endif
     if (titleTextWidth > 176) {
         fontFactor = fontFactor * 176 / titleTextWidth;
     }
 
     pixPaint.setFont(QFont(font, 33*fontFactor));
     fm = pixPaint.fontMetrics();
-    titleTextWidth  = fm.horizontalAdvance(titleText);
-    pixPaint.drawText(pixmap.width()/devicePixelRatio-titleTextWidth-paddingRight,paddingTop,titleText);
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
+    titleTextWidth = fm.width(titleText);                // Qt 5.7–5.10
+#else
+    titleTextWidth = fm.horizontalAdvance(titleText);    // Qt 5.11+
+#endif
+
+    pixPaint.drawText(
+        pixmap.width() / devicePixelRatio - titleTextWidth - paddingRight,
+        paddingTop,
+        titleText
+    );
 
     pixPaint.setFont(QFont(font, 15*fontFactor));
 
     // if the version string is to long, reduce size
     fm = pixPaint.fontMetrics();
-    int versionTextWidth  = fm.horizontalAdvance(versionText);
+    #if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
+    int versionTextWidth = fm.width(versionText);
+#else
+    int versionTextWidth = fm.horizontalAdvance(versionText);
+#endif
+
     if(versionTextWidth > titleTextWidth+paddingRight-10) {
         pixPaint.setFont(QFont(font, 10*fontFactor));
         titleVersionVSpace -= 5;
@@ -132,7 +151,11 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
         boldFont.setWeight(QFont::Bold);
         pixPaint.setFont(boldFont);
         fm = pixPaint.fontMetrics();
-        int titleAddTextWidth  = fm.horizontalAdvance(titleAddText);
+        #if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
+    int titleAddTextWidth = fm.width(titleAddText);
+#else
+    int titleAddTextWidth = fm.horizontalAdvance(titleAddText);
+#endif
         pixPaint.drawText(pixmap.width()/devicePixelRatio-titleAddTextWidth-10,15,titleAddText);
     }
 

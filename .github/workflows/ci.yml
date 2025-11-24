@@ -283,71 +283,6 @@ jobs:
             clang llvm-dev libxml2-dev libssl-dev libbz2-dev libtinfo5 \
             libncurses5 zlib1g-dev xz-utils cmake patch make bison flex
 
-      # 💥 Patch the filesystem copy_options issue inline
-      - name: Patch wallet/db.cpp for filesystem compatibility
-        run: |
-          if grep -q "fs::copy_file" src/wallet/db.cpp; then
-            echo "🔧 Patching wallet/db.cpp for C++17 filesystem..."
-            sed -i '/fs::copy_file/s/fs::copy_file([^)]*);/#if defined(__cpp_lib_filesystem) \&\& __cpp_lib_filesystem >= 201703L\n    &\n#else\n    fs::copy_file(pathSrc, pathDest);\n#endif/' src/wallet/db.cpp
-          fi
-
-      # 🧩 Ensure Qt patch files exist for Windows and macOS builds
-      - name: Create missing Qt patch files (Windows + macOS)
-        if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win' || matrix.name == 'x86_64-macos'
-        run: |
-          echo "🔧 Ensuring all Qt patch files exist..."
-          mkdir -p depends/patches/qt
-          for f in mingw-uuidof.patch pidlist_absolute.patch fix-xcb-include-order.patch \
-                   fix_qt_pkgconfig.patch fix-cocoahelpers-macos.patch qfixed-coretext.patch; do
-            if [ ! -f depends/patches/qt/$f ]; then
-              echo "Creating missing patch file: $f"
-              touch depends/patches/qt/$f
-            fi
-          done
-          echo "✅ Qt patch files ready."
-
-      # 🧩 Patch Qt QFontMetrics compatibility for old Qt versions (proper preprocessor wrapping)
-      - name: Patch Qt QFontMetrics compatibility for old Qt versions
-        if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win'
-        run: |
-          echo "🔧 Patching bitcoingui.cpp for Qt 5.7.x compatibility (clean version)..."
-          TARGET_FILE="src/qt/bitcoingui.cpp"
-
-          if grep -q "horizontalAdvance" "$TARGET_FILE"; then
-            echo "🧩 Applying safe preprocessor block patch..."
-            sed -i '/horizontalAdvance/s/^.*$/#if QT_VERSION < QT_VERSION_CHECK(5,11,0)\
-                    max_width = qMax(max_width, fm.width(BitcoinUnits::longName(unit)));\
-            #else\
-                    max_width = qMax(max_width, fm.horizontalAdvance(BitcoinUnits::longName(unit)));\
-            #endif/' "$TARGET_FILE"
-          fi
-
-          echo "✅ QFontMetrics compatibility patch applied cleanly."
-
-      # 🧩 Fix splashscreen.cpp for Qt 5.7.x compatibility (safe multi-line patch)
-      - name: Patch splashscreen.cpp QFontMetrics compatibility (safe)
-        if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win'
-        run: |
-          echo "🧹 Reverting splashscreen.cpp to clean state (in case of malformed sed patch)..."
-          git checkout -- src/qt/splashscreen.cpp || true
-
-          echo "🔧 Applying safe #if/#else patch for QFontMetrics::horizontalAdvance..."
-          awk '
-            /fm\.horizontalAdvance/ {
-              print "#if QT_VERSION < QT_VERSION_CHECK(5,11,0)"
-              gsub(/fm\.horizontalAdvance/, "fm.width")
-              print $0
-              print "#else"
-              sub(/fm\.width/, "fm.horizontalAdvance")
-              print $0
-              print "#endif"
-              next
-            }
-            { print }
-          ' src/qt/splashscreen.cpp > tmp && mv tmp src/qt/splashscreen.cpp
-
-          echo "✅ splashscreen.cpp compatibility patch applied safely."
-
       # 🧩 Patch zlib 1.2.12 to use stable KDE mirror (Windows builds)
       - name: Force zlib 1.2.12 from KDE mirror (fix checksum)
         if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win'
@@ -428,16 +363,16 @@ jobs:
       - name: Fix permissions for security-check.py
         run: chmod +x contrib/devtools/security-check.py
 
-      # 🧩 Fix Python 3 bytes bug in security-check.py for Windows PE builds
-      - name: Patch security-check.py for Python 3
-        if: matrix.name == 'x86_64-win' || matrix.name == 'i686-win'
-        shell: bash
-        run: |
-          FILE="contrib/devtools/security-check.py"
-          echo "🔧 Patching $FILE for Python 3 compatibility..."
-          sed -i 's/for line in stdout.split(/for line in stdout.decode().split(/' "$FILE"
-          grep -n "stdout.decode()" "$FILE" || (echo "⚠ patch did not apply!" && exit 1)
-          echo "✅ security-check.py patched successfully."
+      # # 🧩 Fix Python 3 bytes bug in security-check.py for Windows PE builds
+      # - name: Patch security-check.py for Python 3
+      #   if: matrix.name == 'x86_64-win' || matrix.name == 'i686-win'
+      #   shell: bash
+      #   run: |
+      #     FILE="contrib/devtools/security-check.py"
+      #     echo "🔧 Patching $FILE for Python 3 compatibility..."
+      #     sed -i 's/for line in stdout.split(/for line in stdout.decode().split(/' "$FILE"
+      #     grep -n "stdout.decode()" "$FILE" || (echo "⚠ patch did not apply!" && exit 1)
+      #     echo "✅ security-check.py patched successfully."
 
       - name: Check security
         if: ${{ matrix.check-security }}
