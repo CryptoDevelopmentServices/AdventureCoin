@@ -283,28 +283,6 @@ jobs:
             clang llvm-dev libxml2-dev libssl-dev libbz2-dev libtinfo5 \
             libncurses5 zlib1g-dev xz-utils cmake patch make bison flex
 
-      # 🧩 Patch zlib 1.2.12 to use stable KDE mirror (Windows builds)
-      - name: Force zlib 1.2.12 from KDE mirror (fix checksum)
-        if: matrix.name == 'i686-win' || matrix.name == 'x86_64-win'
-        shell: bash
-        run: |
-          set -euo pipefail
-          ZVER="1.2.12"
-          ZURL="https://mirrors.ukfast.co.uk/sites/kde.org/files/krita/build/dependencies/zlib-${ZVER}.tar.gz"
-          ZSHA="91844808532e5ce316b3c010929493c0244f3d37593afd6de04f71821d5136d9"
-
-          echo "📦 Downloading zlib ${ZVER} from KDE mirror..."
-          mkdir -p depends/sources
-          curl -L --retry 3 --connect-timeout 15 -o "depends/sources/zlib-${ZVER}.tar.gz" "${ZURL}"
-
-          echo "📝 Updating depends/packages/zlib.mk..."
-          sed -i "s|https://zlib.net/fossils|${ZURL%/zlib-${ZVER}.tar.gz}|g" depends/packages/zlib.mk
-          sed -i "s|https://bitcoincore.org/depends-sources|${ZURL%/zlib-${ZVER}.tar.gz}|g" depends/packages/zlib.mk
-          sed -i "s/sha256=.*/sha256=${ZSHA}/" depends/packages/zlib.mk
-
-          echo "${ZSHA}  depends/sources/zlib-${ZVER}.tar.gz" > depends/work/download/zlib-zlib-${ZVER}/zlib-${ZVER}.tar.gz.hash || true
-          echo "✅ zlib ${ZVER} patched to KDE mirror with correct checksum."
-
       # - name: Patch Boost toolset to prevent version clashes
       #   if: matrix.name == 'x86_64-macos'
       #   shell: bash
