@@ -124,8 +124,8 @@ jobs:
             dep-opts: ""
             config-opts: "--with-gui=qt5 --disable-tests"
             goal: deploy
-            sdk: 10.8
-            sdk-shasum: "709b84adde0fbd1c15de4c9dadb36b3b8c65f9bb7f8a7152f0cf33ab7c3f57af"
+            sdk: 10.11
+            sdk-shasum: "bec9d089ebf2e2dd59b1a811a38ec78ebd5da18cbbcd6ab39d1e59f64ac5033f"
 
     runs-on: ubuntu-22.04
     container:
@@ -179,24 +179,36 @@ jobs:
           path: ./depends/sdk-sources
           key: ${{ matrix.name }}-${{ env.cache-name }}-${{ hashFiles('.github/workflows/ci.yml') }}
 
+      # - name: Install SDK
+      #   if: ${{ matrix.sdk }}
+      #   shell: bash
+      #   env:
+      #     SDK_URL: https://github.com/phracker/MacOSX-SDKs/releases/download/10.15
+      #     sdk-filename: MacOSX${{ matrix.sdk }}.sdk.tar.xz
+      #   run: |
+      #     set -euo pipefail
+      #     mkdir -p ./depends/sdk-sources ./depends/SDKs
+      #     echo "📦 Downloading macOS SDK ${{ matrix.sdk }} from phracker…"
+      #     curl -L --fail \
+      #       "$SDK_URL/${{ env.sdk-filename }}" \
+      #       -o "depends/sdk-sources/${{ env.sdk-filename }}"
+      #     echo "🔐 Verifying checksum…"
+      #     echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c
+      #     echo "📂 Extracting SDK…"
+      #     tar -C depends/SDKs -xf "depends/sdk-sources/${{ env.sdk-filename }}"
+      #     echo "✅ SDK installed: depends/SDKs/${{ env.sdk-filename }}"
+
       - name: Install SDK
         if: ${{ matrix.sdk }}
-        shell: bash
         env:
-          SDK_URL: https://github.com/phracker/MacOSX-SDKs/releases/download/10.15
-          sdk-filename: MacOSX${{ matrix.sdk }}.sdk.tar.xz
+          sdk-filename: MacOSX${{ matrix.sdk }}.sdk.tar.gz
         run: |
-          set -euo pipefail
-          mkdir -p ./depends/sdk-sources ./depends/SDKs
-          echo "📦 Downloading macOS SDK ${{ matrix.sdk }} from phracker…"
-          curl -L --fail \
-            "$SDK_URL/${{ env.sdk-filename }}" \
-            -o "depends/sdk-sources/${{ env.sdk-filename }}"
-          echo "🔐 Verifying checksum…"
+          mkdir -p ./depends/sdk-sources
+          mkdir -p ./depends/SDKs
+          echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c || \
+          curl --location --fail $SDK_URL/${{ env.sdk-filename }} -o depends/sdk-sources/${{ env.sdk-filename }} &&\
           echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c
-          echo "📂 Extracting SDK…"
-          tar -C depends/SDKs -xf "depends/sdk-sources/${{ env.sdk-filename }}"
-          echo "✅ SDK installed: depends/SDKs/${{ env.sdk-filename }}"
+          tar -C depends/SDKs -xf depends/sdk-sources/${{ env.sdk-filename }}
 
       - name: Dependency cache
         uses: actions/cache@v4
