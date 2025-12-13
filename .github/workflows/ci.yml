@@ -179,35 +179,25 @@ jobs:
           path: ./depends/sdk-sources
           key: ${{ matrix.name }}-${{ env.cache-name }}-${{ hashFiles('.github/workflows/ci.yml') }}
 
-      # - name: Install SDK
-      #   if: ${{ matrix.sdk }}
-      #   shell: bash
-      #   env:
-      #     SDK_URL: https://github.com/phracker/MacOSX-SDKs/releases/download/10.15
-      #     sdk-filename: MacOSX${{ matrix.sdk }}.sdk.tar.xz
-      #   run: |
-      #     set -euo pipefail
-      #     mkdir -p ./depends/sdk-sources ./depends/SDKs
-      #     echo "📦 Downloading macOS SDK ${{ matrix.sdk }} from phracker…"
-      #     curl -L --fail \
-      #       "$SDK_URL/${{ env.sdk-filename }}" \
-      #       -o "depends/sdk-sources/${{ env.sdk-filename }}"
-      #     echo "🔐 Verifying checksum…"
-      #     echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c
-      #     echo "📂 Extracting SDK…"
-      #     tar -C depends/SDKs -xf "depends/sdk-sources/${{ env.sdk-filename }}"
-      #     echo "✅ SDK installed: depends/SDKs/${{ env.sdk-filename }}"
-
       - name: Install SDK
         if: ${{ matrix.sdk }}
         env:
           sdk-filename: MacOSX${{ matrix.sdk }}.sdk.tar.gz
         run: |
-          mkdir -p ./depends/sdk-sources
-          mkdir -p ./depends/SDKs
-          echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c || \
-          curl --location --fail $SDK_URL/${{ env.sdk-filename }} -o depends/sdk-sources/${{ env.sdk-filename }} &&\
-          echo "${{ matrix.sdk-shasum }}  depends/sdk-sources/${{ env.sdk-filename }}" | sha256sum -c
+          mkdir -p depends/sdk-sources
+          mkdir -p depends/SDKs
+
+          cd depends/sdk-sources
+
+          # First check: does NOT include path
+          echo "${{ matrix.sdk-shasum }}  ${{ env.sdk-filename }}" | sha256sum -c || \
+          curl --location --fail "$SDK_URL/${{ env.sdk-filename }}" -o "${{ env.sdk-filename }}"
+
+          # Second check AFTER download
+          echo "${{ matrix.sdk-shasum }}  ${{ env.sdk-filename }}" | sha256sum -c
+
+          cd ../..
+
           tar -C depends/SDKs -xf depends/sdk-sources/${{ env.sdk-filename }}
 
       - name: Dependency cache
