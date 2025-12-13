@@ -9,47 +9,23 @@ $(package)_config_opts_release=variant=release
 $(package)_config_opts_debug=variant=debug
 $(package)_config_opts=--layout=tagged --build-type=complete --user-config=user-config.jam
 $(package)_config_opts+=threading=multi link=static -sNO_BZIP2=1 -sNO_ZLIB=1
-
 $(package)_config_opts_linux=threadapi=pthread runtime-link=shared
-
-# IMPORTANT: macOS now forced to GCC toolset
-$(package)_config_opts_darwin=--toolset=gcc runtime-link=shared
-
+$(package)_config_opts_darwin=--toolset=darwin-4.2.1 runtime-link=shared
 $(package)_config_opts_mingw32=binary-format=pe target-os=windows threadapi=win32 runtime-link=static
-
 $(package)_config_opts_x86_64_mingw32=address-model=64
 $(package)_config_opts_i686_mingw32=address-model=32
 $(package)_config_opts_i686_linux=address-model=32 architecture=x86
-
 $(package)_toolset_$(host_os)=gcc
 $(package)_archiver_$(host_os)=$($(package)_ar)
-
-# These stay defined but DO NOT get used anymore
-$(package)_toolset_darwin=gcc
-$(package)_archiver_darwin=$($(package)_ar)
-
-boost_toolset_darwin=$($(package)_toolset_darwin)
-boost_archiver_darwin=$($(package)_archiver_darwin)
-
-$(package)_config_libraries=chrono,filesystem,program_options,system,thread
-
+$(package)_toolset_darwin=darwin
+$(package)_archiver_darwin=$($(package)_libtool)
+$(package)_config_libraries=chrono,filesystem,program_options,system,thread,test
 $(package)_cxxflags=-std=c++11 -fvisibility=hidden
 $(package)_cxxflags_linux=-fPIC
 endef
 
-# ==================================================================
-# PREPROCESS: FORCE GCC TOOLSET FOR MACOS + EVERY OTHER HOST
-# macOS cross compile will use gcc toolset with g++ invocation
-# This avoids Boost's broken "darwin" toolset and missing libtool.
-# ==================================================================
 define $(package)_preprocess_cmds
-  echo "using gcc : : $($(package)_cxx) \
-    : <cxxflags>\"$($(package)_cxxflags) $($(package)_cppflags)\" \
-      <linkflags>\"$($(package)_ldflags)\" \
-      <archiver>\"$($(package)_ar)\" \
-      <ranlib>\"$(host_RANLIB)\" \
-      <striper>\"$(host_STRIP)\" \
-    ;" > user-config.jam
+  echo "using $(boost_toolset_$(host_os)) : : $($(package)_cxx) : <cxxflags>\"$($(package)_cxxflags) $($(package)_cppflags)\" <linkflags>\"$($(package)_ldflags)\" <archiver>\"$(boost_archiver_$(host_os))\" <striper>\"$(host_STRIP)\"  <ranlib>\"$(host_RANLIB)\" <rc>\"$(host_WINDRES)\" : ;" > user-config.jam
 endef
 
 define $(package)_config_cmds
