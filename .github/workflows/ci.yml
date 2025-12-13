@@ -130,7 +130,7 @@ jobs:
     runs-on: ubuntu-22.04
     container:
       image: ${{ matrix.container }}
-      options: ${{ matrix.container-options == '' && '-e 1ARCH=1ARCH' || matrix.container-options }}
+      options: ${{ matrix.container-options == '' && '-e 1ADVC=1ADVC' || matrix.container-options }}
 
     steps:
       - name: Configure container
