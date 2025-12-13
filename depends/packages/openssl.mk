@@ -62,7 +62,7 @@ define $(package)_preprocess_cmds
   patch -p1 < $($(package)_patch_dir)/secure_getenv.patch && \
   sed -i.old "/define DATE/d" util/mkbuildinf.pl && \
   sed -i.old "s|engines apps test|engines|" Makefile.org && \
-  sed -i.old 's/^CC=.*/CC=$($(package)_cc)/' Configure
+  sed -i.old "s#^CC=.*#CC=$($(package)_cc)#" Configure
 endef
 
 define $(package)_config_cmds
