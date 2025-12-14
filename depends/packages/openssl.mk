@@ -7,7 +7,7 @@ $(package)_sha256_hash=ecd0c6ffb493dd06707d38b14bb4d8c2288bb7033735606569d8f90f8
 
 # PATCHES (must use +=, not =)
 $(package)_patches += secure_getenv.patch
-$(package)_patches += domd_cc.patch
+# $(package)_patches += domd_cc.patch
 
 define $(package)_set_vars
 $(package)_config_env=AR="$($(package)_ar)" RANLIB="$($(package)_ranlib)" CC="$($(package)_cc)"
@@ -63,9 +63,9 @@ endef
 
 define $(package)_preprocess_cmds
   patch -p1 < $($(package)_patch_dir)/secure_getenv.patch && \
-  patch -p1 < $($(package)_patch_dir)/domd_cc.patch && \
   sed -i.old "/define DATE/d" util/mkbuildinf.pl && \
   sed -i.old "s|engines apps test|engines|" Makefile.org && \
+  sed -i.old "s/\<clang\>/$(package_cc)/g" Makefile.org && \
   sed -i.old "s#^CC=.*#CC=$($(package)_cc)#" Configure
 endef
 
