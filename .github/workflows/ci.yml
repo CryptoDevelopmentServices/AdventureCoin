@@ -208,8 +208,22 @@ jobs:
           path: ./depends/built
           key: ${{ matrix.name }}-${{ env.cache-name }}-${{ hashFiles('depends/packages/*', '.github/workflows/ci.yml') }}
 
+      # - name: Build depends
+      #   run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
+
       - name: Build depends
-        run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
+        run: |
+          set +e
+          make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
+          STATUS=$?
+
+          echo "==== Attempting to dump util/domd files found so far ===="
+          find depends/work -path "*/openssl*/util/domd" -exec sh -c '
+            echo "---- {} ----"
+            sed -n "1,200p" "{}"
+          ' \;
+
+          exit $STATUS
 
       - name: CCache
         uses: actions/cache@v4
