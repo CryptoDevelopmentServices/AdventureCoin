@@ -1,8 +1,10 @@
 --- a/util/domd
 +++ b/util/domd
-@@ -31,7 +31,7 @@
- # We assume that perl is in your path.  If you want to use a different
- # perl then uncomment the following line and fix the path to perl
- #
--CC=clang
-+CC="${CC:-cc}"
+@@ -33,7 +33,7 @@ fi
+ 
+ case "$MAKEDEPEND" in
+ *)
+-    cmd="clang -MM $@"
++    cmd="${CC:-cc} -MM $@"
+     ;;
+ esac
