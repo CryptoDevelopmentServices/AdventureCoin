@@ -66,7 +66,7 @@ define $(package)_preprocess_cmds
   sed -i.old "/define DATE/d" util/mkbuildinf.pl && \
   sed -i.old "s|engines apps test|engines|" Makefile.org && \
   sed -i.old "s#^CC=.*#CC=$($(package)_cc)#" Configure && \
-  sed -i.old 's/MAKEDEPEND=.*clang.*/MAKEDEPEND="$($(package)_cc) -MM"/' Configure
+  sed -i.old "s|MAKEDEPEND=.*|MAKEDEPEND=\"$($(package)_cc) -MM\"|" Configure
 endef
 
 define $(package)_config_cmds
