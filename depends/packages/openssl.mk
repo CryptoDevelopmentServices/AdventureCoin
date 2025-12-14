@@ -1,11 +1,9 @@
 package=openssl
-$(package)_version=1.0.2
-$(package)_version_suffix=u
-$(package)_download_path=https://www.openssl.org/source/old/$($(package)_version)
-$(package)_file_name=$(package)-$($(package)_version)$($(package)_version_suffix).tar.gz
-$(package)_sha256_hash=ecd0c6ffb493dd06707d38b14bb4d8c2288bb7033735606569d8f90f89669d16
-# PATCHES
-$(package)_patches += secure_getenv.patch
+$(package)_version=1.0.1k
+$(package)_download_path=https://www.openssl.org/source
+$(package)_file_name=$(package)-$($(package)_version).tar.gz
+$(package)_sha256_hash=8f9faeaebad088e772f4ef5e38252d472be4d878c6b3a2718c10a4fcebe7a41c
+$(package)_patches=0001-Add-OpenSSL-termios-fix-for-musl-libc.patch
 
 define $(package)_set_vars
 $(package)_config_env=AR="$($(package)_ar)" RANLIB="$($(package)_ranlib)" CC="$($(package)_cc)"
@@ -50,29 +48,31 @@ $(package)_config_opts_linux=-fPIC -Wa,--noexecstack
 $(package)_config_opts_x86_64_linux=linux-x86_64
 $(package)_config_opts_i686_linux=linux-generic32
 $(package)_config_opts_arm_linux=linux-generic32
+$(package)_config_opts_armv7l_linux=linux-generic32
 $(package)_config_opts_aarch64_linux=linux-generic64
 $(package)_config_opts_mipsel_linux=linux-generic32
 $(package)_config_opts_mips_linux=linux-generic32
 $(package)_config_opts_powerpc_linux=linux-generic32
+$(package)_config_opts_riscv32_linux=linux-generic32
+$(package)_config_opts_riscv64_linux=linux-generic64
 $(package)_config_opts_x86_64_darwin=darwin64-x86_64-cc
 $(package)_config_opts_x86_64_mingw32=mingw64
 $(package)_config_opts_i686_mingw32=mingw
+$(package)_config_opts_android=-fPIC
+$(package)_config_opts_aarch64_android=linux-generic64
+$(package)_config_opts_x86_64_android=linux-generic64
+$(package)_config_opts_armv7a_android=linux-generic32
+$(package)_config_opts_i686_android=linux-generic32
 endef
 
 define $(package)_preprocess_cmds
-  patch -p1 < $($(package)_patch_dir)/secure_getenv.patch && \
+  patch -p1 < $($(package)_patch_dir)/0001-Add-OpenSSL-termios-fix-for-musl-libc.patch && \
   sed -i.old "/define DATE/d" util/mkbuildinf.pl && \
   sed -i.old "s|engines apps test|engines|" Makefile.org
 endef
 
 define $(package)_config_cmds
-  ./Configure $($(package)_config_opts) && \
-  echo "Patching util/domd to force GCC-based dependencies..." && \
-  sed -i.bak \
-    -e 's|MAKEDEPEND=.*|MAKEDEPEND="$$CC -MM"|' \
-    -e 's|^\( *\)makedepend|\1$$CC -MM|' \
-    util/domd && \
-  make depend
+  ./Configure $($(package)_config_opts)
 endef
 
 define $(package)_build_cmds
