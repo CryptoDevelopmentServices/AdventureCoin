@@ -208,22 +208,22 @@ jobs:
           path: ./depends/built
           key: ${{ matrix.name }}-${{ env.cache-name }}-${{ hashFiles('depends/packages/*', '.github/workflows/ci.yml') }}
 
-      # - name: Build depends
-      #   run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
-
       - name: Build depends
-        run: |
-          set +e
-          make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
-          STATUS=$?
+        run: make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
 
-          echo "==== Attempting to dump util/domd files found so far ===="
-          find depends/work -path "*/openssl*/util/domd" -exec sh -c '
-            echo "---- {} ----"
-            sed -n "1,200p" "{}"
-          ' \;
+      # - name: Build depends
+      #   run: |
+      #     set +e
+      #     make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
+      #     STATUS=$?
 
-          exit $STATUS
+      #     echo "==== Attempting to dump util/domd files found so far ===="
+      #     find depends/work -path "*/openssl*/util/domd" -exec sh -c '
+      #       echo "---- {} ----"
+      #       sed -n "1,200p" "{}"
+      #     ' \;
+
+      #     exit $STATUS
 
       - name: CCache
         uses: actions/cache@v4
@@ -240,14 +240,23 @@ jobs:
           chmod +x autogen.sh
           chmod -R +x depends || true
           chmod +x share/genbuild.sh
+
           SHORT_COMMIT=$(echo "$GIT_COMMIT_ID" | cut -c1-7)
           depends/${{ matrix.host }}/native/bin/ccache --max-size=$CCACHE_SIZE
+
           ./autogen.sh
           chmod +x configure || true
-          ./configure --prefix=`pwd`/depends/${{ matrix.host }} ${{ matrix.config-opts }} --enable-reduce-exports \
-            CFLAGS="-std=c++17 -DGIT_COMMIT_ID=\\\"$SHORT_COMMIT\\\"" \
-            CXXFLAGS="-std=c++17 -DGIT_COMMIT_ID=\\\"$SHORT_COMMIT\\\"" || ( cat config.log && false)
-          make $MAKEJOBS ${{ matrix.goal }} CXXFLAGS="-std=c++17" || (echo "Build failure. Verbose build follows." && make ${{ matrix.goal }} CXXFLAGS="-std=c++17" V=1 ; false)
+
+          ./configure --prefix=`pwd`/depends/${{ matrix.host }} \
+            ${{ matrix.config-opts }} \
+            --enable-reduce-exports \
+            CFLAGS="-pipe -O2 -DGIT_COMMIT_ID=\\\"$SHORT_COMMIT\\\"" \
+            CXXFLAGS="-std=c++17 -pipe -O2 -DGIT_COMMIT_ID=\\\"$SHORT_COMMIT\\\"" \
+            || (cat config.log && false)
+
+          make $MAKEJOBS ${{ matrix.goal }} \
+            CXXFLAGS="-std=c++17" \
+            || (echo "Build failure. Verbose build follows." && make ${{ matrix.goal }} CXXFLAGS="-std=c++17" V=1 ; false)
 
       - name: Run benchmark
         if: ${{ matrix.run-bench }}
