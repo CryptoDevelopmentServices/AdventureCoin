@@ -36,6 +36,28 @@
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/thread.hpp>
 
+#include <algorithm>
+// ================================================================
+// C++17 compatibility: std::random_shuffle was removed.
+// We provide a replacement that preserves the old behavior.
+// ================================================================
+template <typename RandomIt>
+static void RandomShuffleCompat(RandomIt first, RandomIt last)
+{
+#if __cplusplus >= 201703L
+    // Manual shuffle using GetRandInt()
+    if (first == last) return;
+    auto n = last - first;
+    for (decltype(n) i = n - 1; i > 0; --i) {
+        std::swap(first[i], first[GetRandInt(i + 1)]);
+    }
+#else
+    // Old compilers still have std::random_shuffle
+    std::random_shuffle(first, last, GetRandInt);
+#endif
+}
+
+
 std::vector<CWalletRef> vpwallets;
 /** Transaction fee set by the user */
 CFeeRate payTxFee(DEFAULT_TRANSACTION_FEE);
@@ -2392,7 +2414,7 @@ bool CWallet::SelectCoinsMinConf(const CAmount& nTargetValue, const int nConfMin
     std::vector<CInputCoin> vValue;
     CAmount nTotalLower = 0;
 
-    random_shuffle(vCoins.begin(), vCoins.end(), GetRandInt);
+    RandomShuffleCompat(vCoins.begin(), vCoins.end());
 
     for (const COutput &output : vCoins)
     {

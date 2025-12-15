@@ -177,13 +177,29 @@ CHECKS = {
 ]
 }
 
-def identify_executable(executable):
+def identify_executable(filename):
     with open(filename, 'rb') as f:
         magic = f.read(4)
+
+    # Windows PE
     if magic.startswith(b'MZ'):
         return 'PE'
-    elif magic.startswith(b'\x7fELF'):
+
+    # Linux ELF
+    if magic.startswith(b'\x7fELF'):
         return 'ELF'
+
+    # macOS Mach-O (32/64-bit, swapped and unswapped)
+    MACHO_MAGICS = [
+        b'\xfe\xed\xfa\xce', # 32-bit Mach-O
+        b'\xce\xfa\xed\xfe', # 32-bit reverse byte order
+        b'\xfe\xed\xfa\xcf', # 64-bit Mach-O
+        b'\xcf\xfa\xed\xfe', # 64-bit reverse byte order
+    ]
+
+    if magic in MACHO_MAGICS:
+        return 'MACHO'   # <- added type
+
     return None
 
 if __name__ == '__main__':
@@ -194,6 +210,11 @@ if __name__ == '__main__':
             if etype is None:
                 print('%s: unknown format' % filename)
                 retval = 1
+                continue
+
+            # Skip Mach-O (macOS)
+            if etype == 'MACHO':
+                print('%s: skipping macOS Mach-O binary (no checks available)' % filename)
                 continue
 
             failed = []
